@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Audio Player</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p>Audio Output Device: <select id="outputs"></select></p>
+	<p><button id="open">OPEN...</button><button id="import">IMPORT...</button></p>
+	<p>File: <strong id="file"></strong></p>
+	<p><button id="play">PLAY</button><button id="stop">STOP</button></p>
+	<p><input type="range" id="time" min="0" max="0" /><strong id="totaltime"></strong></p>
+	<p>Volume: <input type="range" id="volume" min="0" max="100" /><strong id="gain"></strong></p>
+	<p>Speed: <input type="range" id="speed" min="50" max="200" /><strong id="rate"></strong></p>
+	<p>Pitch: <input type="range" id="pitch" min="-2400" max="2400" /><strong id="cent"></strong></p>
+	<p>L: <span class="box"><span class="meter" id="meterL">.</span></span></p>
+	<p>R: <span class="box"><span class="meter" id="meterR">.</span></span></p>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		var player = $native.player;
+
+		player.event = {
+			eof: function(file) {
+				player.play(); /* always repeat */
+			},
+			stop: function(file) {
+				/* nothing to do */
+			},
+			error: function(file) {
+				alert('error\n' + file);
+			}
+		};
+
+		$('#play').on('click', function(e) {
+			if (player.status() == 1) {  /* 0:stop, 1:play: 2:pause */
+				player.pause();
+			} else {
+				player.play();
+			}
+		});
+
+		$('#stop').on('click', function(e) {
+			player.stop();
+		});
+
+		$('#time').on('input', function(e) {
+			onlocating = true;
+		});
+		$('#time').on('change', function(e) {
+			var status = player.status();
+			player.locate($(this).val());
+			if (status == 1) {
+				player.play();
+			}
+			onlocating = false;
+		});
+
+		$('#volume').on('change', function(e) {
+			var v = player.volume($(this).val() / 100);
+			$('#gain').text(v.toFixed(1));
+		});
+		$('#speed').on('change', function(e) {
+			var v = player.speed($(this).val() / 100);
+			$('#rate').text(v.toFixed(1));
+		});
+		$('#pitch').on('change', function(e) {
+			var v = player.pitch($(this).val() * 1);
+			$('#cent').text(v.toFixed(0));
+		});
+
+		$('#file').text(player.file());
+		$('#volume').val(player.volume() * 100);
+		$('#gain').text(player.volume().toFixed(1));
+		$('#speed').val(player.speed() * 100);
+		$('#rate').text(player.speed().toFixed(1));
+		$('#cent').text(player.pitch().toFixed(0));
+
+		var totaltime = player.totaltime();
+		var onlocating = false;
+
+		function update() {
+
+			var status = player.status();
+			$('#play').text((status == 1) ? 'PAUSE' : 'PLAY');
+
+			var mm = Math.floor(totaltime / 60);
+			var ss = Math.floor(totaltime % 60);
+			$('#totaltime').text(mm + ':' + ss);
+
+			if (!onlocating) {
+				var time = player.time();
+				$('#time').attr('max', Math.floor(totaltime));
+				$('#time').val(Math.floor(time));
+			}
+
+			var ch = player.channels();
+			if (ch > 0) {
+				v = player.peakpower(0);
+				v = ((120 + v) / 120) * 100;
+				$('#meterL').css('width', Math.floor(v) + '%');
+			} else {
+				$('#meterL').css("width", "0%");
+			}
+			if (ch > 1) {
+				v = player.peakpower(1);
+				v = ((120 + v) / 120) * 100;
+				$('#meterR').css('width', Math.floor(v) + '%');
+			} else {
+				$('#meterR').css("width", "0%");
+			}
+
+		}
+
+		setInterval(update, 50);
+
+		$('#open').on('click', function(e) {
+			var filter = [ 'wav', 'aiff', 'mp3', 'm4a', 'mp4' ];
+			$native.fs.openfilename(filter);
+		});
+
+		$native.fs.event.openfilename = function(file) {
+			if (file) {
+				$('#file').text(file);
+				if (!player.open(file)) {
+					alert('openfailed\n' + file);
+				} else {
+					totaltime = player.totaltime();
+				}
+			}
+		};
+
+		$('#import').on('click', function(e) {
+			var filter = {
+				uti: [ 'public.audio' ],
+				mime: [ 'audio/*' ]
+			};
+			$native.app.importfile(filter);
+		});
+
+		$native.app.event.command = function(param1, param2) {
+			if (param1 == 'import') {
+				$native.fs.event.openfilename(param2);
+			}
+		};
+
+		$('#outputs').on('change', function(){
+			var uid = player.device($(this).val());
+			$('#outputs').val(uid);
+		});
+
+		$native.audio.event.changed = function() {
+			var doc = '<option value="">(default)</option>';
+			var devs = $native.audio.outputs();
+			for (var i = 0, num = devs.length; i < num; i++) {
+				var uid = devs[i].AudioDeviceUIDKey;
+				var current = devs[i].AudioDeviceCurrentKey ? ' (*)' : '';
+				var desc = (
+					devs[i].AudioDeviceNameKey + ' - ' +
+					devs[i].AudioDeviceSampleRateKey + '/' +
+					devs[i].AudioDeviceBitDepthKey + '/' +
+					devs[i].AudioDeviceChannelsKey + current
+				);
+				doc += (
+					'<option value="' + uid + '">' + desc + '</option>'
+				);
+			}
+			$('#outputs').empty();
+			$('#outputs').append(doc);
+
+			var uid = player.device();
+			if (uid && !$('option[value="' + uid + '"]').length) {
+				player.device('');
+			} else {
+				$('#outputs').val(uid);
+			}
+		};
+		$native.audio.event.changed();
+
+		$event.start();
+
+	});
+
+	</script>
+
+</body>
+</html>

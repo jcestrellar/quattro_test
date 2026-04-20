@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Audio Converter</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+
+	<style type="text/css"><!--
+		td { text-align: center; }
+	--></style>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p><button id="open">OPEN...</button><button id="import">IMPORT...</button></p>
+	<p>File: <strong id="file"></strong></p>
+	<p><span id="desc"></span></p>
+	<p>
+		<button id="split">SPLIT</button>
+		<button id="reverse">REVERSE</button>
+	</p>
+	<p>
+		<select id="format">
+			<option value="wav">WAV</option>
+			<option value="m4a">AAC</option>
+			<option value="mp3">MP3</option>
+		</select>
+		<select id="samplerate">
+			<option value="44100">44.1 KHz</option>
+			<option value="48000">48 KHz</option>
+		</select>
+		<select id="bitrate" style="display:none;">
+			<option value="48000">48 Kbps</option>
+			<option value="64000">64 Kbps</option>
+			<option value="80000">80 Kbps</option>
+			<option value="96000">96 Kbps (*)</option>
+			<option value="128000">128 Kbps (*)</option>
+			<option value="160000">160 Kbps (*)</option>
+			<option value="192000">192 Kbps (*)</option>
+			<option value="256000">256 Kbps</option>
+			<option value="320000">320 Kbps</option>
+		</select>
+		<select id="bitdepth">
+			<option value="0">IEEE Float</option>
+			<option value="16">16 bit</option>
+			<option value="24">24 bit</option>
+			<option value="32">32 bit</option>
+		</select>
+		<select id="channels">
+			<option value="1">MONO</option>
+			<option value="2">Stereo</option>
+		</select>
+		<button id="convert">CONVERT</button>
+	</p>
+	<p><progress id="converting" style="visibility:hidden;"></progress></p>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		/* set default options */
+		$('#format').val('wav');
+		$('#samplerate').val('44100');
+		$('#bitrate').val('128000');
+		$('#bitdepth').val('16');
+		$('#channels').val('2');
+
+		if (navigator.userAgent.indexOf('quattro(Win)') < 0) {
+			$('option[value="mp3"]').prop('disabled', true);
+		}
+
+		var audio = $native.audio;
+		var fs = $native.fs;
+
+		audio.event = {
+			converted: function(file, outputs) {
+				$('#converting').css('visibility', 'hidden');
+				outputs = JSON.parse(outputs);
+				alert('converted\n' + outputs.join('\n'));
+			},
+			convertfailed: function(file) {
+				$('#converting').css('visibility', 'hidden');
+				alert('convertfailed!');
+			}
+		};
+
+		$('#split').on('click', function(e) {
+			var file = $('#file').text();
+			if (file) {
+				fs.event.choosefolder = function(path) {
+					if (path) {
+						var name = file.split(fs.separator()).pop().split('.')[0];
+						var wavs = [];
+						var info = audio.format(file);
+						for (var ch = 0; ch < info.channels; ch++) {
+							wavs.push(path + name + '_split~' + (ch + 1) + '.wav');
+						}
+						audio.split(file, wavs);
+						$('#converting').css('visibility', 'visible');
+					}
+				};
+				fs.choosefolder();
+			}
+		});
+
+		$('#reverse').on('click', function(e) {
+			var file = $('#file').text();
+			if (file) {
+				fs.event.savefilename = function(to) {
+					if (to) {
+						audio.reverse(file, to);
+						$('#converting').css('visibility', 'visible');
+					}
+				};
+				var name = file.split(fs.separator()).pop().split('.')[0];
+				fs.savefilename(name + '_reverse', 'wav');
+			}
+		});
+
+		$('#convert').on('click', function(e) {
+			var file = $('#file').text();
+			if (file) {
+				var out = {
+					format: $('#format').val(),
+					samplerate: $('#samplerate').val() * 1,
+					bitrate: $('#bitrate').val() * 1,
+					bitdepth: $('#bitdepth').val() * 1,
+					channels: $('#channels').val() * 1
+				};
+				fs.event.savefilename = function(to) {
+					if (to) {
+						out.file = to;
+						audio.convert(file, out);
+						$('#converting').css('visibility', 'visible');
+					}
+				};
+				var name = (
+					out.samplerate + '_' +
+					((out.format == 'wav') ? out.bitdepth : out.bitrate) + '_' + 
+					out.channels
+				);
+				fs.savefilename(name, out.format);
+			}
+		});
+
+		$('#open').on('click', function(e) {
+			var filter = [ 'wav', 'aiff', 'mp3', 'm4a', 'mp4' ];
+			fs.openfilename(filter);
+		});
+
+		fs.event.openfilename = function(file) {
+			if (file) {
+				$('#file').text(file);
+				var info = audio.format(file);
+				var bitdepth = '';
+				if (info.format == 'PCM') {
+					if (info.bitdepth == 0) {
+						bitdepth = ' Float';
+					} else {
+						bitdepth = ' ' + info.bitdepth + '(bit)';
+					}
+				}
+				$('#desc').text(
+					info.format + bitdepth +  ', ' +
+					info.samplerate + '(Hz), ' +
+					info.channels + '(ch), ' +
+					info.bitrate + '(bps), ' +
+					info.duration.toFixed(2) + '(sec)'
+				);
+			}
+		};
+
+		$('#import').on('click', function(e) {
+			var filter = {
+				uti: [ 'public.audio' ],
+				mime: [ 'audio/*' ]
+			};
+			$native.app.importfile(filter);
+		});
+
+		$native.app.event.command = function(param1, param2) {
+			if (param1 == 'import') {
+				fs.event.openfilename(param2);
+			}
+		};
+
+		$('#format').on('change', function(e) {
+			if ($(this).val() == 'wav') {
+				$('#bitrate').hide();
+				$('#bitdepth').show();
+			} else {
+				$('#bitrate').show();
+				$('#bitdepth').hide();
+			}
+		});
+
+		$event.start();
+
+	});
+
+	</script>
+
+	<div><strong>Supported Encoders</strong>
+	<table>
+	<tr>
+		<th colspan="1"></th>
+		<th colspan="6">AAC</th>
+		<th colspan="2">MP3</th>
+	</tr>
+	<tr>
+		<th colspan="1"></th>
+		<th colspan="2">Windows</th>
+		<th colspan="2">macOS/iOS</th>
+		<th colspan="2">Android</th>
+		<th colspan="2">Windows</th>
+	</tr>
+	<tr>
+		<th colspan="1">Bitrate</th>
+		<td>MONO</td><td>Stereo</td>
+		<td>MONO</td><td>Stereo</td>
+		<td>MONO</td><td>Stereo</td>
+		<td>MONO</td><td>Stereo</td>
+	</tr>
+	<tr><td> 48 Kbps</td><td> </td><td> </td><td>*</td><td> </td><td>*</td><td>*</td><td>*</td><td> </td></tr>
+	<tr><td> 64 Kbps</td><td> </td><td> </td><td>*</td><td>*</td><td>*</td><td>*</td><td>*</td><td> </td></tr>
+	<tr><td> 80 Kbps</td><td> </td><td> </td><td>*</td><td>*</td><td>*</td><td>*</td><td>*</td><td> </td></tr>
+	<tr><td> 96 Kbps</td><td>*</td><td>*</td><td>*</td><td>*</td><td>*</td><td>*</td><td>*</td><td>*</td></tr>
+	<tr><td>128 Kbps</td><td>*</td><td>*</td><td>*</td><td>*</td><td>*</td><td>*</td><td>*</td><td>*</td></tr>
+	<tr><td>160 Kbps</td><td>*</td><td>*</td><td>*</td><td>*</td><td>*</td><td>*</td><td> </td><td>*</td></tr>
+	<tr><td>192 Kbps</td><td>*</td><td>*</td><td>*</td><td>*</td><td>*</td><td>*</td><td> </td><td>*</td></tr>
+	<tr><td>256 Kbps</td><td> </td><td> </td><td>*</td><td>*</td><td>*</td><td>*</td><td> </td><td>*</td></tr>
+	<tr><td>320 Kbps</td><td> </td><td> </td><td> </td><td>*</td><td>*</td><td>*</td><td> </td><td>*</td></tr>
+	</table>
+	</div>
+
+</body>
+</html>

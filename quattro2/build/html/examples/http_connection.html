@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HTTP Connection</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p>URL: <input type="text" id="url" />
+	<p><button id="download">DOWNLOAD...</button>
+		<button id="download-tmp">(to tmp file)</button></p>
+	<p><button id="upload">UPLOAD...</button></p>
+	<div id="list"></div>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		$('#url').val('https://test-rcpiot-cf.roland.com/firmware/000000/ROM_V020.zip');
+
+		var http = $native.http;
+
+		$('#download').on('click', function(e) {
+			var url = $('#url').val();
+			if (url) {
+				$native.fs.event.savefilename = function(to) {
+					if (to) {
+						var id = http.download(url, to);
+						progress(id);
+					}
+				};
+				$native.fs.savefilename('untitled', '');
+			}
+		});
+
+		$('#download-tmp').on('click', function(e) {
+			var url = $('#url').val();
+			if (url) {
+				var id = http.download(url);
+				progress(id);
+			}
+		});
+
+		$('#upload').on('click', function(e) {
+			var url = $('#url').val();
+			if (url) {
+				$native.fs.event.openfilename = function(file) {
+					if (file) {
+						var id = http.upload(url, file);
+						progress(id);
+					}
+				};
+				$native.fs.openfilename();
+			}
+		});
+
+		http.event = {
+
+			progress: function(id, total, amount) {
+				if (total > 0) {
+					var per = Math.floor((amount / total) * 100) + '%';
+					$('#' + id).find(".progress").text(per);
+					$('#' + id).find(".progress").css('width', per);
+				} else {
+					$('#' + id).find(".progress").text('file size : Unknown');
+				}
+			},
+
+			completed: function(id, file) {
+				var p = $('#' + id);
+				p.removeAttr('id');
+				p.empty();
+				p.text(file);
+			},
+
+			error: function(id, url) {
+				$('#' + id).remove();
+				alert('error:\n' + url);
+			}
+
+		};
+
+		function progress(id) {
+			if (id == -1 || id == 0xffffffff) {
+				alert('error: invalid arguments'); return;
+			}
+			var doc =
+				'<p id="' + id + '">' +
+				'<span class="box"><span class="progress"></span></span>' +
+				'<button class="cancel">CANCEL</button></p>';
+			$('#list').append(doc);
+		}
+
+		$('#list').on('click', '.cancel', function(e) {
+			var p = $(this).closest('p');
+			http.cancel(p.attr('id'));
+			p.remove();
+		});
+
+		$native.app.event.command = function(param1, param2) {
+			if (param1 == 'download') {
+				$('#url').val(param2);
+				$('#download').trigger('click');
+			}
+		}
+
+		$event.start();
+
+	});
+
+	</script>
+
+</body>
+</html>

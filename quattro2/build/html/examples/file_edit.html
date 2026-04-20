@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>File Edit</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p><button id="open">OPEN...</button><input type="text" id="file" /></p>
+
+	<p><button id="read">READ</button></p>
+	<p><button id="write">WRITE</button><button id="append">APPEND</button></p>
+	<p>
+		<input type="radio" name="type" id="text" checked="checked" />text
+		<input type="radio" name="type" id="binary" />binary
+	</p>
+
+	<p>File Data:</p><textarea cols=60 rows=20 id="data"></textarea>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		var fs = $native.fs;
+
+		$('#open').on('click', function(e) {
+			fs.openfilename(); /* no filter */
+		});
+
+		fs.event.openfilename = function(file) {
+			if (file) {
+				$('#file').val(file);
+			}
+		};
+
+		$('#file').bind('keypress', function(e) {
+			var code = e.keyCode || e.which;
+			if (code == 13) {
+				var file = $(this).val();
+			}
+		});
+
+		$('#read').on('click', function(e) {
+			var file = $('#file').val();
+			if (file) {
+				try {
+					if ($('#text:checked').val()) {
+						$('#data').val(fs.readString(file));
+					} else {
+						$('#data').val(fs.readData(file));
+					}
+				} catch (e) { alert(e.name + ": " + e.message); }
+			}
+		});
+
+		$('#write').on('click', function(e) {
+			var file = $('#file').val();
+			if (file) {
+				try {
+					if ($('#text:checked').val()) {
+						fs.writeString(file, $('#data').val());
+					} else {
+						fs.writeData(file, $('#data').val());
+					}
+				} catch (e) { alert(e.name + ": " + e.message); }
+			}
+		});
+
+		$('#append').on('click', function(e) {
+			var file = $('#file').val();
+			if (file) {
+				try {
+					if ($('#text:checked').val()) {
+						fs.appendString(file, $('#data').val());
+					} else {
+						fs.appendData(file, $('#data').val());
+					}
+				} catch (e) { alert(e.name + ": " + e.message); }
+			}
+		});
+
+		$event.start();
+
+	});
+
+	</script>
+
+</body>
+</html>

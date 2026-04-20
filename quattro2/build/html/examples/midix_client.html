@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MIDI In/Out (MIDIX)</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+</head>
+<body>
+    <p><a href="./midi_client.html">&lt; BACK</a></p>
+
+	<p>MIDI Clients:</p>
+		<div id="clients"></div>
+
+	<p><button id="panel">PANEL...</button></p>
+
+	<p>Input Monitor:</p>
+		<ul id="monitor"></ul>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		var MAX_CLIENTS = 7;
+		var KEY = 'quattro.midix.pref';
+
+		var midix = $native.midix;
+
+		midix.client(MAX_CLIENTS);
+
+		var inputs = [];
+		var outputs = [];
+
+		var pref = [];
+		var connected = [];
+		var timer = [];
+
+		(function(){
+			for (var i = 0; i < MAX_CLIENTS; i++) {
+				pref[i] = {}; connected[i] = {};
+			}
+			pref[0].signature = KEY;
+		})();
+
+		var json = $native.app.storage2(KEY);
+		if (json) {
+			var obj = JSON.parse(json);
+			if (obj[0] && obj[0].signature == KEY) pref = obj;
+		}
+
+		midix.event = {
+			message: function(cid, msg, timestamp) {
+				if ($('#monitor > li').length > 10) {
+					$('#monitor > li:first').remove();
+				}
+				$('#monitor').append('<li>' + '#' + cid + ': ' + msg + '</li>');
+			},
+			changed: function() {
+				list(); /* update */
+			},
+			connectfailed: function(cid, ep) {
+				ep = JSON.parse(ep);
+				alert('#' + cid + ': ' + 'connectfailed: ' + ep.MIDIDeviceNameKey);
+			},
+			error: function(cid, code) {
+				alert('#' + cid + ': ' + 'error (' + code + ')');
+			}
+		}
+
+		$('#clients').on('change', '.in', function(){
+			var cid = $(this).closest('tr').index() - 1;
+			midix.input.disconnect(cid);
+			var v = $(this).val();
+			if (v >= 0) {
+				midix.input.connect(cid, inputs[v]);
+				pref[cid].in = inputs[v].MIDIEndpointUIDKey;
+				connected[cid].in = true;
+			} else {
+				pref[cid].in = null;
+			}
+			$native.app.storage2(KEY, JSON.stringify(pref));
+		});
+
+		$('#clients').on('change', '.out', function(){
+			var cid = $(this).closest('tr').index() - 1;
+			midix.output.disconnect(cid);
+			var v = $(this).val();
+			if (v >= 0) {
+				midix.output.connect(cid, outputs[v]);
+				pref[cid].out = outputs[v].MIDIEndpointUIDKey;
+				connected[cid].out = true;
+			} else {
+				pref[cid].out = null;
+			}
+			$native.app.storage2(KEY, JSON.stringify(pref));
+		});
+
+		$('#clients').on('click', '.thru', function(){
+			var cid = $(this).closest('tr').index() - 1;
+			var checked = $(this).prop('checked');
+			midix.thru(cid, checked);
+			pref[cid].thru = checked;
+			$native.app.storage2(KEY, JSON.stringify(pref));
+		});
+
+		$('#clients').on('click', '.note', function(){
+			var cid = $(this).closest('tr').index() - 1;
+			if (timer[cid]) {
+				clearInterval(timer[cid]);
+				timer[cid] = null;
+			} else {
+				function proc() {
+					var on = true;
+					return function() {
+						if (on) {
+							midix.send(cid, '903C40');
+						} else {
+							midix.send(cid, '803C00')
+						}
+						on != on;
+					}
+				}
+				timer[cid] = setInterval(proc(), 200);
+			}
+			$(this).text(timer[cid] ? 'STOP' : 'Note (C4)');
+		});
+
+		$('#panel').on('click', function(){
+			midix.panel();
+		});
+
+		window.onbeforeunload = function() {
+			for (var cid = 0, max = MAX_CLIENTS; cid < max; cid++) {
+				midix.input.disconnect(cid);
+				midix.output.disconnect(cid);
+			}
+		}
+		window.onpagehide = window.onbeforeunload; /* for iOS Safari */
+
+		function list() {
+
+			var doc = '';
+
+			inputs = midix.input.endpoints();
+			outputs = midix.output.endpoints();
+
+			function search(uid, endpoints) {
+				if (!uid) return -1;
+				for (var i = 0, num = endpoints.length; i < num; i++) {
+					if (endpoints[i].MIDIEndpointUIDKey == uid) return i;
+				}
+				return -1;
+			}
+
+			function header() {
+				return (
+					'<tr>' +
+					'<th>Client ID</th>' +
+					'<th>Input Device</th>' +
+					'<th>Output Device</th>' +
+					'<th>Send</th>' +
+					'<th>Thru</th>' +
+					'</tr>'
+				);
+			}
+
+			function options(endpoints, uid) {
+				var doc = '<option value="-1">(none)</option>';
+				for (var i = 0, num = endpoints.length; i < num; i++) {
+					doc += '<option value="' + i + '">' + endpoints[i].MIDIEntityNameKey + '</option>';
+				}
+				return doc;
+			}
+
+			doc += '<table>';
+			doc += header();
+			for (var cid = 0, max = MAX_CLIENTS; cid < max; cid++) {
+				doc += (
+					'<tr>' +
+					'<td>Client #' + cid + '</td>' +
+					'<td><select class="in">' + options(inputs) + '</select></td>' +
+					'<td><select class="out">' + options(outputs) + '</select></td>' +
+					'<td><button class="note">' + (timer[cid] ? 'STOP' : 'Note (C4)') + '</button></td>' +
+					'<td><input type="checkbox" class="thru" /></td>' +
+					'</tr>'
+				);
+			}
+			doc += '</table>'
+			$('#clients').empty();
+			$('#clients').append(doc);
+
+			for (var cid = 0, max = MAX_CLIENTS; cid < max; cid++) {
+
+				var v = search(pref[cid].in, inputs);
+				if (v >= 0) {
+					$('table tr:eq(' + (cid + 1) + ') .in').val(v);
+					if (!connected[cid].in) {
+						midix.input.connect(cid, inputs[v]);
+						connected[cid].in = true;
+					}
+				} else {
+					connected[cid].in = false;
+				}
+
+				v = search(pref[cid].out, outputs);
+				if (v >= 0) {
+					$('table tr:eq(' + (cid + 1) + ') .out').val(v);
+					if (!connected[cid].out) {
+						midix.output.connect(cid, outputs[v]);
+						connected[cid].out = true;
+					}
+				} else {
+					connected[cid].out = false;
+				}
+
+				var checked = pref[cid].thru ? true : false;
+				$('table tr:eq(' + (cid + 1) + ') .thru').prop('checked', checked);
+				midix.thru(cid, checked);
+			}
+
+		}
+
+		list();
+
+		$event.start();
+
+	});
+
+	</script>
+
+</body>
+</html>

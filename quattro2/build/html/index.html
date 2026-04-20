@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Quattro</title>
+	<script src="native.js"></script>
+	<script src="examples/jquery.js"></script>
+</head>
+<body>
+
+	<h1>Quattro</h1>
+
+	<p id="useragent"></p>
+	<p>Version: <span id="version"></span></p>
+	<p>Locale: <span id="locale"></span></p>
+	<p>Device: <span id="device"></span></p>
+	<script type = "text/javascript">
+		var useragent = document.createTextNode(navigator.userAgent);
+		document.getElementById('useragent').appendChild(useragent);
+	</script>
+
+	<h2>$native API Examples</h2>
+	<ul>
+		<li><a href="examples/midi_client.html">MIDI In/Out</a></li>
+		<li><a href="examples/gm2.html">GM2 Sound (built-in)</a></li>
+		<li><a href="examples/audio_player.html">Audio Player</a></li>
+		<li><a href="examples/audio_recorder.html">Audio Recorder</a></li>
+		<li><a href="examples/sampler.html">Sampler</a></li>
+		<li><a href="examples/audio_converter.html">Audio Converter</a></li>
+		<li><a href="examples/http_connection.html">HTTP Connection</a></li>
+		<li><a href="examples/file_manager.html">File Manager</a></li>
+		<li><a href="examples/file_edit.html">File Edit</a></li>
+		<li><a href="examples/storage.html">Storage &amp; Security</a></li>
+		<li><a href="examples/crypto.html">Crypto</a></li>
+		<li><a href="examples/ble.html">BLE Central (macOS/iOS/Android)</a></li>
+		<li><a href="examples/store.html">In-App Purchase (iOS/Android)</a></li>
+		<li><a href="examples/roland_cloud.html">Roland Cloud</a></li>
+		<li><a href="examples/roland_wireless_connect.html">Roland Wireless Connect</a></li>
+		<li><a href="javascript:$native.app.barcode();">QR Code Scanner</a></li>
+		<li><a href="examples/native_extension.html">Native Extension</a></li>
+	</ul>
+	<ul>
+		<li><a href="examples/api_reference.html">API Reference</a></li>
+	</ul>
+
+	<script type = "text/javascript">
+	$(function() {
+		var appVer = $native.app.version();
+		var device = $native.app.device();
+		$('#version').text(appVer.name + ' (' + appVer.code + ')');
+		$('#locale').text($native.app.locale());
+		$('#device').text(device.model + ' / ' + device.os + ' / ' + device.id);
+		$native.app.event.command = function(param1, param2) {
+			if (param1 == 'exit') {
+				$native.app.exit();
+			}
+			if (param1 == 'open') {
+				var url = param2;
+				if (url.lastIndexOf('/', 0) === 0) { url = 'file://' + param2; }
+				try {
+					var parser = new URL(url);
+					var pos = parser.pathname.lastIndexOf('.');
+					if ((pos == -1) || (parser.pathname.substr(pos + 1) == 'html')) {
+						$native.app.locate(parser.href); return;
+					}
+				} catch (e) {}
+			}
+			alert(param1 + ': ' + param2);
+		};
+		$event.start();
+	});
+	</script>
+
+</body>
+</html>

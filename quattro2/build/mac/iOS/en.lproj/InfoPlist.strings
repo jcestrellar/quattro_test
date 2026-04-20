@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+*/
+
+NSBluetoothAlwaysUsageDescription = "This app uses the bluetooth for MIDI communication.";
+NSBluetoothPeripheralUsageDescription = "This app uses the bluetooth for MIDI communication.";
+NSMicrophoneUsageDescription = "This app uses the microphone to record audio.";
+NSCameraUsageDescription = "This app uses the camera to read QR code.";

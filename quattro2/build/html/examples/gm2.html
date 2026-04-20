@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>GM2 Sound (built-in)</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+	<script src="gm2_params.js"></script>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p>Audio Output Device: <select id="outputs"></select></p>
+
+	<p>
+		<button id="smf">SMF...</button>
+		<button id="play">PLAY</button>
+		<button id="reset">&lt;</button>
+		<button id="metronome">METRO</button><br>
+		<strong id="trackinfo"></strong><br>
+		Tempo: <input type="range" id="tempo" min="30" max="250" />
+			&#9833; = <span id="bpm"></span><br>
+		Locate: <input type="range" id="locate" min="0" max="0" />
+			<span id="position"></span>
+		<button id="rangeA">A</button>
+		<button id="rangeB">B</button><br>
+		Key Shift: <select id="transpose"></select>
+		Count-in: <select id="count-in">
+			<option value="2">2 (play)</option>
+			<option value="1">1 (play)</option>
+			<option value="0">0</option>
+			<option value="-1">1 (play &amp; repeat)</option>
+			<option value="-2">2 (play &amp; repeat)</option>
+		</select>
+		<input type="checkbox" id="cue" />Cue to the first note when loading<br>
+		Mute: <span id="mute"></span><br>
+	</p>
+
+	<p>Voices ( <span id="current">---</span>, <span id="peak">---</span> )</p>
+	<p id="buffer">Audio Buffer: <select id="buffer-num">
+		<option value="0">Automatic</option>
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+	</select></p>
+
+	<h2>MASTER</h2>
+	<p>Volume: <input type="range" id="master-volume" min="0" max="127" />
+		<button id="panic">PANIC</button></p>
+	<p>Tune: <input type="range" id="master-tune" min="4337" max="4463" />
+		<span></span></p>
+	<p>Key Shift: <input type="range" id="master-key-shift" min="-6" max="5" />
+		<span></span></p>
+
+	<h2>PART</h2>
+	<div>
+		<p>CH: <select id="ch"></select><!--<button id="preview">PREVIEW</button>--></p>
+		<p>Patch: <select id="patch"></select></p>
+		<p>Rhythm: <select id="rhythm"></select></p>
+		<p>Level: <input type="range" id="part-level" min="0" max="127" /></p>
+		<p>Chorus: <input type="range" id="chorus-send-level" min="0" max="127" /></p>
+		<p>Reverb: <input type="range" id="reverb-send-level" min="0" max="127" /></p>
+		<p>Pan: <input type="range" id="pan" min="-63" max="63" /></p>
+		<p>
+			<button class="key" id="3C">C4</button>
+			<button class="key" id="3E">D</button>
+			<button class="key" id="40">E</button>
+			<button class="key" id="41">F</button>
+			<button class="key" id="43">G</button>
+			<button class="key" id="45">A</button>
+			<button class="key" id="47">B</button>
+			<button class="key" id="48">C5</button>
+		</p>
+	</div>
+
+	<h2>Effect</h2>
+	<div>
+		<h3>Chorus</h3>
+		<div>
+			<p>ON/OFF: <input type="checkbox" id="chorus-sw" /></p>
+			<p>Chorus Type: <select id="chorus-type"></select></p>
+			<p>RATE: <input type="range" id="chorus-rate" min="0" max="127" /></p>
+			<p>DEPTH: <input type="range" id="chorus-depth" min="0" max="127" /></p>
+			<p>FEEDBACK: <input type="range" id="chorus-feedback" min="0" max="127" /></p>
+			<p>REV SND LEVEL: <input type="range" id="rev-snd-level" min="0" max="127" /></p>
+		</div>
+		<h3>Reverb</h3>
+		<div>
+			<p>ON/OFF: <input type="checkbox" id="reverb-sw" /></p>
+			<p>Rreverb Type: <select id="reverb-type"></select></p>
+			<p>TIME: <input type="range" id="reverb-time" min="0" max="127" /></p>
+		</div>
+	</div>
+
+	<h2>SYSTEM</h2>
+	<div>
+		<p>Voice Limit: <input type="range" id="voice-limit" min="0" max="127" /></p>
+		<p>Low CPU Load: <input type="checkbox" id="low-load-sw" /></p>
+	</div>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		var tgif = $native.tgif;
+
+		tgif.thru(true);
+
+		var buffer = tgif.buffer();
+		if (buffer < 0) {
+			$('#buffer').empty(); /* No buffer */
+		} else {
+			$('#buffer-num').val(tgif.buffer());
+		}
+		$('#buffer-num').on('change', function(e) {
+			tgif.buffer($(this).val());
+		});
+
+	/* create select options */
+
+		var doc = '';
+		for (var i = 0; i < 16; i++) {
+			doc += '<option value="' + i + '">' + (i + 1) + '</option>';
+		}
+		$('#ch').append(doc);
+
+		doc = '';
+		for (var i = 0; i < GM2_PATCH_MAP.length; i++) {
+			var name = GM2_PATCH_MAP[i].name;
+			if (GM2_PATCH_MAP[i].lsb) {
+				name += (' (' + GM2_PATCH_MAP[i].lsb + ')');
+			}
+			doc += '<option value="' + i + '">' + name + '</option>';
+		}
+		$('#patch').append(doc);
+
+		doc = '';
+		for (var i = 0; i < GM2_RHYTHM_MAP.length; i++) {
+			doc += '<option value="' + i + '">' + GM2_RHYTHM_MAP[i].name + '</option>';
+		}
+		$('#rhythm').append(doc);
+
+		doc = '';
+		for (var i = 0; i < GM2_CHORUS_TYPE.length; i++) {
+			doc += '<option value="' + GM2_CHORUS_TYPE[i].val + '">' + GM2_CHORUS_TYPE[i].name + '</option>';
+		}
+		$('#chorus-type').append(doc);
+
+		doc = '';
+		for (var i = 0; i < GM2_REVERB_TYPE.length; i++) {
+			doc += '<option value="' + GM2_REVERB_TYPE[i].val + '">' + GM2_REVERB_TYPE[i].name + '</option>';
+		}
+		$('#reverb-type').append(doc);
+
+	/* MASTER */
+
+		/* initialize values */
+		$('#master-volume').val(
+			tgif.param(GM2_PID(GID_MASTER_PARAM, VID_MASTER_VOL, 0, 0))
+		);
+		$('#master-tune').val(
+			tgif.param(GM2_PID(GID_MASTER_PARAM, VID_MASTER_TUNE, 0, 0))
+		);
+		$('#master-tune').next().text(
+			($('#master-tune').val() / 10).toFixed(1) + ' Hz'
+		);
+		$('#master-key-shift').val(
+			tgif.param(GM2_PID(GID_MASTER_PARAM, VID_MASTER_KEY, 0, 0))
+		);
+		$('#master-key-shift').next().text(
+			$('#master-key-shift').val()
+		);
+
+		/* events */
+		$('#master-volume').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_MASTER_PARAM, VID_MASTER_VOL, 0, 0),
+				$(this).val()
+			);
+		});
+		$('#panic').on('click', function(e) {
+			tgif.param(
+				GM2_PID(GID_ACTION, VID_ON_PANIC, 0, 0),
+				1
+			);
+		});
+		$('#master-tune').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_MASTER_PARAM, VID_MASTER_TUNE, 0, 0),
+				$(this).val()
+			);
+			$(this).next().text(($(this).val() / 10).toFixed(1) + ' Hz');
+		});
+		$('#master-key-shift').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_MASTER_PARAM, VID_MASTER_KEY, 0, 0),
+				$(this).val()
+			);
+			$(this).next().text($(this).val());
+		});
+
+	/* PART */
+
+		function patch_change(patch) {
+			tgif.param(GM2_PID(GID_PART_PARAM, VID_BANK_MSB, $('#ch').val(), 0), patch.msb);
+			tgif.param(GM2_PID(GID_PART_PARAM, VID_BANK_LSB, $('#ch').val(), 0), patch.lsb);
+			tgif.param(GM2_PID(GID_PART_PARAM, VID_PC,       $('#ch').val(), 0), patch.pc );
+		}
+
+		function find_map(map, lsb, pc) {
+			for (var i = 0; i < map.length; i++) {
+				if ((map[i].lsb == lsb) && (map[i].pc == pc)) return i;
+			}
+			return 0;
+		}
+
+		/* initialize & update values */
+		function update_part() {
+			var msb = tgif.param(GM2_PID(GID_PART_PARAM, VID_BANK_MSB, $('#ch').val(), 0));
+			var lsb = tgif.param(GM2_PID(GID_PART_PARAM, VID_BANK_LSB, $('#ch').val(), 0));
+			var pc  = tgif.param(GM2_PID(GID_PART_PARAM, VID_PC,       $('#ch').val(), 0));
+			if (msb == 121) {
+				$('#patch').val(find_map(GM2_PATCH_MAP, lsb, pc));
+			} else {
+				$('#rhythm').val(find_map(GM2_RHYTHM_MAP, lsb, pc));
+			}
+			$('#part-level').val(
+				tgif.param(GM2_PID(GID_PART_PARAM, VID_PART_LEV, $('#ch').val(), 0))
+			);
+			$('#chorus-send-level').val(
+				tgif.param(GM2_PID(GID_PART_PARAM, VID_PART_CHO, $('#ch').val(), 0))
+			);
+			$('#reverb-send-level').val(
+				tgif.param(GM2_PID(GID_PART_PARAM, VID_PART_REV, $('#ch').val(), 0))
+			);
+			$('#pan').val(
+				tgif.param(GM2_PID(GID_PART_PARAM, VID_PART_PAN, $('#ch').val(), 0))
+			);
+		}
+		update_part();
+
+		/* events */
+		$('#ch').on('change', function(e) {
+			update_part();
+		});
+		$('#patch').on('change', function(e) {
+			patch_change(GM2_PATCH_MAP[$(this).val()]);
+		});
+		$('#rhythm').on('change', function(e) {
+			patch_change(GM2_RHYTHM_MAP[$(this).val()]);
+		});
+	/*
+		$('#preview').on('click', function(e) {
+			tgif.param(
+				GM2_PID(GID_ACTION, VID_ON_PHRASE_PREV, $('#ch').val(), 0),
+				1
+			);
+		});
+	*/
+		$('#part-level').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_PART_PARAM, VID_PART_LEV, $('#ch').val(), 0),
+				$(this).val()
+			);
+		});
+		$('#chorus-send-level').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_PART_PARAM, VID_PART_CHO, $('#ch').val(), 0),
+				$(this).val()
+			);
+		});
+		$('#reverb-send-level').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_PART_PARAM, VID_PART_REV, $('#ch').val(), 0),
+				$(this).val()
+			);
+		});
+		$('#pan').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_PART_PARAM, VID_PART_PAN, $('#ch').val(), 0),
+				$(this).val()
+			);
+		});
+
+		$('.key').on('mousedown touchstart', function(e){
+			e.preventDefault();
+			var ch = ($('#ch').val() * 1).toString(16).toUpperCase();
+			var noteNo = $(this).attr('id');
+			tgif.send('9' + ch + noteNo + '7F'); /* 1 ~ 16 CH */
+		});
+		$('.key').on('mouseup touchend', function(e){
+			e.preventDefault();
+			var ch = ($('#ch').val() * 1).toString(16).toUpperCase();
+			var noteNo = $(this).attr('id');
+			tgif.send('8' + ch + noteNo + '00'); /* 1 ~ 16 CH */
+		});
+
+	/* CHORUS */
+
+		/* initialize values */
+		$('#chorus-sw').prop('checked',
+			tgif.param(GM2_PID(GID_CHORUS_PARAM, VID_CHO_SW, 0, 0)) ? true : false
+		);
+		$('#chorus-type').val(
+			tgif.param(GM2_PID(GID_GM2CHO_PARAM, VID_GM2CHO_TYPE, 0, 0))
+		);
+		$('#chorus-rate').val(
+			tgif.param(GM2_PID(GID_GM2CHO_PARAM, VID_GM2CHO_RATE, 0, 0))
+		);
+		$('#chorus-depth').val(
+			tgif.param(GM2_PID(GID_GM2CHO_PARAM, VID_GM2CHO_DEPTH, 0, 0))
+		);
+		$('#chorus-feedback').val(
+			tgif.param(GM2_PID(GID_GM2CHO_PARAM, VID_GM2CHO_FBK, 0, 0))
+		);
+		$('#rev-snd-level').val(
+			tgif.param(GM2_PID(GID_CHORUS_PARAM, VID_CHO_REV_SND, 0, 0))
+		);
+
+		/* events */
+		$('#chorus-sw').on('click', function(e) {
+			var checked = $(this).prop('checked');
+			tgif.param(
+				GM2_PID(GID_CHORUS_PARAM, VID_CHO_SW, 0, 0),
+				checked ? 1 : 0
+			);
+		});
+		$('#chorus-type').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_GM2CHO_PARAM, VID_GM2CHO_TYPE, 0, 0),
+				GM2_CHORUS_TYPE[$(this).val()].val
+			);
+		});
+		$('#chorus-rate').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_GM2CHO_PARAM, VID_GM2CHO_RATE, 0, 0),
+				$(this).val()
+			);
+		});
+		$('#chorus-depth').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_GM2CHO_PARAM, VID_GM2CHO_DEPTH, 0, 0),
+				$(this).val()
+			);
+		});
+		$('#chorus-feedback').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_GM2CHO_PARAM, VID_GM2CHO_FBK, 0, 0),
+				$(this).val()
+			);
+		});
+		$('#rev-snd-level').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_CHORUS_PARAM, VID_CHO_REV_SND, 0, 0),
+				$(this).val()
+			);
+		});
+
+	/* REVERB */
+
+		/* initialize values */
+		$('#reverb-sw').prop('checked',
+			tgif.param(GM2_PID(GID_REVERB_PARAM, VID_REV_SW, 0, 0)) ? true : false
+		);
+		$('#reverb-type').val(
+			tgif.param(GM2_PID(GID_GM2REV_PARAM, VID_GM2REV_TYPE, 0, 0))
+		);
+		$('#reverb-time').val(
+			tgif.param(GM2_PID(GID_GM2REV_PARAM, VID_GM2REV_TIME, 0, 0))
+		);
+
+		/* events */
+		$('#reverb-sw').on('click', function(e) {
+			var checked = $(this).prop('checked');
+			tgif.param(
+				GM2_PID(GID_REVERB_PARAM, VID_REV_SW, 0, 0),
+				checked ? 1 : 0
+			);
+		});
+		$('#reverb-type').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_GM2REV_PARAM, VID_GM2REV_TYPE, 0, 0),
+				GM2_REVERB_TYPE[$(this).val()].val
+			);
+		});
+		$('#reverb-time').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_GM2REV_PARAM, VID_GM2REV_TIME, 0, 0),
+				$(this).val()
+			);
+		});
+
+	/* SYSTEM */
+
+		/* initialize values */
+		$('#voice-limit').val(
+			tgif.param(GM2_PID(GID_MASTER_PARAM, VID_POLY_LIMIT, 0, 0))
+		);
+		$('#low-load-sw').prop('checked',
+			tgif.param(GM2_PID(GID_MASTER_PARAM, VID_LOW_MODE_SW, 0, 0)) ? true : false
+		);
+
+		/* events */
+		$('#voice-limit').on('change', function(e) {
+			tgif.param(
+				GM2_PID(GID_MASTER_PARAM, VID_POLY_LIMIT, 0, 0),
+				$(this).val()
+			);
+		});
+		$('#low-load-sw').on('click', function(e) {
+			var checked = $(this).prop('checked');
+			tgif.param(
+				GM2_PID(GID_MASTER_PARAM, VID_LOW_MODE_SW, 0, 0),
+				checked ? 1 : 0
+			);
+		});
+
+	/* monitoring current/peak voices */
+
+		function monitor() {
+			$("#current").text(
+				tgif.param(GM2_PID(GID_MASTER_PARAM, VID_POLYPHONY, 0, 0))
+			);
+			$("#peak").text(
+				tgif.param(GM2_PID(GID_MASTER_PARAM, VID_POLYPHONY_PEAK, 0, 0))
+			);
+		}
+		setInterval(monitor,1000);
+
+	/* Audio Output Devices */
+
+		$('#outputs').on('change', function(){
+			var uid = tgif.device($(this).val());
+			$('#outputs').val(uid);
+		});
+
+		$native.audio.event.changed = function() {
+			var doc = '<option value="">(default)</option>';
+			var devs = $native.audio.outputs();
+			for (var i = 0, num = devs.length; i < num; i++) {
+				var uid = devs[i].AudioDeviceUIDKey;
+				var current = devs[i].AudioDeviceCurrentKey ? ' (*)' : '';
+				var desc = (
+					devs[i].AudioDeviceNameKey + ' - ' +
+					devs[i].AudioDeviceSampleRateKey + '/' +
+					devs[i].AudioDeviceBitDepthKey + '/' +
+					devs[i].AudioDeviceChannelsKey + current
+				);
+				doc += (
+					'<option value="' + uid + '">' + desc + '</option>'
+				);
+			}
+			$('#outputs').empty();
+			$('#outputs').append(doc);
+
+			var uid = tgif.device();
+			if (uid && !$('option[value="' + uid + '"]').length) {
+				tgif.device('');
+			} else {
+				$('#outputs').val(uid);
+			}
+		};
+		$native.audio.event.changed();
+
+	/* MIDI & SMF operations */
+
+		$native.seq.output(0);
+
+		$native.midi.event = {
+			changed: function() {
+				$native.midi.input.connect();
+			},
+			connectfailed: function(ep) {
+				ep = JSON.parse(ep);
+				alert('connectfailed: ' + ep.MIDIDeviceNameKey);
+			},
+			error: function(code) {
+				alert('error (' + code + ')');
+			}
+		};
+
+		window.onbeforeunload = function() {
+			$native.seq.stop();
+			$native.seq.metro(false);
+			$native.midi.input.disconnect();
+			tgif.thru(false);
+		}
+		window.onpagehide = window.onbeforeunload; /* for iOS Safari */
+
+		$native.midi.event.changed();
+		$event.start();
+
+	});
+
+	</script>
+
+	<script src="smf_player.js"></script>
+
+</body>
+</html>

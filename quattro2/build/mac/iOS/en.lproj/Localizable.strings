@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+*/
+
+"!OK" = "OK";
+"!CANCEL" = "Cancel";
+"!YES" = "Yes";
+"!NO" = "No";
+"!CLOSE" = "Close";
+
+"!SAVE" = "Save";
+"!ENTER_FILE_NAME" = "Enter the File name.";
+"!FILE_NAME" = "File name";
+"!ENTER_FOLDER_NAME" = "Enter the Folder name.";
+"!FOLDER_NAME" = "Folder name";
+"!OVERWRITE" = "Replace Existing File?";
+"!CANNOT_OVERWRITE" = "Could not Save.";
+"!EXISTS_SAME_FOLDER" = "The same name is already token.";
+
+"!PURCHASE" = "Purchase";
+"!PAYMENT_NOT_AUTHORIZED" = "In-app purchases are not allowed.";
+"!PRODUCT_NOT_AVAILABLE" = "This item is not available.";
+"!COULD_NOT_BE_PURCHASED" = "This item could not be purchased.";
+"!RECEIPT_VALIDATION_ERROR" = "Error occurred in validating the receipt.";

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TCPIP Client</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+
+	<style type="text/css"><!--
+		.ternimal { color:#fff; background-color:#000; }
+		.ternimal ul { list-style: none; }
+	--></style>
+
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p>Host(IPv4:Port): <input type="text" value="127.0.0.1:80"/>
+		<button id="connect">CONNECT</button>
+
+	<p>DNS-SD: <input type="text" value="_http._tcp."/>
+		<button id="search">SEARCH</button>
+	</p>
+		<div id="list"></div>
+
+	<div id="consoles"></div>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		var services = [];
+
+		var netservice = $native.netservice;
+		var socket = $native.tcpip;
+
+		netservice.event = {
+			resolved: function(service) {
+				services.push(JSON.parse(service));
+				list();
+			},
+			lost: function(name) {
+				var tmp = [];
+				for (var i = 0, num = services.length; i < num; i++) {
+					if (services[i].name != name) {
+						tmp.push(services[i]);
+					}
+				}
+				services = tmp;
+				list();
+			},
+			stopped: function(error) {
+				$('#search').text('SEARCH');
+				if (error) { alert('DNS-SD error: ' + error); }
+			}
+		};
+
+		socket.event = {
+			read: function(fd, data) {
+				var str = toStr(data);
+				var line = str.split('\n');
+				for (var i = 0; i < line.length; i++) {
+					output(fd, line[i]);
+				}
+			},
+			closed: function(fd) {
+				$('#_' + fd).remove();
+			}
+		};
+
+		$('#connect').on('click', function(){
+			var host = $(this).prev().val();
+			if (host) {
+				var addr = host.split(':')[0];
+				var port = host.split(':')[1];
+				if (addr && port) {
+					connect(addr, port);
+				}
+			}
+		});
+
+		$('#search').on('click', function(){
+			if ($(this).text() == 'searching...') {
+				netservice.stop();
+			} else if ($(this).text() == 'SEARCH') {
+				var type = $(this).prev().val();
+				if (type) {
+					services = []; list();
+					if (netservice.search(type)) {
+						$(this).text('searching...');
+					}
+				}
+			}
+		});
+
+		$('#list').on('click', '.connect', function(){
+			var i = $(this).closest('tr').index();
+			var addr = services[i].address;
+			var port = services[i].port;
+			connect(addr, port);
+		});
+
+		$('#consoles').on('click', '.enter', function(){
+			var text = $(this).prev().val();
+			if (text) {
+				var id = $(this).closest('div').attr('id');
+				var fd = id.substr(1);
+				socket.write(fd, toHex(text + '\n'));
+				output(fd, '> ' + text);
+			}
+		});
+
+		$('#consoles').on('click', '.disconnect', function(){
+			var id = $(this).closest('div').attr('id');
+			var fd = id.substr(1);
+			socket.close(fd);
+		});
+
+		function connect(addr, port) {
+			netservice.stop();
+			var fd = socket.connect(addr, port);
+			if (fd < 0) {
+				alert(addr + ':' + port + ' connect failed.');
+			} else {
+				var doc = (
+					'<div class="ternimal" id="_' + fd + '">' +
+						'Ternimal(' + fd + ') - ' + addr + ':' + port + '<br>' + 
+						'<input type="text" />' +
+						'<button class="enter">ENTER</button>' +
+						'<button class="disconnect">DISCONNECT</button>' +
+						'<ul></ul>' +
+					'</div>'
+				);
+				$('#consoles').append(doc);
+			}
+		}
+
+		function output(fd, str) {
+			if (!str) return;
+			if ($('#_' + fd + ' li').length > 10) {
+				$('#_' + fd + ' li:first').remove();
+			}
+			$('#_' + fd + ' ul').append('<li>' + str + '</li>');
+		}
+
+		function list() {
+			var doc = '<table>';
+			for (var i = 0, num = services.length; i < num; i++) {
+				doc += (
+					'<tr>' +
+					'<td>' + services[i].name    + '</td>' +
+					'<td>' + services[i].address + ':' + services[i].port + '</td>' +
+					'<td><button class="connect">CONNECT</button></td>' +
+					'</tr>'
+					);
+			}
+			doc += '</table>'
+			$('#list').empty();
+			$('#list').append(doc);
+		}
+
+		window.onbeforeunload = function() {
+			netservice.stop();
+			$('.ternimal').each(function() {
+				var id = $(this).attr('id');
+				var fd = id.substr(1);
+				socket.close(fd);
+			});
+		}
+		window.onpagehide = window.onbeforeunload; /* for iOS Safari */
+
+		list();
+
+		$event.start();
+
+		/* HEX utils */
+		function toHex(str) {
+			var hex = '';
+			for (var i = 0; i < str.length; i++) {
+				var x = str.charCodeAt(i) & 0x7f;
+				var s = x.toString(16).toUpperCase();
+				hex += (x < 0x10 ? '0' + s : s);
+			}
+			return hex;
+		}
+
+		function toStr(hex) {
+			var str = '';
+			for (var i = 0; i < hex.length; i += 2) {
+				var c = parseInt(hex.substr(i, 2), 16);
+				if (0x20 <= c && c <= 0x7e) {
+					str += String.fromCharCode(c);
+				} else {
+					str += '.';
+				}
+			}
+			return str;
+		}
+
+	});
+
+	</script>
+
+</body>
+</html>

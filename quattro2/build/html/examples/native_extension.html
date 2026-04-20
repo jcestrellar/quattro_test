@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Native Extension</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p><input type="number" id="a"/> x <input type="number" id="b"/></p>
+	<p><button id="mul">MULTIPLE</button></p>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		function rand(max) { return Math.floor(Math.random() * max); }
+
+		$('#a').val(rand(100));
+		$('#b').val(rand(100));
+
+		/* register custom native functions */
+		$native.calc = {
+			multiple: function(a, b) { return $native.call('$$calc_multiple', a * 1, b * 1); },
+			event: {
+				alert: function(message) {}
+			}
+		}
+
+		$('#mul').on('click', function(e) {
+			var a = $('#a').val();
+			var b = $('#b').val();
+			if (a == '') { a = 0 };
+			if (b == '') { b = 0 };
+			var c = $native.calc.multiple(a, b);
+			$native.app.control(a + ' x ' + b + ' = ' + c);
+		});
+
+		$native.calc.event.alert = function(message) {
+			alert(message);
+		};
+
+		$event.start();
+
+	});
+
+	</script>
+
+</body>
+</html>

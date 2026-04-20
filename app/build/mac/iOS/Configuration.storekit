@@ -1,0 +1,125 @@
+{
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : true,
+      "internalID" : "B3B7A117",
+      "localizations" : [
+        {
+          "description" : "non-consumable item",
+          "displayName" : "001",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "非消費型アイテム",
+          "displayName" : "001",
+          "locale" : "ja"
+        }
+      ],
+      "productID" : "com.example.product.001",
+      "referenceName" : "001",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "06C5C4FF",
+      "localizations" : [
+        {
+          "description" : "consumable item",
+          "displayName" : "002",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "消費型アイテム",
+          "displayName" : "002",
+          "locale" : "ja"
+        }
+      ],
+      "productID" : "com.example.product.002",
+      "referenceName" : "002",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_timeRate" : 6
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "074E5C2A",
+      "localizations" : [
+
+      ],
+      "name" : "com.example.subscription.group.001",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "2.99",
+          "familyShareable" : true,
+          "groupNumber" : 1,
+          "internalID" : "A8FF2319",
+          "introductoryOffer" : {
+            "internalID" : "EC7146FF",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P2W"
+          },
+          "localizations" : [
+            {
+              "description" : "general member",
+              "displayName" : "003",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "一般会員",
+              "displayName" : "003",
+              "locale" : "ja"
+            }
+          ],
+          "productID" : "com.example.subscription.003",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "003",
+          "subscriptionGroupID" : "074E5C2A",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "4.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "FC3BA437",
+          "introductoryOffer" : {
+            "displayPrice" : "1.99",
+            "internalID" : "C738000C",
+            "paymentMode" : "payUpFront",
+            "subscriptionPeriod" : "P3M"
+          },
+          "localizations" : [
+            {
+              "description" : "premium member",
+              "displayName" : "004",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "プレミアム会員",
+              "displayName" : "004",
+              "locale" : "ja"
+            }
+          ],
+          "productID" : "com.example.subscription.004",
+          "recurringSubscriptionPeriod" : "P3M",
+          "referenceName" : "004",
+          "subscriptionGroupID" : "074E5C2A",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 0
+  }
+}

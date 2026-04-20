@@ -1,0 +1,32 @@
+<resources>
+
+    <string name="app_name">Quattro</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">キャンセル</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
+    <string name="close">閉じる</string>
+    <string name="back">戻る</string>
+
+    <string name="save">保存</string>
+    <string name="folder">新規フォルダ</string>
+    <string name="enter_file_name">ファイル名を入力してください。</string>
+    <string name="enter_folder_name">フォルダ名を入力してください。</string>
+    <string name="overwrite">既存のファイルを置き換えますか？</string>
+    <string name="exists_same_folder">同名のフォルダが既に存在しています。</string>
+
+    <string name="ble_device_list">Bluetooth MIDI Devices</string>
+    <string name="ble_not_supported">Bluetooth がサポートされていません。</string>
+    <string name="ble_cannot_scan">Bluetooth 機能の利用には「付近のデバイス」へのアクセス許可が必要です。</string>
+    <string name="ble_scan_stop">デバイスの検索中...</string>
+    <string name="ble_scan">デバイスを再検索する</string>
+
+    <string name="microphone_in_use">録音中...</string>
+
+    <string name="send_to">送る...</string>
+    <string name="no_viewer">ファイルを表示できませんでした。</string>
+
+    <string name="query_products">このアイテムは購入できません。</string>
+
+</resources>

@@ -1,0 +1,8 @@
+{
+  "channel": {
+    "channelVoice": {
+      "noteOff": { "channels": [] },
+      "noteOn": { "channels": [] }
+    }
+  }
+}

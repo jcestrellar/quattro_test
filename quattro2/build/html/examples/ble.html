@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BLE Central</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<h2>Connections</h2>
+	<p>Service UUIDs: <input type="text" id="services" /></p>
+	<p>
+		<button id="scan">SCAN</button>
+		<button id="stop">STOP</button>
+	</p>
+	<p>Bluetooth Devices:</p>
+		<div id="peripherals"></div>
+
+	<h2>Operations</h2>
+	<p>Peripheral: <select id="peripheral"></select></p>
+	<p>Service: <select id="service"></select>
+		<button id="discover">Discover</button></p>
+	<p>Characteristic: <select id="characteristic"></select></p>
+	<p><span id="properties"></span></p>
+	<p>
+		<button id="notify">Notify</button>
+		<select id="enabled">
+			<option value="0">OFF</option>
+			<option value="1">ON</option>
+		</select>
+	</p>
+	<p>
+		<button id="read">Read</button>
+		<button id="write">Write</button>
+		<button id="writewithoutresponse">Write /wo Response</button>
+	</p>
+	<p>Write Value: <input type="text" id="data" /></p>
+
+	<p>Input Monitor:</p>
+		<ul id="monitor"></ul>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		$('#services').val('03b80e5a-ede8-4b33-a751-6ce34ec4c700');
+
+		var ble = $native.ble;
+
+		var peripherals = {},
+			DISCONNECTED = '';
+			CONNECTING   = 'Connecting ...';
+			CONNECTED    = 'Connected';
+
+		ble.event = {
+			unauthorized: function() {
+				if (confirm('BLE unauthorized! Open "Settings"?')) {
+					if (navigator.userAgent.indexOf('quattro(Mac)') >= 0) {
+						$native.fs.exec('x-apple.systempreferences:com.apple.preference.security?Privacy_Bluetooth');
+					} else {
+						$native.fs.exec('app-settings:');
+					}
+				}
+			},
+			found: function(id, name, rssi) {
+				peripherals[id] = {
+					name:name, rssi:rssi, state:DISCONNECTED, services:{}
+				};
+				list();
+			},
+			connected: function(id, name) {
+				update_state(id, CONNECTED);
+			},
+			connectfailed: function(id, name) {
+				update_state(id, DISCONNECTED);
+				alert('connectfailed: ' + name);
+			},
+			disconnected: function(id, name) {
+				update_state(id, DISCONNECTED);
+			},
+			discovered: function(id, service, characteristics) {
+                service = service.toLowerCase();
+				if (peripherals[id]) {
+					peripherals[id].services[service] = JSON.parse(characteristics);
+					$('#monitor').append('<li><font color="blue">(discovered)</font></li>');
+					update_characteristic();
+				}
+			},
+			discoverfailed: function(id, reason) {
+				alert('discoverfailed: ' + peripherals[id].name + ': ' + reason);
+			},
+			write: function(ep, error) {
+				if ($('#monitor > li').length > 10) {
+					$('#monitor > li:first').remove();
+				}
+				if (error) {
+                    $('#monitor').append('<li><font color="red">(write error: ' + error + ')</font></li>');
+                } else {
+                    $('#monitor').append('<li><font color="blue">(write success)</font></li>');
+                }
+			},
+			changed: function(ep, value, error) {
+				if ($('#monitor > li').length > 10) {
+					$('#monitor > li:first').remove();
+				}
+				ep = JSON.parse(ep);
+				var name = peripherals[ep.BLEPeripheralKey].name;
+				var characteristic = ep.BLECharacteristicKey;
+				if (error) {
+					$('#monitor').append('<li>(changed): ' + name + ': ' + characteristic + ': <font color="red">(error: ' + error + ')</font></li>');
+				} else {
+					$('#monitor').append('<li>(changed): ' + name + ': ' + characteristic + ': ' + value + '</li>');
+				}
+			}
+		}
+
+		$('#scan').on('click', function(){
+			peripherals = {};
+			var services = $('#services').val().replace(/\s+/g, '').split(',');
+			set_services(services);
+			ble.scan.start(services);
+		});
+		$('#stop').on('click', function(){
+			ble.scan.stop();
+		});
+		$('#peripherals').on('click', '.connection', function(){
+			var id = $(this).children('td:first').text();
+			if (peripherals[id].state == DISCONNECTED) {
+				ble.scan.stop();
+				update_state(id, CONNECTING);
+				ble.connect(id);
+			} else {
+				ble.disconnect(id);
+			}
+		});
+		$('#discover').on('click', function(){
+			if ($('#peripheral').val() && $('#service').val()) {
+				ble.discover($('#peripheral').val(), $('#service').val());
+			}
+		});
+		$('#notify').on('click', function(){
+			ble.notify(endpoint(), $("#enabled").val() * 1 ? true : false);
+		});
+		$('#read').on('click', function(){
+			ble.read(endpoint());
+		});
+		$('#write').on('click', function(){
+			ble.write(endpoint(), $('#data').val().replace(/\s+/g, ''));
+		});
+		$('#writewithoutresponse').on('click', function(){
+			ble.writewithoutresponse(endpoint(), $('#data').val().replace(/\s+/g, ''));
+		});
+
+		$('#peripheral').on('change', function(){
+			update_characteristic();
+		});
+		$('#service').on('change', function(){
+			update_characteristic();
+		});
+
+		function endpoint() {
+			return {
+				BLEPeripheralKey: $('#peripheral').val(),
+				BLEServiceKey: $('#service').val(),
+				BLECharacteristicKey: $('#characteristic').val()
+			};
+		}
+
+		function set_services(services) {
+			$('#peripherals').empty();
+			$('#peripheral').empty();
+			$('#service').empty();
+			$('#characteristic').empty();
+
+			var opt = '';
+			for (var UUID of services) {
+				var uuid = UUID.toLowerCase();
+				opt += '<option value="' + uuid + '">' + UUID + '</option>';
+			}
+			$('#service').append(opt);
+		}
+
+		function list() {
+			function header() {
+				return (
+					'<tr>' +
+					'<th>identifier </th>' +
+					'<th>name</th>' +
+					'<th>RSSI</th>' +
+					'<th>state</th>' +
+					'</tr>'
+				);
+			}
+			var doc = '<table>' + header();
+			for (var id in peripherals) {
+				var _id = id.replace(/:/g, '-');
+				doc += (
+					'<tr class="connection" id ="' + _id + '">' +
+					'<td>' + id + '</td>' +
+					'<td>' + peripherals[id].name + '</td>' +
+					'<td>' + peripherals[id].rssi + '</td>' +
+					'<td class="state">' + peripherals[id].state + '</td>' +
+					'</tr>'
+				);
+			}
+			doc += '</table>'
+			$('#peripherals').empty();
+			$('#peripherals').append(doc);
+		}
+
+		function update_state(id, state) {
+			if (peripherals[id] === undefined) return;
+			var _id = id.replace(/:/g, '-');
+			$('#' + _id + ' .state').text(state);
+			peripherals[id].state = state;
+			var opt = '';
+			for (var id in peripherals) {
+				if (peripherals[id].state == CONNECTED) {
+					opt += ('<option value="' + id + '">' + peripherals[id].name + '</option>');
+				}
+			}
+			$('#peripheral').empty();
+			$('#peripheral').append(opt);
+			update_characteristic();
+		}
+
+		function update_characteristic() {
+			var opt = '';
+			var id = $('#peripheral').val();
+			if (id && peripherals[id]) {
+				var characteristics = peripherals[id].services[$('#service').val()];
+				if (characteristics) {
+					for (var UUID of characteristics) {
+						opt += '<option value="' + UUID + '">' + UUID + '</option>';
+					}
+				}
+			}
+			$('#characteristic').empty();
+			$('#characteristic').append(opt);
+
+			var prop = JSON.parse(ble.properties(endpoint()));
+			var _ = [];
+			if (prop.broadcast) { _.push('broadcast'); }
+			if (prop.read) { _.push('read'); }
+			if (prop.writeWithoutResponse) { _.push('writeWithoutResponse'); }
+			if (prop.write) { _.push('write'); }
+			if (prop.notify) { _.push('notify'); }
+			if (prop.indicate) { _.push('indicate'); }
+			$('#properties').text(_.join(', '));
+		}
+
+		window.onbeforeunload = function() {
+			ble.scan.stop();
+			ble.disconnect();
+		}
+		window.onpagehide = window.onbeforeunload; /* for iOS Safari */
+
+		$event.start();
+
+	});
+
+	</script>
+
+</body>
+</html>

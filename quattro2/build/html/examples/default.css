@@ -1,0 +1,65 @@
+body {
+	font-size: 80%;
+}
+
+div {
+	margin: 4px 4px 4px 4px;
+}
+
+input[type="text"] {
+	width: 50%;
+}
+
+textarea {
+	max-width: 96%;
+}
+
+td, th {
+	border: 1px solid #DDD;
+}
+
+button {
+	display: inline-block;
+	background: #EEE;
+	color: #111;
+	border: 2px solid #DDD;
+	font-weight: bold;
+	text-align: center;
+	min-width: 100px;
+	padding: 2px;
+	margin: 2px;
+}
+
+.key {
+	background: #FFF;
+	border: 2px solid #000;
+	min-width: 40px;
+}
+
+.mute {
+	min-width: 40px;
+}
+.muted {
+	color: #BBB;
+}
+
+.box {
+	display: inline-block;
+    border: 1px solid #DDD;
+	width: 50%;
+}
+
+.progress {
+	display: inline-block;
+	background: #BCD;
+	text-align: right;
+}
+
+.meter {
+	display: inline-block;
+	background: #F86;
+}
+
+.deprecated {
+	color: #F66;
+}

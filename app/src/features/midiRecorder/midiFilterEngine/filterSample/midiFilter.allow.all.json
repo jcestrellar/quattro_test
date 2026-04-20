@@ -1,0 +1,40 @@
+{
+  "channel": {
+    "channelVoice": {
+      "noteOff": { "channels": [] },
+      "noteOn": { "channels": [] },
+      "controlChange": { "channels": [], "controllers": [] },
+      "polyphonicKeyPressure": { "channels": [] },
+      "programChange": { "channels": [] },
+      "channelPressure": { "channels": [] },
+      "pitchBend": { "channels": [] }
+    },
+    "channelMode": {
+      "allSoundOff": { "channels": [] },
+      "resetAllControllers": { "channels": [] },
+      "localControl": { "channels": [] },
+      "allNotesOff": { "channels": [] },
+      "omniOff": { "channels": [] },
+      "omniOn": { "channels": [] },
+      "monoMode": { "channels": [] },
+      "polyMode": { "channels": [] }
+    }
+  },
+  "system": {
+    "exclusive": true,
+    "common": {
+      "timeCodeQuarterFrame": true,
+      "songPositionPointer": true,
+      "songSelect": true,
+      "tuneRequest": true
+    },
+    "realTime": {
+      "timingClock": true,
+      "start": true,
+      "continue": true,
+      "stop": true,
+      "activeSensing": true,
+      "systemReset": true
+    }
+  }
+}

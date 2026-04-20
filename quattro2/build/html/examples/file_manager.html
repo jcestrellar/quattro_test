@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>File Manager</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+
+	<style type="text/css"><!--
+		.cls_paste { background-color:#fca; }
+	--></style>
+
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p>Directories in user domain:</p>
+		<ul>
+			<li>Home: <strong id="home"></strong></li>
+			<li>Documents: <strong id="documents"></strong></li>
+			<li>Music: <strong id="music"></strong></li>
+			<li>Movies: <strong id="movies"></strong></li>
+			<li>Pictures: <strong id="pictures"></strong></li>
+			<li>Downloads: <strong id="downloads"></strong></li>
+			<li>Library: <strong id="library"></strong></li>
+			<li>Temporary: <strong id="temporary"></strong></li>
+			<li>Bundle: <strong id="bundle"></strong></li>
+		</ul>
+
+	<p>Volumes:</p>
+		<ul id="volumes"></ul>
+
+	<p><input type="text" /><button id="mkdir">New Folder</button></p>
+	<p><input type="text" /><button id="creat">New File</button></p>
+	<p><button id="import">Import File</button>
+		<button id="exportfiles">Export Files</button></p>
+
+	<p>CWD: <strong id="cwd"></strong></p>
+	<p>
+		<button id="up">UP</button><button id="reset">~/</button>
+		<button id="paste" class="cls_paste">OK</button>
+		<button id="cancel" class="cls_paste">CANCEL</button>
+	</p>
+		<div id="list"></div>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		var fs = $native.fs;
+
+		var SEP = fs.separator();
+
+		$('#home').text(fs.path('home'));
+		$('#documents').text(fs.path('documents'));
+		$('#music').text(fs.path('music'));
+		$('#movies').text(fs.path('movies'));
+		$('#pictures').text(fs.path('pictures'));
+		$('#downloads').text(fs.path('downloads'));
+		$('#library').text(fs.path('library'));
+		$('#temporary').text(fs.path('temporary'));
+		$('#bundle').text(fs.path('bundle'));
+
+		function volumeslist() {
+			var doc = '';
+			var volumes = fs.volumes();
+			for (var i = 0, num = volumes.length; i < num; i++) {
+				var v = volumes[i];
+				doc += (
+					'<li><strong>' + v.mount + '</strong> (' + v.volume + ' )' +
+					'<button class="unmount">EJECT</button></li>'
+				);
+			}
+			$('#volumes').empty();
+			$('#volumes').append(doc);
+		}
+
+		fs.event.unmounted = function(path) {
+			volumeslist(); list(); /* update list */
+		};
+
+		fs.event.unmountfailed = function(path, reason) {
+			alert('unmountfailed: ' + path + '\n' + reason);
+		};
+
+		$('#volumes').on('click', '.unmount', function(){
+			var v = $(this).prev().text();
+			fs.unmount(v);
+		});
+
+		var from, paste = null;
+
+		function list() {
+
+			function header() {
+				return (
+					'<table><tr>' +
+					'<th>Name</th>' +
+					'<th>Attributes</th>' +
+					'<th>Size</th>' +
+					'<th>Action</th>' +
+					'</tr>'
+				);
+			}
+
+			function data(f) {
+				var attr = (
+						(f.directory ? 'D' : '-') +
+						(f.readable  ? 'R' : '-') +
+						(f.writable  ? 'W' : '-') +
+						(f.deletable ? '-' : '!')
+				);
+				return (
+					'<tr>' +
+					'<td class="name">' + f.name + (f.directory ? SEP : '') + '</td>' +
+					'<td>' + attr + '</td>' +
+					'<td>' + f.size + '</td>' +
+					'<td>' +
+						'<button class="copy">COPY</button>' +
+						'<button class="move">MOVE</button>' +
+						'<button class="unlink">DELETE</button>' +
+						(f.directory ? '' : '<button class="export">EXPORT</button>') +
+					'</td>' +
+					'</tr>'
+				);
+			}
+
+			var doc = header();
+			try {
+				var contents = fs.contents($('#cwd').text());
+				for (var i = 0, num = contents.length; i < num; i++) {
+					doc += data(contents[i]);
+				}
+			} catch (e) { alert(e.message); }
+			doc += '</table>';
+			$('#list').empty();
+			$('#list').append(doc);
+
+			if ($('.export').length > 0) {
+				$('#exportfiles').show();
+			} else {
+				$('#exportfiles').hide();
+			}
+
+			if (paste) {
+				$('#paste, #cancel').show();
+				$('.copy, .move, .unlink, .export').hide();
+				$('table').addClass('cls_paste');
+			} else {
+				$('#paste, #cancel').hide();
+			}
+		}
+
+		$('#list').on('click', '.name', function(){
+			var path = $('#cwd').text() + $(this).text();
+			try {
+				var stat = fs.stat(path);
+				if (stat.directory) {
+					$('#cwd').text(path); list();
+				} else {
+					fs.exec(path);
+				}
+			} catch (e) { alert(e.message); }
+		});
+
+		$('#list').on('click', '.copy', function(){
+			var name = $(this).closest('tr').find('.name').text();
+			from = $('#cwd').text() + name;
+			paste = fs.copy; list();
+		});
+
+		$('#list').on('click', '.move', function(){
+			var name = $(this).closest('tr').find('.name').text();
+			from = $('#cwd').text() + name;
+			paste = fs.move; list();
+		});
+
+		$('#list').on('click', '.unlink', function(){
+			var name = $(this).closest('tr').find('.name').text();
+			if (confirm('Are you sure you want to delete "' + name + '"')) {
+				try {
+					fs.unlink($('#cwd').text() + name); list();
+				} catch (e) { alert(e.message); }
+			}
+		});
+
+		$('#list').on('click', '.export', function(){
+			var name = $(this).closest('tr').find('.name').text();
+			$native.app.exportfile($('#cwd').text() + name);
+		});
+
+		$('#mkdir').on('click', function(){
+			var name = $(this).prev().val();
+			if (name) {
+				try {
+					fs.mkdir($('#cwd').text() + name); list();
+				} catch (e) { alert(e.message); }
+			}
+		});
+
+		$('#creat').on('click', function(){
+			var name = $(this).prev().val();
+			if (name) {
+				try {
+					fs.writeData($('#cwd').text() + name, ''); list();
+				} catch (e) { alert(e.message); }
+			}
+		});
+
+		$('#import').on('click', function(){
+			$native.app.importfile([], true); /* no filters, allow multiple */
+		});
+		$('#exportfiles').on('click', function(){
+			var files = [];
+			$('.export').each(function() {
+				var name = $(this).closest('tr').find('.name').text();
+				files.push($('#cwd').text() + name);
+			});
+			$native.app.exportfile(JSON.stringify(files));
+		});
+		$native.app.event.command = function(param1, param2) {
+			if (param1 == 'import') {
+				var files = JSON.parse(param2);
+				for (var i = 0, num = files.length; i < num; i++) {
+					var file = files[i];
+					var name = file.slice(file.lastIndexOf(SEP) + 1);
+					try {
+						fs.move(file, $('#cwd').text() + name); list();
+					} catch (e) { alert(e.message); }
+				}
+			}
+			if ((param1 == 'export') && param2) {
+				alert(decodeURIComponent(param2));
+			}
+		};
+
+		$('#paste').on('click', function(){
+			var name = from.slice(from.lastIndexOf(SEP) + 1);
+			try {
+				paste(from, $('#cwd').text() + name);
+			} catch (e) { alert(e.message); }
+			paste = null; list();
+		});
+
+		$('#cancel').on('click', function(){
+			paste = null; list();
+		});
+
+		$('#up').on('click', function(){
+			var cwd = $('#cwd').text();
+			var index = cwd.lastIndexOf(SEP, cwd.length - 2);
+			if (index >= 0) {
+				cwd = cwd.slice(0, index + 1);
+			}
+			$('#cwd').text(cwd); list();
+		});
+
+		$('#reset').on('click', function(){
+			$('#cwd').text($('#home').text()); list();
+		});
+
+		$('#cwd').text($('#home').text());
+
+		volumeslist(); list();
+
+		$event.start();
+
+	});
+
+	</script>
+
+</body>
+</html>

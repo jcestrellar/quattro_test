@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include=".\Resources\app.ico" />
+    <Image Include=".\Resources\doc.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include=".\Resources\resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioConverter.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioDevice.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioInputStream.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioInputUnit.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioOutputStream.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioOutputUnit.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioPlayer.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioRecorder.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioVolume.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\SamplePlayer.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Common\Bundle.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Common\Crypto.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Common\FSEvent.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Common\Process.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Common\Registry.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Common\Thread.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Common\Timer.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Common\VolumeEject.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeConverters.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeObjects.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\MIDIClient\MIDIClient.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\MIDIClient\MIDIInputEndpoint.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\MIDIClient\MIDIInputPort.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\MIDIClient\MIDIOutputEndpoint.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\MIDIClient\MIDIOutputPort.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Network\HTTPConnection.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Network\HTTPDownload.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Network\HTTPTask.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Network\HTTPUpload.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Network\NetServiceDiscovery.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Network\Socket.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Network\TCPIPClient.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCAudioInputStream.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCAudioOutputStream.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCConnection.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCDiscovery.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCMIDIService.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCNetClient.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCNetServer.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCProtocol.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Sound\Sequencer.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Sound\SoundEngine.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\Sound\TGIF.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\JavaScriptInterface.h" />
+    <ClInclude Include="..\..\..\quattro2\win10\WebView2Controller.h" />
+    <ClInclude Include=".\Resources\resource.h" />
+    <ClInclude Include=".\Resources\version.h" />
+    <ClInclude Include=".\security.h" />
+    <ClInclude Include="AppWebViewController.h" />
+    <ClInclude Include="Audio\ExtSamplePlayer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\AudioConverter.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\AudioDevice.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\AudioInputUnit.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\AudioOutputUnit.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\AudioPlayer.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\AudioRecorder.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\AudioVolume.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\SamplePlayer.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Common\Bundle.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Common\Crypto.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Common\FSEvent.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Common\initguid.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Common\Process.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Common\Registry.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Common\Thread.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Common\Timer.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Common\VolumeEject.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+app.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+audio.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+ble.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+fs.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+http.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+midi.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+midix.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+netservice.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+player.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+recorder.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+rwc.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+sampler.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+security.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+seq.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+sh.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+store.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+tcpip.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+tgif.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+util.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeConverters.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeObjects.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\MIDIClient\MIDIClient.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\MIDIClient\MIDIInputEndpoint.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\MIDIClient\MIDIInputPort.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\MIDIClient\MIDIOutputPort.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Network\HTTPConnection.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Network\HTTPDownload.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Network\HTTPTask.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Network\HTTPUpload.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Network\NetServiceDiscovery.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Network\Socket.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Network\TCPIPClient.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCAudioInputStream.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCAudioOutputStream.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCConnection.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCDiscovery.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCMIDIService.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCNetClient.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCNetServer.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Sound\Sequencer.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Sound\SoundEngine.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\Sound\TGIF.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\WebView2Controller.cpp" />
+    <ClCompile Include="..\..\..\quattro2\win10\winmain.cpp" />
+    <ClCompile Include="AppWebViewController.cpp" />
+    <ClCompile Include="Audio\ExtSamplePlayer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{21ccea05-67bd-411d-9e5d-af07cc811d30}</ProjectGuid>
+    <RootNamespace>quattro</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>quattro(win10)</TargetName>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\exe\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\obj\</IntDir>
+    <LibraryPath>.\libtg\$(Platform)\$(Configuration);$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\quattro2;.\;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetName>quattro(win10)</TargetName>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\exe\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\obj\</IntDir>
+    <LibraryPath>.\libtg\$(Platform)\$(Configuration);$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\quattro2;.\;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>Quattro</TargetName>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\exe\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\obj\</IntDir>
+    <IncludePath>..\..\..\quattro2;.\;$(IncludePath)</IncludePath>
+    <LibraryPath>.\libtg\$(Platform)\$(Configuration);$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>Quattro</TargetName>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\exe\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\obj\</IntDir>
+    <IncludePath>..\..\..\quattro2;.\;$(IncludePath)</IncludePath>
+    <LibraryPath>.\libtg\$(Platform)\$(Configuration);$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions);ENABLE_DEVTOOLS</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>winmm.lib;avrt.lib;mfplat.lib;mfreadwrite.lib;mfuuid.lib;wsock32.lib;wininet.lib;ws2_32.lib;dnsapi.lib;crypt32.lib;rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>winmm.lib;avrt.lib;mfplat.lib;mfreadwrite.lib;mfuuid.lib;wsock32.lib;wininet.lib;ws2_32.lib;dnsapi.lib;crypt32.lib;rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions);ENABLE_DEVTOOLS;_ENABLE_APP_EXIT;_INIT_CLIENT_WIDTH=800;_INIT_CLIENT_HEIGHT=640;_MIN_CLIENT_WIDTH=800;_MIN_CLIENT_HEIGHT=640;_MAX_CLIENT_WIDTH=800;_MAX_CLIENT_HEIGHT=640;_USE_TGIF</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>winmm.lib;avrt.lib;mfplat.lib;mfreadwrite.lib;mfuuid.lib;wsock32.lib;wininet.lib;ws2_32.lib;dnsapi.lib;crypt32.lib;rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>winmm.lib;avrt.lib;mfplat.lib;mfreadwrite.lib;mfuuid.lib;wsock32.lib;wininet.lib;ws2_32.lib;dnsapi.lib;crypt32.lib;rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\Microsoft.Web.WebView2.1.0.1774.30\build\native\Microsoft.Web.WebView2.targets" Condition="Exists('packages\Microsoft.Web.WebView2.1.0.1774.30\build\native\Microsoft.Web.WebView2.targets')" />
+    <Import Project="packages\Microsoft.Windows.ImplementationLibrary.1.0.230411.1\build\native\Microsoft.Windows.ImplementationLibrary.targets" Condition="Exists('packages\Microsoft.Windows.ImplementationLibrary.1.0.230411.1\build\native\Microsoft.Windows.ImplementationLibrary.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.Web.WebView2.1.0.1774.30\build\native\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Web.WebView2.1.0.1774.30\build\native\Microsoft.Web.WebView2.targets'))" />
+    <Error Condition="!Exists('packages\Microsoft.Windows.ImplementationLibrary.1.0.230411.1\build\native\Microsoft.Windows.ImplementationLibrary.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.ImplementationLibrary.1.0.230411.1\build\native\Microsoft.Windows.ImplementationLibrary.targets'))" />
+  </Target>
+  <PropertyGroup>
+    <WebView2LoaderPreference>Static</WebView2LoaderPreference>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,90 @@
+﻿*** this is a sample ***
+
+[App name] Terms of Use
+
+[App Name) (this "App") is an application software licensed for use by Roland Corporation ("Company") for [the purpose of the App]. All users of this App ("Customers") are deemed to have accepted these terms and conditions upon such Customer’s first use of this App. These Terms of Use also apply to the updated application software when this App is updated.
+　
+These Terms of Use apply to Customers and the Company, and the Customer is deemed to have agreed to these Terms of Use of this App, the terms of the Roland Cloud End-User License Agreement (https://www.roland.com/cloud/policies ) and the terms of use of the other products and services provided by the Company on this App (the terms of Roland Cloud End-User License Agreement and other products and services provided by the Company on this App, collectively "Individual Terms of Use”). In the event the contents of these Terms of Use are different from those of the Individual Terms of Use, these Terms of Use shall prevail.
+The Company may change these Terms of Use without the consent of the Customers, at the sole discretion of the Company. In the event of such a change, the conditions of use of this App. shall be based on the revised Terms of Use. The Company shall provide such changes to the Customers in advance by posting them on this App or by any other means deemed appropriate by the Company. The contents of the revised Terms of Use shall apply from the date the Customers commences use of this App after such change.
+　
+In the event the Customers use this App after a change in the Terms of Use becomes effective, the Customers shall be deemed to have agreed to all the contents of the revised Terms of Use.
+
+Article 1 (Contents of this App).
+This App is a software application that provides [functions/services provided by the application].
+
+Article 2 (Attribution and licensing of rights)
+Rights in this App belong to either the Company or to third parties who have granted rights to the Company. The Company grants you a non-exclusive, non-transferable right to install this App on any terminal equipment you own and use this App in accordance with these Terms of Use.
+
+Article 3 (Prohibitions)
+The Company prohibits you from doing any of the following, except as expressly granted in these Terms of Use or on this App:
+(1) Reproduce, process or alter, transfer, make transmittable, rent, sale, redistribute, or sublicense this App in whole or in part to allow any third party to use it; 
+(2) Infringe any intellectual property rights (including, without limitation, copyrights, design rights, patent rights, utility model rights, trademark rights, publicity rights, privacy rights, moral rights, etc.) or any other proprietary rights or profits of the Company or any third party;
+(3) Analyzing or modifying this App by reverse assembling, reverse compiling, or reverse engineering, etc.;
+(4) Use of this App by a minor, an adult ward, a person under conservatorship, without the consent of a statutory agent, guardian, curator, assistant; 
+(5) An act of a person judged by the Company to be an anti-social force, including, without limitation, an organized crime group, a company affiliated with an organized crime group, or any entity advocating for violence or hatred towards any group, or a member or facilitator of any entity cooperating with or engaging in the anti-social force using this App; 
+(6) Acts that interfere with the operation or network system of this App; 
+(7) Acts contrary to laws and regulations, public order and morals, or acts contrary to ordinary common sense as adjudged solely by the Company; 
+(8) Acts in breach of these Terms of Use, the Individual Terms of Use, and other precautions stipulated by the Company; and 
+(9) Acts that the Company reasonably determines are inappropriate as a user of this App based on reasonable grounds.
+
+Article 4 (Open-source Software and other Third-Party Software)
+1. This App may use open-source software or other third-party software ("OSS”.) 
+2. In such a case, the license for OSS ("License for OSS") shall apply, and the Customers shall comply with the terms of such License for OSS.
+3. In the event of any difference between the terms of these Terms of Use and the terms and conditions of License for OSS, the License for OSS shall prevail, and these Terms of Use shall not apply.
+
+Article 5 (Expenses for Communication)
+The Customers are responsible for the communication costs required for using this App.
+
+Article 6 (Measures in case of violation)
+1. The Company may, in the event that Customers engage in conduct that breaches or whom the Company believes is likely to breach, any of the Terms of Use, require such Customers to cease such conduct.
+2. In addition to the measures set forth in the preceding paragraph, the Company shall be entitled to suspend or revoke the Customer’s entitlement to use this App.
+3. In the event the Company suspends or revokes the Customers’ entitlement to use this App, the Company shall not be obliged to explain the basis for its actions to the Customers.
+
+Article 7 (Modification and Termination of this application)
+The Company may add, change, or terminate this App at any time for any reason, including, without limitation, for the convenience of the Company.
+
+Article 8 (Disclaimer of Warranties)
+This App will be provided “as is.” EXCEPT AS REQUIRED BY LAW, THE COMPANY MAKES NO WARRANTIES OR REPRESENTATIONS, EXPRESS, IMPLIED, STATUTORY, QUALITY, IMPLIED, NON-INFRINGEMENT OF QUALITY, PERFORMANCE, RIGHTS, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR THAT THE APP IS PROVIDED WITHOUT INTERRUPTION OR DELAY, OR THAT THE APP IS SAFE, ACCURATE, COMPLETE, ERROR-FREE,  NOT DEFECTIVE.
+
+Article 9 (Limitation of Liability)
+1. The Company shall not be responsible for any dispute between the Customers and a third party arising out of the Customers’ use of this App. In the event such a dispute arises, it shall be resolved by the Customers and such third party, and the Company have no role in its resolution.
+2. Except in cases where the damage caused to the Customers in connection with this App is caused by the Company's willful misconduct or gross negligence, the Company's liability shall be limited to the amount that the Customers paid the Company for the use of this App in the last 12 months, and exclude all incidental and consequential damages, including, without limitation, damage claims including loss of income and other damages caused by extraordinary circumstances.
+
+Article 10 (Personal Information)				
+1. In providing this App, the personal information of customers acquired by the Company will be used for the following purposes:
+(1) [Personal Information to be Acquired]	Customer's personal identification
+(2) [Personal Information to be Acquired]	Analysis conducted for marketing of the Company (for planning, development, and improvement of products/apps, etc.)
+2. Information regarding the Customers is stored on servers located in Japan or the United States.
+3. The management of the Customer’s personal information shall be in accordance with the Company's Privacy Policy, located at https://www.roland.com/privacy/.
+
+Article 11 (Force Majeure)
+The Company is not liable for any damage or disadvantage caused by a force majeure event (except those caused by events attributable to the Company), including but not limited to, typhoons, tsunamis, earthquakes, floods, lightning, salt damage, etc.), fires, infectious diseases, cyber-attacks, pollution, wars, civil unrest, acts of terrorism, strikes, establishment or repeal of laws, regulations, orders or disposals by public authority, or other governmental actions, acts of dispute, period of transportation, communication lines, etc., or other irregularities.
+
+Article 12 (Termination of Agreement)
+These Terms of Use shall no longer apply to a customer who uninstalls this App.
+
+Article 13 (General Matters)
+These Terms of Use shall be governed by and construed in accordance with the laws of Japan, except for the principles of conflicts of laws. In addition, in the event that a dispute arises between the Company and the Customers in connection with these Terms of Use, the Tokyo District Court shall assume exclusive jurisdiction in the event that such dispute cannot be resolved through consultation between the Company and the Customers in good faith. If any provision of these Terms of Use or any part of any provision is deemed illegal, invalid, unenforceable by a court or administrative body of competent jurisdiction, or if such provision (or part of a provision) is determined to be inconsistent with the fundamental nature of these Terms of Use as a whole, the legality, validity or legal validity of the remaining provisions (including the remainder of the provisions containing the relevant provision) shall not be affected. All legal notices from the Customers must be in writing and sent by mail to the address set forth below.
+
+2036-1 Nakagawa, Hosoe-cho, Hamana-ku, Hamamatsu, Shizuoka 431-1304, Japan
+Roland Corporation
+
+Article 14 (Supplementary provisions for customers using Apple Inc.'s (“Apple”) Operating System (iOS) and iOS smart devices)
+This clause applies only to the use of the App on iOS devices provided by Apple by customers, as part of this Agreement. In the event of any inconsistency between the provisions of this Terms of Use and the other provisions of these Terms of Use, the provisions contained in this Article shall control.
+1．  Acknowledgement: The Company and the Customer must acknowledge that the EULA is concluded between Company and the Customer only, and not with Apple, and Company, not Apple, are solely responsible for the Licensed and Custom Applications and the content thereof. The EULA may not provide for usage rules for Licensed and Custom Applications that are in conflict with, the Apple Media Services Terms and Conditions or the Volume Content Terms as of the Effective Date (which Company acknowledge Company have had the opportunity to review). 
+2． Scope of License: Each license granted to the Customer for the Licensed and Custom Applications must be limited to a non-transferable license to use the Licensed or Custom Application on any Apple-branded Products that the Customer owns or controls and as permitted by the Usage Rules set forth in the Apple Media Services Terms and Conditions, except that such Licensed Application may be accessed and used by other accounts associated with the purchaser via Family Sharing, volume purchasing, or Legacy Contacts. Solely in connection with certain Apple licensed software, the EULA must authorize a Custom App Distribution Customer to distribute a single license of Company’s free Custom Applications to multiple Customers.
+3． Maintenance and Support: Company must be solely responsible for providing any maintenance and support services with respect to the Licensed and Custom Applications, as specified in the EULA, or as required under applicable law. Company and the Customer must acknowledge that Apple has no obligation whatsoever to furnish any maintenance and support services with respect to the Licensed and Custom Applications.
+4． Warranty: Company must be solely responsible for any product warranties, whether express or implied by law, to the extent not effectively disclaimed. The EULA must provide that, in the event of any failure of the Licensed or Custom Applications to conform to any applicable warranty, the Customer may notify Apple, and Apple will refund the purchase price for such Application to that Customer; and that, to the maximum extent permitted by applicable law, Apple will have no other warranty obligation whatsoever with respect to the Licensed and Custom Applications, and any other claims, losses, liabilities, damages, costs or expenses attributable to any failure to conform to any warranty will be Company’s sole responsibility.
+5．  Product Claims: Company and the Customer must acknowledge that Company, not Apple, are responsible for addressing any claims of the Customer or any third party relating to the Licensed and Custom Applications or the Customer’s possession and/or use of the Licensed and Custom Applications, including, but not limited to: (i) product liability claims; (ii) any claim that the Licensed or Custom Application fails to conform to any applicable legal or regulatory requirement; and (iii) claims arising under consumer protection, privacy, or similar legislation, including in connection with Company’s Licensed Application’s use of the HealthKit and HomeKit frameworks. The EULA may not limit Company’s liability to the Customer beyond what is permitted by applicable law.
+6．  Intellectual Property Rights: Company and the Customer must acknowledge that, in the event of any third party claim that the Licensed or Custom Application or the Customer’s possession and use of the Licensed or Custom Application infringes that third party’s intellectual property rights, You, not Apple, will be solely responsible for the investigation, defense, settlement and discharge of any such intellectual property infringement claim. 
+7． Legal Compliance: The Customer must represent and warrant that (i) the Customer is not located in a region that is subject to a U.S. Government embargo, or that has been designated by the U.S. Government as a “terrorist supporting” region; and (ii) the Customer is not listed on any U.S. Government list of prohibited or restricted parties. 
+8． Developer Name and Address: 
+Roland Corporation
+2036-1, Hosoe-cho Nakagawa, Hamana-ku, Hamamatsu-shi, Shizuoka
+https://www.roland.com/backstage/support
+9． Third Party Terms of Agreement: Company must state in the EULA that the Customer must comply with applicable third party terms of agreement when using Company’s Application, e.g., if Company have a VoIP application, 13 February 2024 then the Customer must not be in violation of their wireless data service agreement when using Company’s Application. 
+10． . Third Party Beneficiary: Company and the Customer must acknowledge and agree that Apple, and Apple’s subsidiaries, are third party beneficiaries of the EULA, and that, upon the Customer’s acceptance of the terms and conditions of the EULA, Apple will have the right (and will be deemed to have accepted the right) to enforce the EULA against the Customer as a third party beneficiary thereof.
+
+END
+
+[Date]

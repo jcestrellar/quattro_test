@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MIDI In/Out</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p>Bluetooth MIDI: (iOS/Android)</p>
+		<div id="ble-scanner">
+			<button id="panel">PANEL...</button>
+			(<button id="ble-scan">SCAN</button>)
+			<div id="ble-devices"></div>
+		</div>
+
+	<p>MIDI Input Devices:</p>
+		<div id="inputs"></div>
+
+	<p>MIDI Output Devices:</p>
+		<div id="outputs"></div>
+
+	<p><a href="./midix_client.html">(to MIDIX ...)</a></p>
+
+	<p>
+		<button id="smf">SMF...</button>
+		<button id="play">PLAY</button>
+		<button id="reset">&lt;</button><br>
+		<strong id="trackinfo"></strong><br>
+		Tempo: <input type="range" id="tempo" min="30" max="250" />
+			&#9833; = <span id="bpm"></span><br>
+		Locate: <input type="range" id="locate" min="0" max="0" />
+			<span id="position"></span>
+		<button id="rangeA">A</button>
+		<button id="rangeB">B</button>
+	</p>
+
+	<p>
+		<button class="key" id="3C">C4</button>
+		<button class="key" id="3E">D</button>
+		<button class="key" id="40">E</button>
+		<button class="key" id="41">F</button>
+		<button class="key" id="43">G</button>
+		<button class="key" id="45">A</button>
+		<button class="key" id="47">B</button>
+		<button class="key" id="48">C5</button>
+	</p>
+	<p><input type="text" /><button id="send">SEND</button></p>
+
+	<p>Input Monitor:</p>
+		<ul id="monitor"></ul>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		var midi = $native.midi;
+
+		var inputs = [];
+		var outputs = [];
+		var connected = { inputs: {}, outputs: {} };
+
+		midi.event = {
+			message: function(msg, timestamp) {
+				if ($('#monitor > li').length > 10) {
+					$('#monitor > li:first').remove();
+				}
+				$('#monitor').append('<li>' + msg + '</li>');
+			},
+			changed: function() {
+				list(); /* update */
+			},
+			connectfailed: function(ep) {
+				ep = JSON.parse(ep);
+				alert('connectfailed: ' + ep.MIDIDeviceNameKey);
+			},
+			error: function(code) {
+				alert('error (' + code + ')');
+			}
+		}
+
+		$('#inputs').on('click', '.connect', function(){
+			var i = $(this).closest('tr').index() - 1;
+			var uid = inputs[i].MIDIEndpointUIDKey;
+			if ($(this).prop('checked')) {
+				connected.inputs[uid] = true;
+				midi.input.connect(inputs[i]);
+			} else {
+				delete connected.inputs[uid];
+				midi.input.disconnect(inputs[i]);
+			}
+		});
+
+		$('#outputs').on('click', '.connect', function(){
+			var i = $(this).closest('tr').index() - 1;
+			var uid = outputs[i].MIDIEndpointUIDKey;
+			if ($(this).prop('checked')) {
+				connected.outputs[uid] = true;
+				midi.output.connect(outputs[i]);
+			} else {
+				delete connected.outputs[uid];
+				midi.output.disconnect(outputs[i]);
+			}
+		});
+
+		$('#panel').on('click', function(){
+			midi.panel();
+		});
+
+		$('.key').on('mousedown touchstart', function(e){
+			e.preventDefault();
+			var noteNo = $(this).attr('id');
+			midi.send('90' + noteNo + '7F');
+		});
+		$('.key').on('mouseup touchend', function(e){
+			e.preventDefault();
+			var noteNo = $(this).attr('id');
+			midi.send('80' + noteNo + '00');
+		});
+
+		$('#send').on('click', function(){
+			midi.send($(this).prev().val().replace(/\s+/g, ''));
+		});
+
+		function list() {
+
+			var doc = '';
+
+			inputs = midi.input.endpoints();
+			outputs = midi.output.endpoints();
+
+			function search(uid, endpoints) {
+				for (var i = 0, num = endpoints.length; i < num; i++) {
+					if (endpoints[i].MIDIEndpointUIDKey == uid) return i;
+				}
+				return -1;
+			}
+
+			function header() {
+				return (
+					'<tr>' +
+					'<th>Device</th>' +
+					'<th>Entity</th>' +
+					'<th>UID</th>' +
+					'<th>Index</th>' +
+					'<th>Connect</th>' +
+					'</tr>'
+				);
+			}
+
+			function data(ep) {
+				return (
+					'<tr>' +
+					'<td>' + ep.MIDIDeviceNameKey + '</td>' +
+					'<td>' + ep.MIDIEntityNameKey + '</td>' +
+					'<td>' + ep.MIDIEndpointUIDKey + '</td>' +
+					'<td>' + ep.MIDIEndpointIndexKey + '</td>' +
+					'<td><input type="checkbox" class="connect" /></button></td>' +
+					'</tr>'
+				);
+			}
+
+			doc = '<table>';
+			doc += header();
+			for (var i = 0, num = inputs.length; i < num; i++) {
+				doc += data(inputs[i]);
+			}
+			doc += '</table>'
+			$('#inputs').empty();
+			$('#inputs').append(doc);
+
+			doc = '<table>';
+			doc += header();
+			for (var i = 0, num = outputs.length; i < num; i++) {
+				doc += data(outputs[i]);
+			}
+			doc += '</table>'
+			$('#outputs').empty();
+			$('#outputs').append(doc);
+
+			for (var uid in connected.inputs) {
+				var i = search(uid, inputs);
+				if (i >= 0) {
+					if (!connected.inputs[uid]) {
+						connected.inputs[uid] = true;
+						midi.input.connect(inputs[i]);
+					}
+					$('#inputs tr:eq(' + (i + 1) + ') .connect').prop('checked', true);
+				} else {
+					connected.inputs[uid] = false;
+				}
+			}
+
+			for (var uid in connected.outputs) {
+				var i = search(uid, outputs);
+				if (i >= 0) {
+					if (!connected.outputs[uid]) {
+						connected.outputs[uid] = true;
+						midi.output.connect(outputs[i]);
+					}
+					$('#outputs tr:eq(' + (i + 1) + ') .connect').prop('checked', true);
+				} else {
+					connected.outputs[uid] = false;
+				}
+			}
+		}
+
+		window.onbeforeunload = function() {
+			$native.seq.stop();
+			midi.input.disconnect();
+			midi.output.disconnect();
+		}
+		window.onpagehide = window.onbeforeunload; /* for iOS Safari */
+
+		list();
+
+		$native.seq.output(1);
+		$native.seq.mute(0);
+		$native.seq.transpose(0);
+		$native.seq.countin(0);
+
+		$event.start();
+	});
+
+	</script>
+
+	<script src="ble_midi_devices.js"></script>
+	<script src="smf_player.js"></script>
+
+</body>
+</html>

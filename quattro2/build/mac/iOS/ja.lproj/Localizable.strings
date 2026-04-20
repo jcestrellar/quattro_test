@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+*/
+
+"!OK" = "OK";
+"!CANCEL" = "キャンセル";
+"!YES" = "はい";
+"!NO" = "いいえ";
+"!CLOSE" = "閉じる";
+
+"!SAVE" = "保存";
+"!ENTER_FILE_NAME" = "ファイル名を入力してください。";
+"!FILE_NAME" = "ファイル名";
+"!ENTER_FOLDER_NAME" = "フォルダ名を入力してください。";
+"!FOLDER_NAME" = "フォルダ名";
+"!OVERWRITE" = "既存のファイルを置き換えますか？";
+"!CANNOT_OVERWRITE" = "保存できません。";
+"!EXISTS_SAME_FOLDER" = "同名のフォルダが既に存在しています。";
+
+"!PURCHASE" = "アイテム購入";
+"!PAYMENT_NOT_AUTHORIZED" = "アプリ内課金が許可されていません。";
+"!PRODUCT_NOT_AVAILABLE" = "このアイテムは購入できません。";
+"!COULD_NOT_BE_PURCHASED" = "アイテムを購入できませんでした。";
+"!RECEIPT_VALIDATION_ERROR" = "レシートの検証でエラーが発生しました。";

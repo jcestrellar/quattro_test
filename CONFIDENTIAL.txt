@@ -1,0 +1,13 @@
+営業秘密 関係者外秘：
+このリポジトリ内のフォルダ下にある全てのファイルは関係者外秘です。
+これらは必要な関係者にのみ共有されます。
+
+2024年4月1日
+ローランド株式会社
+
+CONFIDENTIALITY NOTICE:
+All files under folders in these repositories are confidential.
+These are shared only with the necessary persons concerned.
+
+April 1, 2024
+Roland Corporation

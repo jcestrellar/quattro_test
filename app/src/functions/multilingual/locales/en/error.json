@@ -1,0 +1,29 @@
+{
+  "BLE_TRANSPORT_LOST": "The connection to the device was lost. Please return to the previous screen and reconnect.",
+  "TIMEOUT_OR_UNKNOWN": "No response was received from the device. Please wait a moment and try again.",
+  "API_ERROR": "Failed to communicate with the server. Please check your internet connection.",
+
+  "NOT_WIFI": "This QR code is not for Wi-Fi setup. Please scan a valid QR code.",
+  "UNSUPPORTED_FORMAT": "This QR code format is not supported. Please enter the network information manually.",
+  "INVALID_CONTENT": "Failed to read the QR code. Please enter the network information manually.",
+
+  "ERR_TOKEN": "Authentication failed. Please sign out and sign in again.",
+  "ERR_MAC": "Failed to retrieve device information. Please restart the device and try again.",
+  "ERR_SAVE": "Failed to save the settings. Please restart the device and try again.",
+  "ERR_FATAL": "Failed to connect to Wi-Fi. Please check your input and network environment, then try again.",
+
+  "ERR_PARAMS": "There is an issue with the input. Please check your entries.",
+  "NO_SSID": "The specified Wi-Fi network could not be found. Please check the SSID and try again.",
+  "WRONG_SECURITY": "Failed to connect to Wi-Fi. Please check your input and try again.",
+  "WRONG_PASSWORD": "The password is incorrect. Please enter the correct password and try again.",
+  "ERR_DHCP": "Network connection failed. Please check your Wi-Fi router settings and connection status.",
+
+  "GENERIC_ERROR": "An error occurred. If the issue persists, please provide the following code.",
+
+  "If the problem persists, please provide the following code to support.": "",
+  "Error Code": "",
+
+  "Device not found": "",
+  "Please check your Bluetooth settings and device power.": "",
+  "Please check the browser selection screen": ""
+}

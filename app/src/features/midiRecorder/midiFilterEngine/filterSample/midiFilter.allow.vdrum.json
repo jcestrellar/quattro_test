@@ -1,0 +1,13 @@
+{
+  "channel": {
+    "channelVoice": {
+      "noteOff": { "channels": [] },
+      "noteOn": { "channels": [] },
+      "polyphonicKeyPressure": { "channels": [] },
+      "controlChange": {
+        "channels": [],
+        "controllers": [1, 2, 4, 11, 16, 17, 18, 19, 80, 81, 82, 83, 88]
+      }
+    }
+  }
+}

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Storage &amp; Security</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p>Storage KEY: <input type="text" id="key" /></p>
+	<p>
+		<button id="save">SAVE</button>
+		<button id="restore">RESTORE</button>
+	</p>
+
+		<textarea cols=60 rows=4 id="edit"></textarea>
+
+	<p>
+		<button id="encipher">PROTECT</button>
+		<button id="decipher">UNPROTECT</button>
+	</p>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		var app = $native.app;
+		var security = $native.security;
+
+		$('#save').on('click', function(e) {
+			var key = $('#key').val();
+			if (key) {
+				app.storage2(key, $('#edit').val());
+			} else {
+				app.storage($('#edit').val());
+			}
+		});
+
+		$('#restore').on('click', function(e) {
+			var key = $('#key').val();
+			if (key) {
+				$('#edit').val(app.storage2(key));
+			} else {
+				$('#edit').val(app.storage());
+			}
+		});
+
+		$('#encipher').on('click', function(e) {
+			var text = $('#edit').val();
+			if (text) {
+				var data = security.encipher(text);
+				if (data) {
+					$('#edit').val(data);
+				} else {
+					alert('encipher error!');
+				}
+			}
+		});
+
+		$('#decipher').on('click', function(e) {
+			var data = $('#edit').val();
+			if (data) {
+				var text = security.decipher(data);
+				if (text) {
+					$('#edit').val(text);
+				} else {
+					alert('decipher error!');
+				}
+			}
+		});
+
+	});
+
+	</script>
+
+</body>
+</html>

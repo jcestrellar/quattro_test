@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Crypto</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p>
+		<input type="radio" name="alg" id="aes" checked="checked" />AES128
+		<input type="radio" name="alg" id="des" />3DES
+	</p>
+	<p>KEY/IV (HEX): <input type="text" id="key" /></p>
+	<p>
+		<button id="encrypt">ENCRYPTION</button>
+		<button id="decrypt">DECRYPTION</button>
+	</p>
+		<textarea cols=60 rows=4 id="edit"></textarea>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		var security = $native.security;
+		var util = $native.util;
+
+		var uuid = security.uuidgen();
+		$('#key').val(uuid ? uuid.replace(/-/g, '') : '');
+
+		$('#encrypt').on('click', function(e) {
+			var text = $('#edit').val();
+			if (text) {
+				var key = $('#key').val();
+				var data = $('#aes:checked').val() ?
+						security.aes.encrypt(util.bytes(text), key) :
+						security.des.encrypt(util.bytes(text), key);
+				if (data) {
+					$('#edit').val(data);
+				} else {
+					alert('encryption error!');
+				}
+			}
+		});
+
+		$('#decrypt').on('click', function(e) {
+			var data = $('#edit').val();
+			if (data) {
+				var key = $('#key').val();
+				var bytes = $('#aes:checked').val() ?
+						security.aes.decrypt(data, key) :
+						security.des.decrypt(data, key);
+				if (bytes) {
+					$('#edit').val(util.text(bytes));
+				} else {
+					alert('decryption error!');
+				}
+			}
+		});
+
+	});
+
+	</script>
+
+</body>
+</html>

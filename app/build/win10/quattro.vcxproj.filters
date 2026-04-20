@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Libraries">
+      <UniqueIdentifier>{ff37e3b0-7ab2-4165-aeb8-89b0cd3db94a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\Audio">
+      <UniqueIdentifier>{95bfb2a9-8b66-41da-b8a3-9954760cbb0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\Common">
+      <UniqueIdentifier>{3638af4f-4bc4-40d9-8113-b809d5aacb90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\MIDIClient">
+      <UniqueIdentifier>{9b20af4e-beb6-4562-b120-fd3cd6added6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\Network">
+      <UniqueIdentifier>{3d1cf4c1-493e-40b6-885a-0c38fa12bb75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\RolandWirelessConnect">
+      <UniqueIdentifier>{6e0405cd-c899-4385-b7a1-16a7a6da94b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\Sound">
+      <UniqueIdentifier>{3d8b77dc-22cb-46eb-bb24-2777903a8eed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\JavascriptInterface">
+      <UniqueIdentifier>{7311a1d4-d7bc-4e9d-b2e1-39a0dc4c7f64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSources\Audio">
+      <UniqueIdentifier>{bbb140df-2b30-44a6-b0ad-37ebc2800e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSources\Resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include=".\Resources\app.ico">
+      <Filter>AppSources\Resources</Filter>
+    </Image>
+    <Image Include=".\Resources\doc.ico">
+      <Filter>AppSources\Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include=".\Resources\resource.rc">
+      <Filter>AppSources\Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioConverter.h">
+      <Filter>Libraries\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioDevice.h">
+      <Filter>Libraries\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioInputStream.h">
+      <Filter>Libraries\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioInputUnit.h">
+      <Filter>Libraries\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioOutputStream.h">
+      <Filter>Libraries\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioOutputUnit.h">
+      <Filter>Libraries\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioPlayer.h">
+      <Filter>Libraries\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioRecorder.h">
+      <Filter>Libraries\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\AudioVolume.h">
+      <Filter>Libraries\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Audio\SamplePlayer.h">
+      <Filter>Libraries\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Common\Bundle.h">
+      <Filter>Libraries\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Common\Crypto.h">
+      <Filter>Libraries\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Common\FSEvent.h">
+      <Filter>Libraries\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Common\Process.h">
+      <Filter>Libraries\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Common\Registry.h">
+      <Filter>Libraries\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Common\Thread.h">
+      <Filter>Libraries\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Common\Timer.h">
+      <Filter>Libraries\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Common\VolumeEject.h">
+      <Filter>Libraries\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\MIDIClient\MIDIClient.h">
+      <Filter>Libraries\MIDIClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\MIDIClient\MIDIInputEndpoint.h">
+      <Filter>Libraries\MIDIClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\MIDIClient\MIDIInputPort.h">
+      <Filter>Libraries\MIDIClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\MIDIClient\MIDIOutputEndpoint.h">
+      <Filter>Libraries\MIDIClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\MIDIClient\MIDIOutputPort.h">
+      <Filter>Libraries\MIDIClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Network\HTTPConnection.h">
+      <Filter>Libraries\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Network\HTTPDownload.h">
+      <Filter>Libraries\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Network\HTTPTask.h">
+      <Filter>Libraries\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Network\HTTPUpload.h">
+      <Filter>Libraries\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Network\NetServiceDiscovery.h">
+      <Filter>Libraries\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Network\Socket.h">
+      <Filter>Libraries\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Network\TCPIPClient.h">
+      <Filter>Libraries\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCAudioInputStream.h">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCAudioOutputStream.h">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCConnection.h">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCDiscovery.h">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCMIDIService.h">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCNetClient.h">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCNetServer.h">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCProtocol.h">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Sound\Sequencer.h">
+      <Filter>Libraries\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Sound\SoundEngine.h">
+      <Filter>Libraries\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\Sound\TGIF.h">
+      <Filter>Libraries\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall.h">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeConverters.h">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeObjects.h">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\JavaScriptInterface.h">
+      <Filter>Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\quattro2\win10\WebView2Controller.h">
+      <Filter>Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include=".\Resources\resource.h">
+      <Filter>AppSources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\ExtSamplePlayer.h">
+      <Filter>AppSources\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AppWebViewController.h">
+      <Filter>AppSources</Filter>
+    </ClInclude>
+    <ClInclude Include=".\security.h">
+      <Filter>AppSources</Filter>
+    </ClInclude>
+    <ClInclude Include=".\Resources\version.h">
+      <Filter>AppSources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\AudioConverter.cpp">
+      <Filter>Libraries\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\AudioDevice.cpp">
+      <Filter>Libraries\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\AudioInputUnit.cpp">
+      <Filter>Libraries\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\AudioOutputUnit.cpp">
+      <Filter>Libraries\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\AudioPlayer.cpp">
+      <Filter>Libraries\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\AudioRecorder.cpp">
+      <Filter>Libraries\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\AudioVolume.cpp">
+      <Filter>Libraries\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Audio\SamplePlayer.cpp">
+      <Filter>Libraries\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Common\Bundle.cpp">
+      <Filter>Libraries\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Common\Crypto.cpp">
+      <Filter>Libraries\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Common\FSEvent.cpp">
+      <Filter>Libraries\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Common\initguid.cpp">
+      <Filter>Libraries\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Common\Process.cpp">
+      <Filter>Libraries\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Common\Registry.cpp">
+      <Filter>Libraries\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Common\Thread.cpp">
+      <Filter>Libraries\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Common\Timer.cpp">
+      <Filter>Libraries\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Common\VolumeEject.cpp">
+      <Filter>Libraries\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\MIDIClient\MIDIClient.cpp">
+      <Filter>Libraries\MIDIClient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\MIDIClient\MIDIInputEndpoint.cpp">
+      <Filter>Libraries\MIDIClient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\MIDIClient\MIDIInputPort.cpp">
+      <Filter>Libraries\MIDIClient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\MIDIClient\MIDIOutputPort.cpp">
+      <Filter>Libraries\MIDIClient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Network\HTTPConnection.cpp">
+      <Filter>Libraries\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Network\HTTPDownload.cpp">
+      <Filter>Libraries\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Network\HTTPTask.cpp">
+      <Filter>Libraries\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Network\HTTPUpload.cpp">
+      <Filter>Libraries\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Network\NetServiceDiscovery.cpp">
+      <Filter>Libraries\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Network\Socket.cpp">
+      <Filter>Libraries\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Network\TCPIPClient.cpp">
+      <Filter>Libraries\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCAudioInputStream.cpp">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCAudioOutputStream.cpp">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCConnection.cpp">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCDiscovery.cpp">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCMIDIService.cpp">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCNetClient.cpp">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\RolandWirelessConnect\RWCNetServer.cpp">
+      <Filter>Libraries\RolandWirelessConnect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Sound\Sequencer.cpp">
+      <Filter>Libraries\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Sound\SoundEngine.cpp">
+      <Filter>Libraries\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\Sound\TGIF.cpp">
+      <Filter>Libraries\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+app.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+audio.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+ble.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+fs.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+http.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+midi.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+midix.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+netservice.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+player.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+recorder.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+rwc.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+sampler.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+security.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+seq.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+sh.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+store.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+tcpip.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+tgif.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeCall+util.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeConverters.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface\NativeObjects.cpp">
+      <Filter>Libraries\JavascriptInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\JavaScriptInterface.cpp">
+      <Filter>Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\WebView2Controller.cpp">
+      <Filter>Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\quattro2\win10\winmain.cpp">
+      <Filter>Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\ExtSamplePlayer.cpp">
+      <Filter>AppSources\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AppWebViewController.cpp">
+      <Filter>AppSources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natvis" />
+  </ItemGroup>
+</Project>

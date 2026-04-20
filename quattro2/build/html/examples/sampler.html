@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sampler</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+
+	<style type="text/css"><!--
+		.playing { color:#f00; }
+		.box { width: 80%; }
+	--></style>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p>Audio Output Device: <select id="outputs"></select></p>
+
+	<p><button id="stop-all">Stop All</button></p>
+
+	<table id="sampler">
+		<tr>
+			<th>File</th>
+			<th>Control <button id="play-all">Play All</button></th>
+			<th>Volume</th>
+			<th>Repeat</th>
+			<th>Speed/Pitch</th>
+			<th>FadeIn/FadeOut</th>
+		</tr>
+	</table>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		var MAX_PAD = 9;
+
+		var sampler = $native.sampler;
+
+		sampler.create(MAX_PAD);
+
+		$('#play-all').on('click', function(){
+			for (var pad = 0, max = MAX_PAD; pad < max; pad++) {
+				sampler.play(pad);
+			}
+		});
+		$('#stop-all').on('click', function(){
+			sampler.stop();
+		});
+
+		$('#sampler').on('click', '.open', function(){
+			var pad = $(this).closest('tr').index() - 1;
+			$native.fs.event.openfilename = function(file) {
+				if (file) {
+					if (!sampler.open(pad, file)) {
+						$('.file').eq(pad).text('');
+						alert('openfailed\n' + file);
+					} else {
+						var totaltime = sampler.totaltime(pad);
+						$('.file').eq(pad).text(file.split($native.fs.separator()).pop());
+						$('.totaltime').eq(pad).text(TIME(totaltime));
+						$('.time').eq(pad).attr('max', totaltime);
+						$('.beg').eq(pad).attr('max', totaltime);
+						$('.beg').eq(pad).val(0);
+						$('.begtime').eq(pad).text(TIME(0));
+						$('.end').eq(pad).attr('max', totaltime);
+						$('.end').eq(pad).val(totaltime);
+						$('.endtime').eq(pad).text(TIME(totaltime));
+						$('speed').val(sampler.speed(pad) * 100);
+						$('rate').text(sampler.speed(pad).toFixed(2));
+						$('pitch').val(sampler.pitch(pad));
+						$('cent').text(sampler.pitch(pad));
+					}
+				}
+			};
+			var filter = [ 'wav', 'aiff', 'mp3', 'm4a', 'mp4' ];
+			$native.fs.openfilename(filter);
+		});
+		$('#sampler').on('click', '.play', function(){
+			var pad = $(this).closest('tr').index() - 1;
+			sampler.play(pad);
+		});
+		$('#sampler').on('click', '.pause', function(){
+			var pad = $(this).closest('tr').index() - 1;
+			sampler.pause(pad);
+		});
+		$('#sampler').on('click', '.stop', function(){
+			var pad = $(this).closest('tr').index() - 1;
+			sampler.stop(pad);
+		});
+		$('#sampler').on('input', '.time', function(e) {
+			clearInterval(timer);
+		});
+		$('#sampler').on('change', '.time', function(e) {
+			var pad = $(this).closest('tr').index() - 1;
+			sampler.locate(pad, $(this).val() * 1);
+			timer = setInterval(update_status, 100);
+		});
+		$('#sampler').on('change', '.beg', function(e){
+			var pad = $(this).closest('tr').index() - 1;
+			var v = $(this).val() * 1;
+			v = sampler.begin(pad, v);
+			$(this).val(v);
+			$(this).next().text(TIME(v));
+		});
+		$('#sampler').on('change', '.end', function(){
+			var pad = $(this).closest('tr').index() - 1;
+			var v = $(this).val() * 1;
+			var max = $(this).attr('max') * 1;
+			v = sampler.end(pad, (max - v));
+			$(this).val(max - v);
+			$(this).next().text(TIME(max - v));
+		});
+		$('#sampler').on('change', '.volume', function(){
+			var pad = $(this).closest('tr').index() - 1;
+			var v = sampler.volume(pad, $(this).val() / 100);
+			$(this).next().text(v.toFixed(2));
+		});
+		$('#sampler').on('change', '.repeat', function(){
+			var pad = $(this).closest('tr').index() - 1;
+			sampler.repeat(pad, $(this).val() * 1);
+		});
+		$('#sampler').on('change', '.speed', function(){
+			var pad = $(this).closest('tr').index() - 1;
+			var v = sampler.speed(pad, $(this).val() / 100);
+			$(this).next().text(v.toFixed(2));
+		});
+		$('#sampler').on('change', '.pitch', function(){
+			var pad = $(this).closest('tr').index() - 1;
+			var v = sampler.pitch(pad, $(this).val() * 1);
+			$(this).next().text(v);
+		});
+		$('#sampler').on('change', '.fadein', function(){
+			var pad = $(this).closest('tr').index() - 1;
+			var v = sampler.fadein(pad, $(this).val() / 10);
+			$(this).next().text(TIME(v));
+		});
+		$('#sampler').on('change', '.fadeout', function(){
+			var pad = $(this).closest('tr').index() - 1;
+			var v = sampler.fadeout(pad, $(this).val() / 10);
+			$(this).next().text(TIME(v));
+		});
+
+		for (var pad = 0, max = MAX_PAD; pad < max; pad++) {
+			var doc = (
+				'<tr>' +
+				'<td><button class="open">OPEN #' + (pad + 1) + ' ...</button><br>' +
+						'<strong class="file"></strong><br>' +
+					'</td>' +
+				'<td>' +
+					'<button class="play">PLAY</button>' +
+					'<button class="pause">PAUSE</button>' +
+					'<button class="stop">STOP</button><br>' +
+					'<input type="range" class="time" min="0" max="0" /><strong class="totaltime"></strong><br>' +
+					'<input type="range" class="beg" min="0" max="0" /><strong class="begtime"></strong> (BEGIN)<br>' +
+					'<input type="range" class="end" min="0" max="0" /><strong class="endtime"></strong> (END)' +
+					'</td>' +
+				'<td>' +
+					'<input type="range" class="volume" min="0" max="100" /><strong class="gain"></strong><br>' +
+					'L: <span class="box"><span class="meter meter0">.</span></span><br>' +
+					'R: <span class="box"><span class="meter meter1">.</span></span>' +
+					'</td>' +
+				'<td><select class="repeat">' +
+						'<option value="-1">LOOP</option>' +
+						'<option value="0" >0</option>' +
+						'<option value="1" >1</option>' +
+						'<option value="2" >2</option>' +
+					'</select></td>' +
+				'<td>' +
+					'<input type="range" class="speed" min="50" max="200" /><strong class="rate"></strong><br>' +
+					'<input type="range" class="pitch" min="-2400" max="2400" /><strong class="cent"></strong>' +
+					'</td>' +
+				'<td>' +
+					'<input type="range" class="fadein" min="0" max="100" /><strong class="fadein-time"></strong><br>' +
+					'<input type="range" class="fadeout" min="0" max="100" /><strong class="fadeout-time"></strong>' +
+					'</td>' +
+				'</tr>'
+			);
+			$('#sampler').append(doc);
+
+			var file = sampler.file(pad);
+			var name = file ? file.split($native.fs.separator()).pop() : '---';
+			$('tr:last-child .file').text(name);
+			var totaltime = sampler.totaltime(pad);
+			$('tr:last-child .totaltime').text(TIME(totaltime));
+			$('tr:last-child .time').attr('max', totaltime);
+			$('tr:last-child .beg').attr('max', totaltime);
+			$('tr:last-child .beg').val(sampler.begin(pad));
+			$('tr:last-child .begtime').text(TIME(sampler.begin(pad)));
+			$('tr:last-child .end').attr('max', totaltime);
+			$('tr:last-child .end').val(totaltime - sampler.end(pad));
+			$('tr:last-child .endtime').text(TIME(totaltime - sampler.end(pad)));
+
+			$('tr:last-child .volume').val(sampler.volume(pad) * 100);
+			$('tr:last-child .gain').text(sampler.volume(pad).toFixed(2));
+
+			$('tr:last-child .repeat').val(sampler.repeat(pad));
+
+			$('tr:last-child .speed').val(sampler.speed(pad) * 100);
+			$('tr:last-child .rate').text(sampler.speed(pad).toFixed(2));
+			$('tr:last-child .pitch').val(sampler.pitch(pad));
+			$('tr:last-child .cent').text(sampler.pitch(pad));
+
+			$('tr:last-child .fadein').val(sampler.fadein(pad) * 10);
+			$('tr:last-child .fadein-time').text(TIME(sampler.fadein(pad)));
+			$('tr:last-child .fadeout').val(sampler.fadeout(pad) * 10);
+			$('tr:last-child .fadeout-time').text(TIME(sampler.fadeout(pad)));
+		}
+
+		function update_status() {
+			var status = sampler.status();
+			if (!status) return;
+			for (var pad = 0, max = MAX_PAD; pad < max; pad++) {
+				$('.stop' ).eq(pad).css('background', '#eee');
+				$('.play' ).eq(pad).css('background', '#eee');
+				$('.pause').eq(pad).css('background', '#eee');
+				switch (status[pad].state) {
+					case 0: /* stop */
+						break;
+					case 1: /* stopping */
+						$('.stop').eq(pad).css('background', '#fd8');
+						break;
+					case 2: /* play */
+						$('.play').eq(pad).css('background', '#fd8');
+						break;
+					case 3: /* pause */
+						$('.pause').eq(pad).css('background', '#fd8');
+						break;
+				}
+				$('.time').eq(pad).val(status[pad].time);
+				var channels = status[pad].peakpower.length;
+				for (var ch = 0; ch < channels; ch++) {
+					v = status[pad].peakpower[ch];
+					v = ((120 + v) / 120) * 100;
+					$('.meter' + ch).eq(pad).css('width', Math.floor(v) + '%');
+				}
+			}
+		}
+		var timer = setInterval(update_status, 100);
+
+		$('#outputs').on('change', function(){
+			for (var pad = 0, max = MAX_PAD; pad < max; pad++) {
+				sampler.device(pad, $(this).val());
+			}
+			$('#outputs').val(sampler.device(0));
+		});
+
+		$native.audio.event.changed = function() {
+			var doc = '<option value="">(default)</option>';
+			var devs = $native.audio.outputs();
+			for (var i = 0, num = devs.length; i < num; i++) {
+				var uid = devs[i].AudioDeviceUIDKey;
+				var current = devs[i].AudioDeviceCurrentKey ? ' (*)' : '';
+				var desc = (
+					devs[i].AudioDeviceNameKey + ' - ' +
+					devs[i].AudioDeviceSampleRateKey + '/' +
+					devs[i].AudioDeviceBitDepthKey + '/' +
+					devs[i].AudioDeviceChannelsKey + current
+				);
+				doc += (
+					'<option value="' + uid + '">' + desc + '</option>'
+				);
+			}
+			$('#outputs').empty();
+			$('#outputs').append(doc);
+
+			var uid = sampler.device(0);
+			/* If the uid device does not exist, set to the default device */
+			if (uid && !$('option[value="' + uid + '"]').length) {
+				for (var pad = 0, max = MAX_PAD; pad < max; pad++) {
+					sampler.device(pad, '');
+				}
+			} else {
+				$('#outputs').val(uid);
+			}
+		};
+		$native.audio.event.changed();
+
+		window.onbeforeunload = function() {
+			sampler.stop();
+		}
+		window.onpagehide = window.onbeforeunload; /* for iOS Safari */
+
+		$event.start();
+
+		function TIME(time) {
+			var mm = Math.floor(time / 60);
+			var ss = Math.floor(time % 60);
+			return (mm + ':' + ss);
+		}
+
+		$("body").keypress(function(e){
+			if (49 <= e.which && e.which < 49 + MAX_PAD) {
+				sampler.play(e.which - 49);
+			}
+		});
+
+	});
+
+	</script>
+
+</body>
+</html>

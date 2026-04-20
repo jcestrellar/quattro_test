@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Roland Cloud</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="../rcp_log.js"></script>
+	<script src="jquery.js"></script>
+	<style type="text/css"><!--
+		.auth { display:none; }
+		#e-mail, #password { width: 20em; }
+	--></style>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p>
+		<button id="privacy-policy">Open Privacy Policy...</button>
+		<button class="auth" id="sign-out">Sign Out</button>
+	</p>
+
+	<table class="auth">
+		<tr><td>e-mail</td><td><input type="text" id="e-mail" placeholder="someone@example.com" /></td></tr>
+		<tr><td>Password</td><td><input type="password" id="password" /></td></tr>
+	</table>
+	<p>
+		<button class="auth" id="sign-in">Sign In</button>
+		<button class="auth" id="sso">SSO...</button>
+	</p>
+
+	<p>RCP_log:</p>
+	<p>
+		<button id="opt-in">Opt In</button>
+		<button id="opt-out">Opt Out</button>
+		<button id="post-event">Post Event</button>
+		<button id="opt-delete">Delete User Logs</button>
+	</p>
+	<ul id="inspect"></ul>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		var SERVICE = 'quattro2';
+		var CLIENT_ID = '2dhaejqvph6m5bi5hu7mse2nu6';
+
+		var RCPAPI = 'https://test-rcpapi.roland.com';
+		var RCPSVC = 'https://test-rcpsvc.roland.com';
+
+		var X_SCHEME = 'x-roland.' + CLIENT_ID;
+		var REDIRECT_URI = 'https://test-auth.roland.com/verify/' + X_SCHEME + '/redirect';
+		if ((navigator.userAgent.indexOf('quattro(iOS)') >= 0) ||
+			(navigator.userAgent.indexOf('quattro(Android)') >= 0)) {
+			REDIRECT_URI = 'https://dev-app-content.roland.com/' +  SERVICE + '/redirect';
+		}
+
+		var rcplog = new RCPLog(RCPSVC + '/log/' + SERVICE, true);
+
+		var verifies = {};
+		var tokens = {};
+		var timer = null;
+
+		$('#e-mail').val(localStorage.getItem('e-mail'));
+
+		$('#privacy-policy').on('click', function(e) {
+			var url = 'https://www.roland.com/privacy';
+			$native.fs.exec(url);
+		});
+
+		$('#sso').on('click', function() {
+			PKCE().then(function(code) {
+				state = Math.random().toString(36).substr(2, 9);
+				verifies[state] = code.verifier;
+				var params = {
+					client_id: CLIENT_ID,
+					state: state,
+					code_challenge: code.challenge,
+					redirect_uri: encodeURIComponent(REDIRECT_URI)
+				};
+				var url = RCPAPI + '/oauth2/authorize?' + new URLSearchParams(params);
+				request(url).then(function(response) {
+					$native.app.webauth(response.redirectUrl, X_SCHEME);
+				}).catch(function(err) {
+					alert(err.message);
+				});
+			});
+		});
+
+		$native.app.event.command = function(param1, param2) {
+			if ((param1 == 'url') && param2) {
+				var query = param2.split('?')[1];
+				if (query && (query.substring(0, 16) == '53616c7465645f5f' /* "Salted__" */)) {
+					var salt = query.substring(16, 32);
+					var kiv = $native.security.kiv(salt);
+					var dec = $native.security.aes.decrypt(query.substring(32), kiv);
+					query = $native.util.text(dec);
+				}
+				var params = {};
+				if (query) {
+					query.split('&').forEach(function(elm){
+						_ = elm.split(/=/);
+						params[_[0]] = _[1];
+					});
+				}
+				var code = params['code'];
+				var state = params['state'];
+				if (code && state && verifies[state]) {
+					oauth2_tokens(code, verifies[state]);
+					delete verifies[state];
+				}
+			}
+		}
+
+		$('#sign-in').on('click', function() {
+			var email = $('#e-mail').val();
+			var password = $('#password').val();
+			if (email && password) {
+				$('.auth').hide();
+				var url = RCPAPI + '/client/' + CLIENT_ID + '/signin';
+				request(url, JSON.stringify({
+					email: email, password: password
+				})).then(function(response) {
+					tokens = response;
+					localStorage.setItem('e-mail', email);
+					localStorage.setItem('refresh_token', tokens.refreshToken);
+					rcplog.user(tokens.idToken);
+					timer = setTimeout(refresh, expiresIn() * 1000);
+					$('#sign-out').show();
+				}).catch(function(err) {
+					alert(err.message);
+					$('.auth:not(#sign-out)').show();
+				});
+			}
+		});
+
+		$('#sign-out').on('click', function() {
+			if (timer) {
+				clearTimeout(timer);
+				timer = null;
+			}
+			var token = localStorage.getItem('refresh_token');
+			if (token) {
+				var url = RCPAPI + '/oauth2/signout';
+				request(url, JSON.stringify({
+					refreshToken: token
+				})).then(function(response) {
+					tokens = {};
+					localStorage.removeItem('refresh_token');
+					$('.auth').hide();
+					$('.auth:not(#sign-out)').show();
+				}).catch(function(err) {
+					alert(err.message);
+				});
+			}
+		});
+
+		rcplog.inspect = function(str) { /* for debugging, not actually needed. */
+			if ($('#inspect > li').length > 10) {
+				$('#inspect > li:first').remove();
+			}
+			$('#inspect').append('<li>' + str + '</li>');
+		}
+
+		$('#opt-in').on('click', function() {
+			rcplog.optin();
+		});
+
+		$('#opt-out').on('click', function() {
+			rcplog.optout();
+		});
+
+		var counter = 0;
+		$('#post-event').on('click', function() {
+			rcplog.post('dummy_event', { count: counter++ });
+		});
+
+		$('#opt-delete').on('click', function() {
+			rcplog.remove(tokens.idToken).then(function() {
+				alert('deleted');
+			}).catch(function(status) {
+				if (status == 404) {
+					alert('no logs');
+				} else {
+					alert('xhr error ' + status);
+				}
+			});
+		});
+
+		function PKCE() {
+			return new Promise(function(resolve) {
+				/* generate code_verifier */
+				var array = new Uint8Array(64);
+				crypto.getRandomValues(array);
+				var verifier = Array.from(array, function(x) {
+					return ('0' + x.toString(16)).substr(-2)
+				}).join('')
+				/* code_challenge = BASE64URL(SHA256(verifier)) */
+				var uint8 = new TextEncoder().encode(verifier);
+				crypto.subtle.digest('SHA-256', uint8).then(function(digest) {
+					var str = '';
+					var array = new Uint8Array(digest);
+					for (var i = 0; i < array.byteLength; i++) {
+						str += String.fromCharCode(array[i])
+					}
+					var challenge = window.btoa(str)
+							.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+					resolve({
+						verifier: verifier,
+						challenge: challenge
+					});
+				});
+			});
+		}
+
+		function oauth2_tokens(code, verifier) {
+			$('.auth').hide();
+			if (timer) clearTimeout(timer);
+			var url = RCPAPI + '/oauth2/token';
+			request(url, JSON.stringify({
+				client_id: CLIENT_ID,
+				code: code,
+				codeVerifier: verifier
+			})).then(function(response) {
+				tokens = response;
+				localStorage.setItem('refresh_token', tokens.refreshToken);
+				rcplog.user(tokens.idToken);
+				timer = setTimeout(refresh, expiresIn() * 1000);
+				$('#sign-out').show();
+			}).catch(function(err) {
+				alert(err.message);
+				refresh(); /* try refresh token */
+			});
+		}
+
+		function refresh() {
+			timer = null;
+			var token = localStorage.getItem('refresh_token');
+			if (token) {
+				var url = RCPAPI + '/client/' + CLIENT_ID + '/tokens/refresh';
+				request(url, JSON.stringify({
+					token: token
+				})).then(function(response) {
+					tokens = response;
+					rcplog.user(tokens.idToken);
+					timer = setTimeout(refresh, expiresIn() * 1000);
+					$('#sign-out').show();
+				}).catch(function(err) {
+					$('.auth').hide();
+					$('.auth:not(#sign-out)').show();
+				});
+			} else {
+				$('.auth:not(#sign-out)').show();
+			}
+		}
+
+		function request(url, body) {
+			return new Promise(function(resolve, reject) {
+				var xhr = new XMLHttpRequest();
+				xhr.open(body ? 'POST' : 'GET', url);
+				if (body) {
+					xhr.setRequestHeader('Content-Type', 'application/json');
+				}
+				xhr.onload = function() {
+					try {
+						if (xhr.status == 200) {
+							resolve(JSON.parse(xhr.responseText));
+						} else {
+							var res = JSON.parse(xhr.responseText);
+							throw new Error(res.error);
+						}
+					} catch(e) {
+						reject(e);
+					}
+				};
+				xhr.onerror = xhr.ontimeout = function() {
+					reject(new Error('network error'));
+				};
+				xhr.send(body);
+			});
+		}
+
+		function expiresIn() {
+			var expires_in = 3600;
+			try {
+				var cognito = JSON.parse(atob(tokens.idToken.split('.')[1]));
+				if (cognito && cognito.exp) {
+					expires_in = cognito.exp - Math.floor(Date.now() / 1000);
+				}
+			} catch(e) {};
+			return (expires_in - 300); /* refresh before 5 min */
+		}
+
+		refresh();
+
+		$event.start();
+
+	});
+
+	</script>
+
+</body>
+</html>

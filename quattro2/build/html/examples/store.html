@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>In-App Purchase</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p>Account: <input type="text" id="account" /></p>
+	<p>Product Identifiers:</p>
+		<textarea cols=60 rows=6 id="products"></textarea>
+	<p><button id="query">QUERY</button></p>
+
+	<h3>(for iOS StoreKit - Consumable)</h3>
+	<p>Quantity: <input type="number" id="quantity" min="1" max="10" value="1" /></p>
+
+	<h3>(for Android Billing Library - Subscription)</h3>
+	<p>Old Subscription Plan: <select id="old"></select></p>
+	<p>Proration Mode: <select id="proration">
+		<option value="1">1:WITH_TIME_PRORATION</option>
+		<option value="2">2:CHARGE_PRORATED_PRICE</option>
+		<option value="3">3:WITHOUT_PRORATION</option>
+		<option value="5">5:CHARGE_FULL_PRICE</option>
+		<option value="6">6:DEFERRED</option>
+	</select></p>
+
+	<div id="details"></div>
+
+	<p><button id="recover">RECOVER</button></p>
+
+	<p>Receipt:</p>
+		<ul id="receipt"></ul>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		$('#account').val($native.security.uuidgen())
+
+		$('#products').val([
+			'com.example.product.001',
+			'com.example.product.002',
+			'com.example.subscription.003',
+			'com.example.subscription.004',
+		].join('\n'));
+
+		var details = [];
+
+		var store = $native.store;
+
+		store.event = {
+			reply: function(_details) {
+				details = JSON.parse(_details);
+				list();
+			},
+			changed: function(id, state) {
+				for (var i = 0, num = details.length; i < num; i++) {
+					if (details[i].id == id) {
+						var msg = [ '', '(purchasing...)', 'PENDING...', '(receipt)', 'PURCHASED' ];
+						if (state == 4 /* PURCHASED */) list();
+						$('#details .state').eq(i).text(msg[state]);
+						return;
+					}
+				}
+			},
+			purchased: function(receipt, signature) {
+				if ($('#receipt > li').length > 10) {
+					$('#receipt > li:first').remove();
+				}
+				$('#receipt').append('<li>' + receipt + '</li>');
+				store.accept(JSON.parse(receipt));
+			},
+			revoked: function(products) {
+				alert('revoked: ' + products);
+			}
+		}
+
+		$('#query').on('click', function(e) {
+			var products = $('#products').val().trim().split('\n');
+			if (products && products[0]) {
+				store.query(products);
+			}
+		});
+
+		$('#details').on('click', '.purchase', function(e) {
+			var i = $(this).closest('tr').index() - 1;
+			var params = {
+				type: details[i].type,
+				id: details[i].id,
+				quantity: $('#quantity').val() * 1,
+				account: $('#account').val()
+			};
+			var old = $('#old').val();
+			if (old) {
+				params.old = old;
+				params.proration = ($('#proration').val() * 1);
+			}
+			store.launchflow(params);
+		});
+
+		$('#details').on('click', '.google', function(e) {
+			var i = $(this).closest('tr').index() - 1;
+			var url = 'https://play.google.com/store/account/subscriptions';
+			var sku = encodeURIComponent(details[i].id);
+			var package = encodeURIComponent('jp.co.roland.quattro.android');
+			$native.fs.exec(url + '?sku=' + sku + '&package=' + package);
+		});
+
+		$('#recover').on('click', function(e) {
+			store.recover();
+		});
+
+		function list() {
+
+			function header() {
+				return (
+					'<tr>' +
+					'<th>id</th>' +
+					'<th>purchase</th>' +
+					'<th>state</th>' +
+					'<th>title</th>' +
+					'<th>desc</th>' +
+					'<th>price</th>' +
+					'<th>freetrial</th>' +
+					'<th>introductory</th>' +
+					'<th>payupfront</th>' +
+					'<th></th>' +
+					'</tr>'
+				);
+			}
+
+			function line(detail) {
+				var price = detail.price;
+				var freetrial = '---';
+				var introductory = '---';
+				if (detail.subscription) {
+					price += (' / ' + detail.subscription);
+					if (detail.freetrial) {
+						freetrial = detail.freetrial;
+					}
+					if (detail.introductory) {
+						introductory = (detail.introprice + ' / ' + detail.introductory);
+					}
+				}
+				var google = (detail.type == 'subs') ? '<button class="google">Google Play</button>' : '';
+				return (
+					'<tr>' +
+					'<td>' + detail.id + '</td>' +
+					'<td><button class="purchase">GET</button></td>' +
+					'<td class="state"></td>' +
+					'<td>' + detail.title + '</td>' +
+					'<td>' + detail.desc + '</td>' +
+					'<td>' + price + '</td>' +
+					'<td>' + freetrial + '</td>' +
+					'<td>' + introductory + '</td>' +
+					'<td>' + detail.payupfront + '</td>' +
+					'<td>' + google + '</td>' +
+					'</tr>'
+				);
+			}
+
+			var doc = '<table>' + header();
+			for (var i = 0, num = details.length; i < num; i++) {
+				doc += line(details[i]);
+			}
+			doc += '</table>'
+			$('#details').empty();
+			$('#details').append(doc);
+
+			doc = '<option></option>';
+			for (var i = 0, num = details.length; i < num; i++) {
+				if (details[i].type == 'subs') {
+					doc += '<option>' + details[i].id +'</option>';
+				}
+			}
+			$('#old').empty();
+			$('#old').append(doc);
+		}
+
+		$event.start();
+		
+	});
+
+	</script>
+
+</body>
+</html>

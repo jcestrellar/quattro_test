@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Audio Recorder</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p>Audio Input Device: <select id="inputs"></select></p>
+	<p>( <button id="check">CHECK LEVEL</button> )</p>
+	<p>Recording Format:
+		<select id="format">
+			<option value="0">AAC 256K</option>
+			<option value="1">AAC 192K</option>
+			<option value="2">AAC 128K</option>
+			<option value="3">AAC 64K</option>
+			<option value="4">WAV</option>
+		</select>
+		<button id="record">REC</button><button id="stop">STOP</button></p>
+	<p>Recording File: <strong id="file"></strong></p>
+	<p>Recording Time: <strong id="time"></strong></p>
+	<p>Input Level: <input type="range" id="volume" min="0" max="100" /><strong id="gain"></strong></p>
+	<p>L: <span class="box"><span class="meter" id="meterL">.</span></span></p>
+	<p>R: <span class="box"><span class="meter" id="meterR">.</span></span></p>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		$("#format").val(2);
+
+		var recorder = $native.recorder;
+		var fs = $native.fs;
+
+		recorder.event = {
+			unauthorized: function() {
+				if (confirm('Microphone unauthorized! Open "Settings"?')) {
+					if (navigator.userAgent.indexOf('quattro(Mac)') >= 0) {
+						$native.fs.exec('x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone');
+					} else {
+						$native.fs.exec('app-settings:');
+					}
+				}
+			},
+			stop: function(file) {
+				var name = (new Date()).toLocaleString();
+				name = name.replace(/\\|\/|:|\*|\?|"|<|>|\|/g, '_');
+				var ext = file.slice(file.lastIndexOf('.') + 1);
+				fs.event.savefilename = function(to) {
+					if (to) {
+						try { fs.unlink(to); } catch (e) {}
+						fs.move(file, to);
+						$('#file').text(to);
+					} else {
+						fs.unlink(file);
+					}
+				};
+				fs.savefilename(name, ext);
+			},
+			error: function(file) {
+				alert('error\n' + file);
+			}
+		};
+
+		$('#record').on('click', function(e) {
+			if (recorder.status() == 1) { /* 0:stop, 1:record: 2:pause */
+				recorder.pause();
+			} else {
+				if (!recorder.file()) {
+					var format = $("#format").val();
+					var name = 'record.' + ((format == 4) ? 'wav' : 'm4a');
+					var file = fs.path('temporary') + name;
+					if (!recorder.create(file, format)) {
+						alert('createfailed\n' + file);
+						return;
+					}
+					$('#file').text(file);
+				}
+				recorder.record();
+			}
+		});
+
+		$('#stop').on('click', function(e) {
+			recorder.stop();
+		});
+
+		$('#check').on('click', function(e) {
+			if (recorder.status()) {
+				recorder.stop();
+			} else {
+				recorder.record();
+			}
+		});
+
+		$('#volume').on('change', function(e) {
+			var v = recorder.volume($(this).val() / 100);
+			$('#gain').text(v.toFixed(1));
+		});
+
+		$('#file').val(recorder.file());
+		$('#volume').val(recorder.volume() * 100);
+		$('#gain').text(recorder.volume().toFixed(1));
+
+		function update() {
+
+			var status = recorder.status();
+			$('#record').text((status == 1) ? 'PAUSE' : 'REC');
+
+			var time = recorder.time();
+			var mm = Math.floor(time / 60);
+			var ss = Math.floor(time % 60);
+			$('#time').text(mm + ':' + ss);
+
+			var ch = recorder.channels();
+			if (ch > 0) {
+				v = recorder.peakpower(0);
+				v = ((120 + v) / 120) * 100;
+				$('#meterL').css('width', Math.floor(v) + '%');
+			} else {
+				$('#meterL').css("width", "0%");
+			}
+			if (ch > 1) {
+				v = recorder.peakpower(1);
+				v = ((120 + v) / 120) * 100;
+				$('#meterR').css('width', Math.floor(v) + '%');
+			} else {
+				$('#meterR').css("width", "0%");
+			}
+
+		};
+
+		setInterval(update, 50);
+
+		$('#inputs').on('change', function(){
+			var uid = recorder.device($(this).val());
+			$('#inputs').val(uid);
+		});
+
+		$native.audio.event.changed = function() {
+			var doc = '<option value="">(default)</option>';
+			var devs = $native.audio.inputs();
+			for (var i = 0, num = devs.length; i < num; i++) {
+				var uid = devs[i].AudioDeviceUIDKey;
+				var current = devs[i].AudioDeviceCurrentKey ? ' (*)' : '';
+				var desc = (
+					devs[i].AudioDeviceNameKey + ' - ' +
+					devs[i].AudioDeviceSampleRateKey + '/' +
+					devs[i].AudioDeviceBitDepthKey + '/' +
+					devs[i].AudioDeviceChannelsKey + current
+				);
+				doc += (
+					'<option value="' + uid + '">' + desc + '</option>'
+				);
+			}
+			$('#inputs').empty();
+			$('#inputs').append(doc);
+
+			var uid = recorder.device();
+			if (uid && !$('option[value="' + uid + '"]').length) {
+				recorder.device('');
+			} else {
+				$('#inputs').val(uid);
+			}
+		};
+		$native.audio.event.changed();
+
+		$event.start();
+
+	});
+
+	</script>
+
+</body>
+</html>

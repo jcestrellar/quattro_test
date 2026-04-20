@@ -1,0 +1,1311 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=9">
+	<title>API Reference</title>
+	<script src="jquery.js"></script>
+
+	<style type="text/css"><!--
+		div#list { border: 2px solid #888; margin: 2px; padding: 2px; }
+		div.detail { border: 2px solid #888; margin: 2px; padding: 2px; }
+		.cls_category { font-size: 120%; font-weight: bold; }
+		.cls_category.event { font-size: 110%; font-weight: bold; }
+		.cls_title { font-weight: bold; }
+		.cls_param { font-style: italic; }
+		.cls_return { font-style: italic; }
+		.cls_note { color:#48A; }
+		.cls_atention { color:#f00; font-weight: bold; }
+	--></style>
+
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<div id="list"></div>
+	<div id="desc"></div>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		var id = 0;
+		var list = '';
+		var desc = '';
+		var text = $('#text').text();
+
+		var categories = $.grep(text.split('@category'), function(e){return e !== ''});
+		for (var i = 0; i < categories.length; i++) {
+			createlist(categories[i]);
+		}
+
+		function createlist(category) {
+			var methods = $.grep(category.split('@method'), function(e){return e !== ''});
+			var str = methods.shift();
+			if (str.indexOf('.event') == -1) {
+				list += '<p class="cls_category">' + str + '</p>';
+			} else {
+				list += '<p class="cls_category.event">' + str + '</p>';
+			}
+			list += '<ul>';
+			for (var i = 0; i < methods.length; i++, id++) {
+				str = methods[i].substring(0, methods[i].indexOf('\n'));
+				list += '<li><a href="#' + id + '">' + str + '</a></li>';
+				createdesc(methods[i]);
+			}
+			list += '</ul>';
+		}
+
+		function createdesc(method) {
+			var elements = method.split('\n');
+			var title = elements.shift();
+			desc += '<div class="detail"><a name="' + id + '"><p class="cls_title">' + title + '</p>';
+			var cls = 'cls_description';
+			for (var i = 0; i < elements.length; i++) {
+				var str = elements[i];
+				     if (str.indexOf('@param') === 0) { cls = 'cls_param'; }
+				else if (str.indexOf('@return') === 0) { cls = 'cls_return'; }
+				else if (str.indexOf('@note') === 0) { cls = 'cls_note'; }
+				else if (str.indexOf('@atention') === 0) { cls = 'cls_atention'; }
+				desc += '<p class="' + cls + '">' + elements[i] + '</p>';
+			}
+			desc += '</div>';
+		}
+
+		$('#list').append(list);
+		$('#desc').append(desc);
+
+	});
+
+	</script>
+
+
+
+<pre id="text" style="display:none;">
+
+@category $native
+
+@method stop()
+@note
+iOS の場合は applicationDidEnterBackground 時に、Android の場合は Activity.onStop() 時に通知されます。
+
+@method restart()
+@note
+iOS の場合は applicationWillEnterForeground 時に、Android の場合は Activity.onRestart() 時に通知されます。
+
+@category $native.app
+
+@method app.exit()
+アプリケーションを終了します。
+
+@method app.device()
+端末情報を取得します。
+@return {Object} 端末情報オブジェクト
+端末情報オブジェクトのプロパティ
+  - model {String} 端末の機種
+  - os {String} 端末の OS 情報（OS 名、バージョン）
+  - id {String} 端末の固有 ID（UUIDv4 形式）
+@note
+端末の固有 ID は、アンインストール後の再インストールで、変化する場合があります。
+
+@method app.version()
+ネイティブ側で設定されたバージョン情報を取得します。
+@return {Object} バージョン情報オブジェクト
+バージョン情報オブジェクトのプロパティ
+  - name {String} バージョン文字列
+  - code {Number} ビルド番号
+  - ctime {String} アプリケーションのインストール日時（ISO 8601 形式）
+  - mtime {String} アプリケーションの更新日時（ISO 8601 形式）
+
+@method app.locale()
+システムのロケール情報を取得します。
+@return {String} 現在のロケール情報（"en-US" や "ja-JP" 等）
+
+@method app.storage([data])
+ローカル環境にデータを永続的に保存します。また、保存したデータの取得を行います。
+@param option data {String} 保存する文字列
+@return {String} 最後に保存した文字列
+@note
+引数 data を指定した場合は、data の保存処理を行います。
+引数 data がない場合は、最後に保存した data を戻り値として返します。
+保存する文字数が 32K（0x8000）を超える場合は、app.storage2(key, [data]) を使用してください。
+
+@method app.storage2(key, [data])
+キーを指定して、ローカル環境にデータを永続的に保存します。また、保存したデータの取得を行います。
+@param key {String} 保存するキー
+@param option data {String} 保存する文字列
+@return {String} 最後に保存した文字列
+@note
+引数 data を指定した場合は、指定したキーに data を保存します。
+引数 data がない場合は、指定したキーに保存された data を戻り値として返します。
+@atention 'pref' と先頭が '__' で始まる文字列は、予約語のためキーには使用できません。
+
+@method app.clipboard([data])
+ローカル環境にデータを一時的に保存します。また、保存したデータの取得を行います。
+@param option data {String} 保存する文字列
+@return {String} 最後に保存した文字列
+@note
+引数 data を指定した場合は、data の保存処理を行います。
+引数 data がない場合は、最後に保存した data を戻り値として返します。
+
+@method app.importfile([filter], [multiple])
+iCloudDrive や GoogleDrive などの外部ストレージからファイルをインポートします。インポートされたファイルのパスは、app.event.command('import', file) で通知されます。
+@param option filter {Object} フィルタオブジェクト
+@param option multiple {Boolean} 複数選択可（true）／不可（false）
+@note
+フィルタオブジェクトのプロパティ（参考：audio_player.html）
+  - uti {Array} UTI 文字列の配列（iOS用）
+  - mime {Array} MIME 文字列の配列（Android用）
+@atention iOS/Android のみ対応です。
+インポートされたファイルのパスは 60 秒程度で無効になります。
+
+@method app.exportfile(file)
+iCloudDrive や GoogleDrive などの外部ストレージへ、ファイルをエクスポートします。
+@param file {String} エクスポートするファイルのパス
+@atention iOS/Android のみ対応です。
+@note
+file をパスの配列（JSON形式）にすると、外部ストレージのフォルダ内へ、複数ファイルを一括コピーします。
+フォルダ内に同名のファイルが存在する場合は、上書きコピーされます。
+
+@method app.control(request)
+リクエスト文字列をネイティブ側に送り、独自実装された処理を行います。
+@param request {String} リクエスト文字列
+@note
+ネイティブ側では、以下の関数でリクエスト文字列を受け取ることができます。
+  - win10：AppWebViewController.cpp ... void control(CStringW req)
+  - macOS/iOS：AppWebViewController.m ... - (void)nativeControl:(NSString *)request
+  - android：AppMainActivity.java ... public void control(final String request)
+
+@method app.webauth(url, [scheme])
+外部ブラウザを起動し、url で指定された OAuth 認証ページを表示します。
+@param url {String} OAuth 認証用 URL
+@param option scheme {String} 認証コード取得用のカスタム URL スキーム
+@note
+認証コードは、Universal Links/AppLinks や カスタム URL スキーム を利用して、app.event.command('url', url) で取得します。
+
+@method app.barcode()
+カメラを起動し、QR コードの読み取りを開始します。読み取ったデータは、app.event.command('barcode', text) で通知されます。
+@atention iOS/Android のみ対応です。
+
+@category $native.app.event
+
+@method app.event.command(param1, param2)
+ネイティブで発生したコマンドを通知します。
+@param param1 {String} コマンドパラメータ1（実装依存）
+@param param2 {String} コマンドパラメータ2（実装依存）
+@note
+以下のコマンドがシステムで使用されています。
+  - app.event.command('exit') ... アプリケーションの終了通知（#define ENABLE_APP_EXIT が必要）
+  - app.event.command('open', file) ...  オープンするファイルの通知
+  - app.event.command('download', url) ... ダウンロードする url の通知
+  - app.event.command('import', file) ... インポートしたファイルの通知（複数選択可の場合は、file はパスの配列）
+  - app.event.command('export', url) ... エクスポート先の url の通知（キャンセルした場合は、url は ''（空文字））
+  - app.event.command('url', url) ... Universal Links/AppLinks や カスタム URL スキーム による通知
+  - app.event.command('barcode', text) ... QR コードの読み取り通知（キャンセルした場合は、text は ''（空文字））
+
+@category $native.midi
+
+@method midi.input.endpoints()
+MIDI入力エンドポイントの一覧を取得します。
+@return {Array} MIDI入力エンドポイントオブジェクトの配列
+@note
+MIDI入力エンドポイントオブジェクトのプロパティ
+  - MIDIDeviceNameKey {String} デバイス名
+  - MIDIEntityNameKey {String} エンティティ名
+  - MIDIEndpointUIDKey {String} UID
+  - MIDIEndpointIndexKey {Number} インデックス番号
+
+@method midi.input.connect([ep])
+MIDI入力エンドポイントと接続します。ep を指定しない場合は、すべてのエンドポイントと接続します。
+@param option ep {Object} MIDI入力エンドポイントオブジェクト
+
+@method midi.input.disconnect([ep])
+MIDI入力エンドポイントと切断します。ep を指定しない場合は、すべてのエンドポイントと切断します。
+@param option ep {Object} MIDI入力エンドポイントオブジェクト
+
+@method midi.output.endpoints()
+MIDI出力エンドポイントの一覧を取得します。
+@return {Array} MIDI出力エンドポイントオブジェクトの配列
+@note
+MIDI出力エンドポイントオブジェクトのプロパティ
+  - MIDIDeviceNameKey {String} デバイス名
+  - MIDIEntityNameKey {String} エンティティ名
+  - MIDIEndpointUIDKey {String} UID
+  - MIDIEndpointIndexKey {Number} インデックス番号
+
+@method midi.output.connect([ep])
+MIDI出力エンドポイントと接続します。ep を指定しない場合は、すべてのエンドポイントと接続します。
+@param option ep {Object} MIDI出力エンドポイントオブジェクト
+
+@method midi.output.disconnect([ep])
+MIDI出力エンドポイントと切断します。ep を指定しない場合は、すべてのエンドポイントと切断します。
+@param option ep {Object} MIDI出力エンドポイントオブジェクト
+
+@method midi.send(msg)
+接続しているMIDI出力エンドポイントへ、MIDIメッセージを送信します。
+@param msg {String} 送信するMIDIメッセージ文字列（HEX 形式）
+@note
+送信例）send('90607F');
+
+@method midi.panel()
+MIDIパネルを表示します。
+@note
+MIDIパネルは、プラットフォームによって以下が表示されます
+  - Windows：設定 > Bluetooth とその他のデバイス
+  - macOS：ユーティリティ > Audio MIDI 設定
+  - iOS：Bluetooth MIDI Devices
+  - Android：Bluetooth MIDI Devices
+
+@category $native.midi.event
+
+@method midi.event.message(msg, timestamp)
+MIDI メッセージを受信すると通知されます。
+@param msg {String} 受信した MIDI メッセージ（HEX形式）
+@param timestamp {String} 受信時のタイムスタンプ(ミリ秒)
+
+@method midi.event.changed()
+MIDIデバイスがシステムに追加、削除されたときに通知されます。
+
+@method midi.event.connectfailed(ep)
+MIDIエンドポイントの接続に失敗したときに通知されます。
+@param ep {String} 接続に失敗したMIDIエンドポイントオブジェクト（JSON形式）
+
+@method midi.event.error(code)
+MIDI通信でエラーが発生した場合に通知されます。
+@param code {String} システムのエラー番号
+
+@category $native.tgif
+
+@method tgif.device([uid])
+音源のオーディオ出力デバイスを設定、取得します。引数に uid を指定しない場合は、取得のみを行います。
+@param option uid {String} オーディオ出力デバイスの UID
+@return {String} 現在のオーディオ出力デバイスの UID
+@note
+uid に ''（空文字）を設定した場合は、標準のオーディオ出力が選択されます。
+
+@method tgif.param(pid, [value])
+pid で指定された音源パラメータ値を value に変更します。引数に value を指定しない場合は、現在の設定値を返します。
+@param pid {Number} パラメータID
+@param option value {Number} 設定値
+@return {Number} 現在の設定値
+
+@method tgif.send(msg, [msg2])
+音源に、MIDIメッセージを送信します。
+@param msg {String} 送信するMIDIメッセージ文字列（HEX 形式）
+@param option msg2 {String} 17 ～ 32 ch 拡張分（HEX 形式）
+
+@method tgif.thru(enable)
+MIDI Thru 機能の有効／無効を切り替えます。有効にすると、接続しているMIDI入力からのMIDIメッセージを、直接音源に送信します。
+@param enable {Boolean} 有効（true）／無効（false）
+
+@method tgif.buffer([num])
+オーディオ出力用のバッファ数を変更します。引数に num を指定しない場合は、現在のバッファ数を返します。
+@param option num {Number} バッファ数（0、1 ～ 5）
+@return {Number} 現在のバッファ数
+@note
+バッファ数に 0 を指定した場合は、システム推奨のバッファ値が設定されます。
+@atention 
+macOS/iOS では、バッファ数の設定はできません。バッファ数を取得した場合、-1 を返します。
+
+@category $native.seq
+
+@method seq.load(data, [cue])
+シーケンサーに SMF データをロードします。引数に cue を指定しない場合は、再生開始位置はトラック先頭になります。
+@param data {String} SMF データ（HEX 表記）
+@param option cue {Boolean} 最初にノート情報がある位置まで再生開始位置を頭出しする（true）／頭出ししない（false）
+@return {Boolean} ロードに成功した場合は true を、失敗した場合は false を返します。
+@atention SMF は Format 0/1 のみ対応です。
+
+@method seq.play([loop])
+シーケンサーのデータを、再生します。引数に loop を指定しない場合は、通常再生（トラック終端で停止）を行います。
+@param option loop {Boolean} ループ再生（true）／通常再生（false）
+
+@method seq.pause()
+シーケンサーの再生を、一時停止します。
+
+@method seq.stop()
+シーケンサーの再生を、停止します。
+
+@method seq.locate(beats)
+シーケンサーの再生位置を拍単位で変更します。
+@param beats {Number} 変更する位置（拍数）
+
+@method seq.range([beatsA, beatsB])
+シーケンサーの再生範囲を拍単位で設定、取得します。引数を指定しない場合は、取得のみを行います。
+@param option beatsA {Number} 開始位置（拍数）
+@param option beatsB {Number} 終了位置（拍数）
+@return {Array} 現在の範囲（[0]：開始位置、[1]：終了位置）
+
+@method seq.tempo([bpm])
+シーケンサーのテンポ（BPM）を設定、取得します。bpm の範囲は 10 ～ 480 です。引数に bpm を指定しない場合は、取得のみを行います。
+@param option bpm {Number} 設定するテンポ（BPM）
+@return {Number} 現在のテンポ（BPM）
+
+@method seq.mute([channels])
+ミュートするチャンネル情報を設定、取得します。引数に channels を指定しない場合は、取得のみを行います。
+@param option channels {Number} ミュートするチャンネル情報（ビット列、LSB:CH1）
+@return {Number} ミュート中のチャンネル情報（ビット列、LSB:CH1）
+@note
+CH17でテンポ情報をミュート可能です。
+
+@method seq.transpose([shift])
+音程のシフト値（半音単位）を設定、取得します。引数に shift を指定しない場合は、取得のみを行います。
+@param option shift {Number} 設定するシフト値
+@return {Number} 現在のシフト値
+@note
+CH10（既定のドラムパート）以外のノート情報をシフトします。
+
+@method seq.countin([bars])
+カウント・インの小節数を設定、取得します。bars に 0 を設定した場合は、カウント・インは行われません。引数に bars を指定しない場合は、取得のみを行います。
+@param option bars {Number} 設定する小節数
+@return {Number} 現在の小節数
+
+@method seq.metro([on])
+メトロノームのオン／オフを設定、取得します。引数に on を指定しない場合は、取得のみを行います。
+@param option on {Boolean} オン（true）／オフ（false）
+@return {Boolean} 現在のオン／オフ
+
+@method seq.metroset(notes)
+メトロノームの拍ごとのノート情報を設定します。
+@param notes {Array} ノート情報の配列
+@note
+例）metroset(['99227F', '99217F'])
+配列の要素がメトロノームの拍数より少ない場合は、配列の最後の要素を利用します。
+17 ～ 32 ch を指定する場合は、先頭に 'F5 + {後続のバイト数}' を追加してください。
+例）metroset(['F503' + '90227F', 'F503' + '90217F'])
+
+@method seq.countset(notes)
+カウント・インの拍ごとのノート情報を設定します。
+@param notes {Array} ノート情報の配列
+
+@method seq.position()
+現在の再生位置を拍単位で返します。
+@return {Number} 再生位置（拍数）
+
+@method seq.totalbeats()
+SMF データのトータルの拍数を返します。
+@return {Number} トータルの拍数
+
+@method seq.measure([beats])
+指定された拍位置での小節情報を取得します。引数に beats を指定しない場合は、現在の再生位置で取得します。
+@param option beats {Number} 位置（拍数）
+@return {Array} 小節情報
+@note
+小節情報の配列要素
+  - [0] {Number} 拍数
+  - [1] {Number} 拍子記号（分子）
+  - [2] {Number} 拍子記号（分母）
+  - [3] {Number} メトロノーム1拍あたりの長さ（24 = 4分音符）
+  - [4] {Number} 小節数
+  - [5] {Number} 小節内での拍数（整数部）
+  - [6] {Number} 小節内での拍数（小数部）
+  - [7] {Number} カウント・イン中の残りのカウント数
+
+@method seq.info()
+シーケンス情報を取得します。
+@return {Object} シーケンス情報オブジェクト
+@note
+シーケンス情報オブジェクトのプロパティ
+  - title {String} タイトル名（シーケンス名）
+  - copyright {String} 著作権表示
+
+@method seq.output(type)
+シーケンサーの出力先を設定します。初期設定は、音源 (0) です。
+@param type {Number} 0:音源／1:MIDI出力／2:MIDI入力イベント
+
+@category $native.seq.event
+
+@method seq.event.stop()
+シーケンサーの再生が停止したときに通知されます。
+
+@method seq.event.tempo(bpm)
+シーケンサーにより、テンポが変更されたときに通知されます。
+@param bpm {String} 現在のテンポ（BPM）
+
+@category $native.player
+
+@method player.device([uid])
+オーディオ再生用の出力デバイスを設定、取得します。引数に uid を指定しない場合は、取得のみを行います。
+@param option uid {String} オーディオ出力デバイスの UID
+@return {String} 現在のオーディオ出力デバイスの UID
+@note
+uid に ''（空文字）を設定した場合は、標準のオーディオ出力が選択されます。
+
+@method player.open(file)
+再生するオーディオファイルをオープンします。
+@param file {String} 再生するオーディオファイルのパス
+@return {Boolean} オープンに成功した場合は true を、失敗した場合は false を返します。
+
+@method player.play()
+オーディオファイルを、再生します。
+
+@method player.pause()
+オーディオファイルの再生を、一時停止します。
+
+@method player.stop()
+オーディオファイルの再生を、停止します。
+
+@method player.locate(time)
+オーディオの再生位置を変更します。
+@param time {Number} 変更する再生時間（秒）
+@note
+オーディオ再生中に、再生位置を変更すると、再生は停止します。
+
+@method player.volume([gain])
+オーディオ出力のゲインを調整、取得します。gain の範囲は 0.0 ～ 1.0 です。引数に gain を指定しない場合は、取得のみを行います。
+@param option gain {Number} 設定するオーディオ出力のゲイン値
+@return {Number} 現在のオーディオ出力のゲイン値
+
+@method player.speed([rate])
+オーディオの再生速度を設定、取得します。rate の範囲は 0.5 ～ 2.0 です。引数に rate を指定しない場合は、取得のみを行います。
+@param option rate {Number} 設定する再生速度
+@return {Number} 現在の再生速度
+@atention macOS/iOS/Android のみ対応です。
+
+@method player.pitch([cent])
+オーディオの再生ピッチを設定、取得します。cent の範囲は -2400.0 ～ 2400.0 です。引数に cent を指定しない場合は、取得のみを行います。
+@param option cent {Number} 設定するセント値
+@return {Number} 現在のセント値
+@atention macOS/iOS/Android のみ対応です。
+
+@method player.file()
+現在オープンしているオーディオファイルのパスを返します。オープンしているファイルがない場合は、''（空文字）を返します。
+@return {String} オーディオファイルのパス
+
+@method player.status()
+現在のオーディオ再生の状態を返します。
+@return {Number} ステータス番号
+@note
+以下のステータス番号が返ります。
+  - 0 (停止中)
+  - 1 (再生中)
+  - 2 (一時停止中)
+
+@method player.channels()
+オーディオ出力のチャンネル数を返します。
+@return {Number} チャンネル数
+
+@method player.peakpower(channel)
+channelで指定されたオーディオ出力のピーク値（dB）を返します。範囲は -120.0 〜 0.0 です。
+@param channel {Number} チャンネル番号（0:左チャンネル, 1:右チャンネル）
+@return {Number} ピーク値（dB）
+
+@method player.time()
+現在のオーディオ再生時間（秒）を返します。
+@return {Number} オーディオ再生時間（秒）
+
+@method player.totaltime()
+オーディオファイルのトータル時間（秒）を返します。
+@return {Number} オーディオのトータル時間（秒）
+
+@category $native.player.event
+
+@method player.event.eof(file)
+再生が曲の終わりに達すると通知されます。
+@param file {String} オーディオファイルのパス
+
+@method player.event.stop(file)
+オーディオ再生が終了したときに通知されます。
+@param file {String} オーディオファイルのパス
+
+@method player.event.error(file)
+オーディオ再生中に、エラーが発生したときに通知されます。
+@param file {String} オーディオファイルのパス
+
+@category $native.recorder
+
+@method recorder.device([uid])
+オーディオ録音用の入力デバイスを設定、取得します。引数に uid を指定しない場合は、取得のみを行います。
+@param option uid {String} オーディオ入力デバイスの UID
+@return {String} 現在のオーディオ入力デバイスの UID
+@note
+uid に ''（空文字）を設定した場合は、標準のオーディオ入力が選択されます。
+
+@method recorder.create(file, format)
+オーディオ録音用のファイルを作成します。
+@param file {String} 作成するファイルのパス
+@param format {Number} 指定する録音形式
+@return {Boolean} ファイルの作成に成功した場合は true を、失敗した場合は false を返します。
+@note
+録音形式は、以下の値が指定できます。
+  - 0 (AAC 256K)
+  - 1 (AAC 192K)
+  - 2 (AAC 128K)
+  - 3 (AAC  64K)
+  - 4 (WAV 44100Hz/16bit)
+@atention Windows は、AAC 256K/64K は非対応です。
+
+@method recorder.record()
+オーディオの録音を、開始します。
+
+@method recorder.pause()
+オーディオの録音を、一時停止します。
+
+@method recorder.stop()
+オーディオの録音を、停止します。
+
+@method recorder.volume([gain])
+オーディオの入力ゲインを調整、取得します。gain の範囲は 0.0 ～ 1.0 です。引数に gain を指定しない場合は、取得のみを行います。
+@param option gain {Number} 設定するオーディオ入力のゲイン
+@return {Number} 現在のオーディオ入力のゲイン
+
+@method recorder.file()
+オーディオ録音ファイルのパスを返します。録音中のファイルがない場合は、''（空文字）を返します。
+@return {String} オーディオ録音ファイルのパス
+
+@method recorder.status()
+現在のオーディオ録音の状態を返します。
+@return {Number} ステータス番号
+@note
+以下のステータスが返ります。
+  - 0 (停止中)
+  - 1 (録音中)
+  - 2 (一時停止中)
+
+@method recorder.channels()
+オーディオ入力のチャンネル数を返します。
+@return {Number} チャンネル数
+
+@method recorder.peakpower(channel)
+channelで指定されたオーディオ入力のピーク値（dB）を返します。範囲は -120.0 〜 0.0 です。
+@param channel {Number} チャンネル番号（0:左チャンネル, 1:右チャンネル）
+@return {Number} ピーク値（dB）
+
+@method recorder.time()
+現在のオーディオ録音時間（秒）を返します。
+@return {Number} オーディオ録音時間（秒）
+
+@category $native.recorder.event
+
+@method recorder.event.unauthorized()
+オーディオ録音開始時、マイク入力の利用が許可されていない場合に通知されます。
+
+@method recorder.event.stop(file)
+オーディオ録音が終了したときに通知されます。
+@param file {String} オーディオ録音ファイルのパス
+
+@method recorder.event.error(file)
+オーディオ録音中に、エラーが発生したときに通知されます
+@param file {String} オーディオ録音ファイルのパス
+
+@category $native.sampler
+
+@method sampler.create(num)
+num 個のプレーヤーを作成します。2 回目以降の呼び出しは、無視されます。
+@param num {Number} 作成するプレーヤー数
+
+@method sampler.device(id, [uid])
+再生用の出力デバイスを設定、取得します。引数に uid を指定しない場合は、取得のみを行います。
+@param id {Number} プレーヤーのインデックス番号
+@param option uid {String} オーディオ出力デバイスの UID
+@return {String} 現在のオーディオ出力デバイスの UID
+@note
+uid に ''（空文字）を設定した場合は、標準のオーディオ出力が選択されます。
+
+@method sampler.open(id, file)
+再生するオーディオファイルをオープンします。
+@param id {Number} プレーヤーのインデックス番号
+@param file {String} 再生するオーディオファイルのパス
+@return {Boolean} オープンに成功した場合は true を、失敗した場合は false を返します。
+
+@method sampler.close(id)
+オーディオ出力処理を停止し、オープンしたオーディオファイルをクローズします。
+@param id {Number} プレーヤーのインデックス番号
+
+@method sampler.play(id)
+オーディオファイルを、再生します。
+@param id {Number} プレーヤーのインデックス番号
+
+@method sampler.pause(id)
+オーディオファイルの再生を、一時停止します。
+@param id {Number} プレーヤーのインデックス番号
+
+@method sampler.stop([id, force])
+オーディオファイルの再生を、停止します。引数を指定しない場合は、作成した全プレーヤーを即座に停止します。
+@param id option {Number} プレーヤーのインデックス番号
+@param force option {Boolean} 即座に停止（true）／フェードアウト開始（false）
+
+@method sampler.locate(id, time)
+曲の再生位置を変更します。
+@param id {Number} プレーヤーのインデックス番号
+@param time {Number} 変更する再生時間（秒）
+
+@method sampler.begin(id, time)
+曲の再生開始位置を変更します。引数に time を指定しない場合は、設定時間の取得のみを行います。
+@param id {Number} プレーヤーのインデックス番号
+@param option time {Number} 変更する開始時間（秒）
+@return {Number} 現在の設定時間（秒）
+
+@method sampler.end(id, time)
+曲の終了位置を time 分だけ前にずらします。引数に time を指定しない場合は、設定時間の取得のみを行います。
+@param id {Number} プレーヤーのインデックス番号
+@param option time {Number} 曲の終了位置からの時間（秒）
+@return {Number} 現在の設定時間（秒）
+
+@method sampler.volume(id, [gain])
+オーディオ出力のゲインを調整、取得します。gain の範囲は 0.0 ～ 1.0 です。引数に gain を指定しない場合は、取得のみを行います。
+@param id {Number} プレーヤーのインデックス番号
+@param option gain {Number} 設定するオーディオ出力のゲイン値
+@return {Number} 現在のオーディオ出力のゲイン値
+
+@method sampler.repeat(id, [count])
+再生のリピート回数を設定、取得します。count に -1 を設定した場合は、無限にリピートします。引数に count を指定しない場合は、取得のみを行います。
+@param id {Number} プレーヤーのインデックス番号
+@param option count {Number} 設定するリピート回数
+@return {Number} 現在のリピート回数の設定値
+
+@method sampler.speed(id, [rate])
+再生速度を設定、取得します。rate の範囲は 0.5 ～ 2.0 です。引数に rate を指定しない場合は、取得のみを行います。
+@param id {Number} プレーヤーのインデックス番号
+@param option rate {Number} 設定する再生速度
+@return {Number} 現在の再生速度
+
+@method sampler.pitch(id, [cent])
+再生ピッチを設定、取得します。cent の範囲は -2400.0 ～ 2400.0 です。引数に cent を指定しない場合は、取得のみを行います。
+@param id {Number} プレーヤーのインデックス番号
+@param option cent {Number} 設定するセント値
+@return {Number} 現在のセント値
+
+@method sampler.fadein(id, [time])
+フェードイン時間を設定、取得します。引数に time を指定しない場合は、取得のみを行います。
+@param id {Number} プレーヤーのインデックス番号
+@param option time {Number} 設定するフェードイン時間（秒）
+@return {Number} 現在のフェードイン時間（秒）
+
+@method sampler.fadeout(id, [time])
+フェードアウト時間を設定、取得します。引数に time を指定しない場合は、取得のみを行います。
+@param id {Number} プレーヤーのインデックス番号
+@param option time {Number} 設定するフェードアウト時間（秒）
+@return {Number} 現在のフェードアウト時間（秒）
+
+@method sampler.control(id, params)
+任意の文字列をネイティブ側に送り、独自実装された処理を行います。
+@param id {Number} プレーヤーのインデックス番号
+@param params {String} 任意の文字列
+@return {String} 任意の文字列
+
+@method sampler.file(id)
+現在オープンしているオーディオファイルのパスを返します。オープンしているファイルがない場合は、''（空文字）を返します。
+@param id {Number} プレーヤーのインデックス番号
+@return {String} オーディオファイルのパス
+
+@method sampler.totaltime(id)
+オーディオファイルのトータル時間（秒）を返します。
+@param id {Number} プレーヤーのインデックス番号
+@return {Number} オーディオのトータル時間（秒）
+
+@method sampler.status()
+全プレーヤーの、現在のオーディオ再生の状態を返します。
+@return {Array} ステータス情報オブジェクトの配列
+@note
+ステータス情報オブジェクトのプロパティ
+  - time {Number} 現在のオーディオ再生時間（秒）
+  - state {Number} 現在のステート番号
+  - peakpower {Array} 現在のチャンネル毎のピーク値（dB）を返します。範囲は -120.0 〜 0.0 です。
+ステート番号
+  - 0 (停止中)
+  - 1 (フェードアウト中)
+  - 2 (再生中)
+  - 3 (一時停止中)
+
+@category $native.sampler.event
+
+@method sampler.event.eof(id, file)
+再生が曲の終わりに達すると通知されます。
+@param id {String} プレーヤーのインデックス番号
+@param file {String} オーディオファイルのパス
+
+@category $native.audio
+
+@method audio.inputs()
+オーディオ入力デバイスの一覧を取得します。
+@return {Array} オーディオデバイス情報オブジェクトの配列
+@note
+オーディオデバイス情報オブジェクトのプロパティ
+  - AudioDeviceNameKey {String} デバイス名
+  - AudioDeviceUIDKey {String} UID
+  - AudioDeviceChannelsKey {Number} チャンネル数
+  - AudioDeviceSampleRateKey {Number} サンプルレート
+  - AudioDeviceBitDepthKey {Number} ビット数
+  - AudioDeviceCurrentKey {Boolean} 標準デバイスの判別フラグ
+@atention Windows/macOS のみ対応です。
+
+@method audio.outputs()
+オーディオ出力デバイスの一覧を取得します。
+@return {Array} オーディオデバイス情報オブジェクトの配列
+@atention Windows/macOS のみ対応です。
+
+@method audio.format(file)
+指定されたファイルのオーディオ情報を取得します。
+@param file {String} オーディオファイルのパス
+@return {Object} オーディオ情報オブジェクト
+@note
+オーディオ情報オブジェクトのプロパティ
+  - format {String} エンコード形式
+  - channels {Number} チャンネル数
+  - samplerate {Number} サンプルレート
+  - bitdepth {Number} ビット数（PCM の場合に有効です。0 は IEEE_FLOAT を表します。）
+  - bitrate {Number} ビットレート
+  - duration {Number} オーディオのトータル時間（秒）
+
+@method audio.convert(file, out)
+オーディオファイルを指定した形式に変換します。結果は audio.event.converted || convertfailed で通知されます。
+@param file {String} 変換元のオーディオファイルのパス
+@param out {Object} 変換情報オブジェクト
+@note
+変換情報オブジェクトのプロパティ
+  - file {String} 出力するオーディオファイルのパス
+  - format {String} ファイル形式（"wav", "m4a", "mp3"）
+  - channels {Number} チャンネル数
+  - samplerate {Number} サンプルレート
+  - bitdepth {Number} ビット数（"wav" の場合に有効です。IEEE_FLOAT の場合は 0 を設定します。）
+  - bitrate {Number} ビットレート（"wav" の場合は無視されます。）
+@atention "mp3" への変換は Windows のみ対応です。
+
+@method audio.split(file, wavs)
+オーディオファイルをチャンネル毎に分割して、WAV 形式で保存します。結果は audio.event.converted || convertfailed で通知されます。
+@param file {String} 分割元のオーディオファイルのパス
+@param wavs {Array} 分割先の WAV ファイルのパスの配列
+@note
+分割先のチャンネル数は、MIN( file のチャンネル数 / wavs.length, 2 ) で計算されます。
+
+@method audio.reverse(file, wav)
+オーディオファイルの波形データを逆転して、WAV 形式で保存します。結果は audio.event.converted || convertfailed で通知されます。
+@param file {String} 変換元のオーディオファイルのパス
+@param wav {String} 変換先の WAV ファイルのパス
+
+@category $native.audio.event
+
+@method audio.event.changed()
+オーディオデバイスがシステムに追加、削除されたときに通知されます。
+
+@method audio.event.converted(file, outputs)
+オーディオファイルの変換が完了すると通知されます。
+@param file {String} 変換元のオーディオファイルのパス
+@param outputs {String} 変換したオーディオファイルのパスの配列（JSON形式）
+
+@method audio.event.convertfailed(file)
+オーディオファイルの変換が失敗した場合に通知されます。
+@param file {String} 変換元のオーディオファイルのパス
+
+@category $native.http
+
+@method http.download(url, [to])
+指定された url からダウンロード処理を開始します。保存先 to を指定しない場合は、自動的にテンポラリ以下にファイルが保存されます。
+@param url {String} ダウンロード先の URL
+@param option to {String} 保存先のファイルパス
+@return {Number} 処理識別子
+
+@method http.upload(url, file)
+指定された url へ file のアップロード処理を開始します。
+@param url {String} アップロード先の URL
+@param file {String} アップロードするファイルパス
+@return {Number} 処理識別子
+
+@method http.cancel(id)
+処理識別子のダウンロード／アップロード処理をキャンセルします。
+@param id {Number} 処理識別子
+
+@category $native.http.event
+
+@method http.event.progress(id, total, amount)
+ダウンロード／アップロードの進捗状況を通知します。
+@param id {String} 処理識別子
+@param total {String} ダウンロード／アップロードするファイルサイズ
+@param amount {String} 現在までにダウンロード／アップロードしたサイズ
+@note
+ダウンロード先のファイルサイズが不明の場合は、totalに -1 が入ります。
+
+@method http.event.completed(id, file)
+ダウンロード／アップロード処理が完了すると通知されます。
+@param id {String} 処理識別子
+@param file {String} ダウンロード／アップロードしたファイルパス
+
+@method http.event.error(id, url)
+ダウンロード／アップロード中にエラーが発生した場合に通知されます。
+@param id {String} 処理識別子
+@param url {String} エラーの発生したダウンロード／アップロード先の URL
+
+@category $native.fs
+
+@method fs.separator()
+パス区切り文字を取得します。
+@return {String} パス区切り文字
+
+@method fs.path(where)
+where で指定されたローカルパスを取得します。
+@param where {String} 取得するパスの指定
+@return {String} ディレクトリパス
+@note
+where には、以下が指定できます。
+  - home（ユーザーの'ホーム'ディレクトリ）
+  - documents（ユーザーの'ドキュメント'ディレクトリ）
+  - music（ユーザーの'ミュージック'ディレクトリ）
+  - movies（ユーザーの'ビデオ'ディレクトリ）
+  - pictures（ユーザーの'ピクチャ'ディレクトリ）
+  - downloads（ユーザーの'ダウンロード'ディレクトリ）
+  - library（アプリケーションの'ライブラリ'ディレクトリ）
+  - temporary（アプリケーションの'テンポラリ'ディレクトリ）
+  - bundle（アプリケーションのバンドルパス）
+
+@method fs.volumes()
+マウントされているボリューム情報を取得します。
+@return {Array} ボリューム情報オブジェクトの配列
+@note
+ボリューム情報オブジェクトのプロパティ
+  - volume {String} ボリューム名
+  - mount  {String} マウントパス
+
+@method fs.contents(path) throw Error
+path が示すディレクトリ情報を取得します。
+@param path {String} ディレクトリパス
+@return {Array} ディレクトリ情報オブジェクトの配列
+@note
+ディレクトリ情報オブジェクトのプロパティ
+  - name {String} ファイル名
+  - size {Number} ファイルサイズ
+  - directory {Boolean} ディレクトリフラグ
+  - readable {Boolean} 読み込み可能フラグ
+  - writable {Boolean} 書き込み可能フラグ
+  - deletable {Boolean} 削除可能フラグ
+
+@method fs.stat(path) throw Error
+path が示すファイル情報を取得します。
+@param path {String} ファイルパス
+@return {Object} ファイル情報オブジェクト
+@note
+ファイル情報オブジェクトのプロパティ
+  - name {String} ファイル名
+  - size {Number} ファイルサイズ
+  - directory {Boolean} ディレクトリフラグ
+  - readable {Boolean} 読み込み可能フラグ
+  - writable {Boolean} 書き込み可能フラグ
+  - deletable {Boolean} 削除可能フラグ
+
+@method fs.exec(file)
+指定されたファイル（または URL）を実行します。
+@param path {String} ファイルパス
+
+@method fs.mkdir(path) throw Error
+path で指定されたディレクトリを作成します。
+@param path {String} パス
+
+@method fs.unlink(path) throw Error
+path で指定されたファイルまたはディレクトリを削除します。
+@param path {String} パス
+
+@method fs.copy(from, to) throw Error
+ファイルをコピーします。
+@param from {String} コピー元のファイルパス
+@param to {String} コピー先のファイルパス
+
+@method fs.move(from, to) throw Error
+ファイルを移動（またはリネーム）します。
+@param from {String} 移動元のファイルパス
+@param to {String} 移動先のファイルパス
+
+@method fs.unzip(zip, folder) throw Error
+zipファイルを展開します。
+@param zip {String} zipファイルパス
+@param folder {String} 展開先のディレクトリパス
+
+@method fs.readString(file) throw Error
+UTF-8 形式の file を、テキスト形式で読み込みます。
+@param file {String} ファイルパス
+@return {String} 読み込んだテキストデータ
+
+@method fs.readData(file, [partial]) throw Error
+file をバイナリ形式（HEX 表記）で読み込みます。partial を指定しない場合は、ファイル全体を読み込みます。
+@param file {String} ファイルパス
+@param option partial {Object} 部分読み込みオブジェクト
+@return {String} 読み込んだバイナリデータ（HEX 表記）
+@note
+部分読み込みオブジェクトのプロパティ
+  - offset {Number} 読み込み開始位置
+  - length {Number} 読み込むデータのサイズ
+@atention 一度に読み込めるデータの最大サイズは、512K（0x80000）バイトです。
+
+@method fs.writeString(file, text) throw Error
+テキストデータを UTF-8 形式で file に書き込みます。
+@param file {String} ファイルパス
+@param text {String} テキストデータ
+
+@method fs.writeData(file, data) throw Error
+バイナリデータ（HEX 表記）を、バイナリデータとして file に書き込みます。
+@param file {String} ファイルパス
+@param data {String} バイナリデータ（HEX 表記）
+
+@method fs.appendString(file, text) throw Error
+テキストデータを UTF-8 形式で file に追加書き込みします。
+@param file {String} ファイルパス
+@param text {String} テキストデータ
+
+@method fs.appendData(file, data) throw Error
+バイナリデータ（HEX 表記）を、バイナリデータとして file に追加書き込みします。
+@param file {String} ファイルパス
+@param data {String} バイナリデータ（HEX 表記）
+
+@method fs.openfilename([filter, path])
+「ファイルを開く」ダイアログを表示します。ユーザーが選択したファイル名は、fs.event.openfilename で通知されます。
+@param option filter {Array} 拡張子フィルタの配列
+@param option path {String} ダイアログの初期ディレクトリパス
+@note
+filter は、配列オブジェクトで与えてください。
+例）[ 'wav', 'aiff', 'mp3', 'm4a', 'mp4' ]
+
+@method fs.savefilename([name, ext])
+「ファイルを保存する」ダイアログを表示します。ユーザーが選択したファイル名は、fs.event.savefilename で通知されます。
+@param option name {String} 保存するファイル名
+@param option ext {String} 保存する拡張子
+
+@method fs.choosefolder([path])
+「フォルダの選択」ダイアログを表示します。ユーザーが選択したディレクトリパスは、fs.event.choosefolder で通知されます。
+@param option path {String} ダイアログの初期ディレクトリパス
+
+@method fs.unmount(path)
+path で指定されたボリュームをアンマウントします。結果は、fs.event.unmounted || unmountfailed で通知されます。
+@param path {String} マウントパス
+
+@method fs.watch(path)
+path で指定されたディレクトリ階層内の変更を監視します。ディレクトリ内容が変更された場合は、fs.event.watch で通知されます。path に ''（空文字）を指定した場合は、監視をキャンセルします。
+@param path {String} 監視するディレクトリパス
+
+@category $native.fs.event
+
+@method fs.event.openfilename(file)
+ユーザーが選択したファイル名を通知します。キャンセルした場合は、''（空文字）が通知されます。
+@param file {String} ファイルパス
+
+@method fs.event.savefilename(file)
+ユーザーが選択したファイル名を通知します。キャンセルした場合は、''（空文字）が通知されます。
+@param file {String} ファイルパス
+
+@method fs.event.choosefolder(path)
+ユーザーが選択したディレクトリパスを通知します。キャンセルした場合は、''（空文字）が通知されます。
+@param path {String} ディレクトリパス
+
+@method fs.event.unmounted(path)
+path のアンマウントが成功した場合に通知されます。
+@param file {String} パス名
+
+@method fs.event.unmountfailed(path, reason)
+path のアンマウントが失敗した場合に通知されます。
+@param file {String} パス名
+@param reason {String} エラー原因
+
+@method fs.event.watch(paths)
+監視対象のディレクトリ内容が変更された場合に通知されます。
+@param paths {String} 変更されたディレクトリパスの配列（JSON形式）
+
+@category $native.security
+
+@method security.uuidgen()
+UUID を生成します。生成に失敗した場合は、''（空文字）を返します。
+@return {String} UUID（HEX 形式）
+
+@method security.md5(data)
+ファイルやバイナリデータから MD5 ハッシュ値を計算します。失敗した場合は、''（空文字）を返します。
+@param data {String} ファイルパス、もしくはバイナリデータ（HEX 表記）
+@return {String} MD5 ハッシュ値（HEX 形式）
+
+@method security.encipher(text)
+文字列を暗号化します。暗号化に失敗した場合は、''（空文字）を返します。
+@param text {String} 暗号化する文字列
+@return {String} 暗号化されたバイナリデータ（HEX 形式）
+@note
+暗号化されたデータは、暗号化した端末（およびユーザー）のみで復号可能です。
+
+@method security.decipher(data)
+暗号化されたバイナリデータ（HEX 表記）を復号します。復号に失敗した場合は、''（空文字）を返します。
+@param data {String} 暗号化されたバイナリデータ（HEX 形式）
+@return {String} 復号された文字列
+
+@method security.aes.encrypt(data, [key])
+データを AES128 / CBC / Padding5 形式で暗号化します。暗号化に失敗した場合は、''（空文字）を返します。
+@param data {String} 暗号化するバイナリデータ（HEX 形式）
+@param option key {String} 暗号鍵/初期ベクトル（HEX 形式）（指定しない場合は、アプリケーション固有の暗号鍵/初期ベクトルを利用します）
+@return {String} 暗号化されたバイナリデータ（HEX 形式）
+
+@method security.aes.decrypt(data, [key])
+データを AES128 / CBC / Padding5 形式で復号します。復号に失敗した場合は、''（空文字）を返します。
+@param data {String} 復号するバイナリデータ（HEX 形式）
+@param option key {String} 暗号鍵/初期ベクトル（HEX 形式）（指定しない場合は、アプリケーション固有の暗号鍵/初期ベクトルを利用します）
+@return {String} 復号されたバイナリデータ（HEX 形式）
+
+@method security.des.encrypt(data, [key])
+データを 3DES / ECB / Padding5 形式で暗号化します。暗号化に失敗した場合は、''（空文字）を返します。
+@param data {String} 暗号化するバイナリデータ（HEX 形式）
+@param option key {String} 暗号鍵（HEX 形式）（指定しない場合は、アプリケーション固有の暗号鍵を利用します）
+@return {String} 暗号化されたバイナリデータ（HEX 形式）
+
+@method security.des.decrypt(data, [key])
+データを 3DES / ECB / Padding5 形式で復号します。復号に失敗した場合は、''（空文字）を返します。
+@param data {String} 復号するバイナリデータ（HEX 形式）
+@param option key {String} 暗号鍵（HEX 形式）（指定しない場合は、アプリケーション固有の暗号鍵を利用します）
+@return {String} 復号されたバイナリデータ（HEX 形式）
+
+@category $native.ble
+
+@method ble.scan.start(services)
+指定されたサービスを持つペリフェラルをスキャンします。ペリフェラル見つかると、ble.event.found でペリフェラル識別子などが通知されます。
+@param services {Array} スキャンするサービス UUID の配列
+
+@method ble.scan.stop()
+ペリフェラルのスキャンを停止します。
+
+@method ble.connect(id)
+ペリフェラルとの接続処理を開始します。
+@param id {String} ペリフェラル識別子
+
+@method ble.disconnect([id])
+ペリフェラルと切断します。id を指定しない場合は、接続中のすべてのペリフェラルと切断します。
+@param option id {String} ペリフェラル識別子
+
+@method ble.discover(id, service)
+指定されたサービス内のキャラクタリスティックを探索します。探索結果は ble.event.discovered で通知されます。
+@param id {String} ペリフェラル識別子
+@param service {String} 探索するサービス UUID
+
+@method ble.properties(ep)
+BLE エンドポイントのプロパティを取得します。
+@note
+BLE エンドポイントのプロパティ
+  - BLEPeripheralKey {String} ペリフェラル識別子
+  - BLEServiceKey {String} サービス UUID
+  - BLECharacteristicKey {String} キャラクタリスティック UUID
+
+@param ep {Object} BLE エンドポイント
+@return {Object} プロパティ情報（broadcast, read, writeWithoutResponse, write, notify, indicate）
+
+@method ble.notify(ep, enabled)
+BLE エンドポイントの NOTIFICATION の有効／無効を切り替えます。
+@param ep {Object} BLE エンドポイント
+@param enabled {Boolean} 有効（true）／無効（false）
+
+@method ble.read(ep)
+BLE エンドポイントから値を読み込みます。読み取り結果は ble.event.changed で通知されます。
+@param ep {Object} BLE エンドポイント
+
+@method ble.write(ep, value)
+BLE エンドポイントへ値を書き込みます。書き込み結果は ble.event.write で通知されます。
+@param ep {Object} BLE エンドポイント
+@param value {String}  バイトデータ（HEX 形式）
+
+@method ble.writewithoutresponse(ep, value)
+BLE エンドポイントへ値を書き込みます（レスポンスなし）。
+@param ep {Object} BLE エンドポイント
+@param value {String}  バイトデータ（HEX 形式）
+
+@category $native.ble.event
+
+@method ble.event.unauthorized()
+スキャン開始時、BLE の利用が許可されていない場合に通知されます。
+
+@method ble.event.found(id, name, rssi)
+スキャン結果を通知します。
+@param id {String} ペリフェラル識別子
+@param name {String} ペリフェラル名
+@param rssi {String} RSSI (dBm)
+
+@method ble.event.connected(id, name)
+ペリフェラルとの接続が完了すると通知されます。
+@param id {String} ペリフェラル識別子
+@param name {String} ペリフェラル名
+
+@method ble.event.connectfailed(id, name)
+ペリフェラルとの接続に失敗した場合に通知されます。
+@param id {String} ペリフェラル識別子
+@param name {String} ペリフェラル名
+
+@method ble.event.disconnected(id, name)
+ペリフェラルとの接続が切断された場合に通知されます。
+@param id {String} ペリフェラル識別子
+@param name {String} ペリフェラル名
+
+@method ble.event.discovered(id, service, characteristics)
+ペリフェラル内のサービス探索が正常終了した場合に通知されます。
+@param id {String} ペリフェラル識別子
+@param service {String} 探索したサービス UUID
+@param characteristics {String} 探索したサービス内のエンドポイント UUID の配列（JSON形式）
+
+@method ble.event.discoverfailed(id, reason)
+ペリフェラル内のサービス探索に失敗した場合に通知されます。
+@param id {String} ペリフェラル識別子
+@param reason {String} エラー原因
+
+@method ble.event.write(ep, error)
+BLE エンドポイントへの書き込み結果通知します。error が ''（空文字）の場合は書き込み成功です。
+@param ep {String} BLE エンドポイントオブジェクト（JSON形式）
+@param error {String} エラー内容
+
+@method ble.event.changed(ep, value, error)
+BLE エンドポイントの値が更新された場合に通知されます。error が ''（空文字）の場合は更新成功です。
+@param ep {String} BLE エンドポイントオブジェクト（JSON形式）
+@param value {String} バイトデータ（HEX 形式）
+@param error {String} エラー内容
+
+@category $native.store
+
+@method store.query(products)
+商品情報をストアへ問い合わせます。取得した商品情報は、store.event.reply で通知されます。
+@param products {Array} 商品識別子の配列
+
+@method store.launchflow(params)
+商品の購入処理を開始します。
+@param params {Object} 購入要求オブジェクト
+@note
+購入要求オブジェクト
+- type {String} 商品タイプ
+- id {String} 商品識別子
+- option quantity {Number} 購入数量（iOS 用 消費型のみ有効）
+- option account {String} 難読化されたアカウント情報（UUIDv4 形式）
+- option old {String} プラン変更元の商品識別子（Android 用）
+- option proration {Number} プラン変更モード（Android 用）
+（プラン変更モード）
+- 1: すぐにプランが変更され、残りの期間は価格差に応じて調整され、次回更新時に充当されます（デフォルト）。
+- 2: すぐにプランが変更され、残りの期間の差額が次回更新時に請求されます（アップグレードのみ利用可）。
+- 3: すぐにプランが変更され、次回更新時に新しい価格が請求されます。
+- 5: すぐにプランが変更され、新プランは全額が請求されます。古いプランの残額は引き継がれるか、別プラン変更時に期間内で比例配分されます。
+- 6: 次回更新時に新しいプランに変更されます。
+
+@method store.accept(receipt)
+store.event.purchased で通知されたレシートを受領し、購入処理を完了します。
+@param receipt {Object} レシート情報オブジェクト
+
+@method store.recover()
+未完了の購入処理がある場合は、store.event.purchased で再通知します。
+
+@category $native.store.event
+
+@method store.event.reply(details)
+ストアへの商品情報の問合せが成功した場合に通知されます。
+@param details {String} 商品情報オブジェクトの配列（JSON形式）
+@note
+商品情報オブジェクト
+  - type {String} 商品タイプ
+  - id {String} 商品識別子
+  - title {String} 商品タイトル
+  - desc {String} 商品説明
+  - price {String} 価格
+  - subscription {String} サブスクリプション期間（ISO 8601 形式：P1M、P2W3D 等）
+  - freetrial {String} 無料お試し期間（ISO 8601 形式）
+  - introprice {String} 初回限定価格
+  - introductory {String} 初回利用期間（ISO 8601 形式）
+  - payupfront {Boolean} 初回利用期間分を前払い
+
+@method store.event.changed(id, state)
+商品の購入処理の状態が変化した場合に通知されます。
+@param id {String} 商品識別子
+@param state {String} 0:未処理／1:購入開始／2:購入保留／3:支払い完了／4:購入完了
+
+@method store.event.purchased(receipt, [signature])
+商品を購入した場合に通知されます。必要な場合は、レシート情報をサーバーに送信します。
+@param receipt {String} レシート情報（JSON 形式）
+@param option signature {String} レシート情報への署名（BASE64）
+@note
+レシート情報オブジェクト
+  - orderId {String} 一意なレシート番号
+  - productId {String} 商品識別子
+  - quantity {Number} 購入数量
+  - purchaseTime {Number} 購入日時（Unix エポック、ミリ秒）
+  - packageName {String} 購入したアプリのパッケージ名
+  - option obfuscatedAccountId {String} 難読化されたアカウント情報（UUIDv4 形式）
+  - option purchaseToken {String} Google Play 購入トークン
+  - option jwsRepresentation {String} App Store JSON Web 署名
+
+@method store.event.revoked(products)
+ファミリー共有の解除等で、商品の購入が取り消された場合に通知されます。
+@param {String} 商品識別子の配列（JSON形式）
+
+@category $native.rwc
+
+@method rwc.discovery()
+同じネットワーク内にある楽器の検索を開始します。
+@note
+楽器が見つかると、rwc.event.found で楽器情報オブジェクトが通知されます。
+楽器情報オブジェクトのプロパティ
+  - RWCDeviceNameKey {String} 楽器名
+  - RWCDeviceManufacturerKey {String} 製造元
+  - RWCDeviceUIDKey {String} UID
+
+@method rwc.connect(dev)
+楽器との接続処理を開始します。
+@param dev {Object} 接続する楽器情報オブジェクト
+
+@method rwc.disconnect()
+楽器との接続を停止します。
+
+@method rwc.device()
+現在接続している楽器情報オブジェクトを取得します。接続している楽器がない場合は、null が返ります。
+@return {Object} 楽器情報オブジェクト
+
+@method rwc.send(msg)
+接続している楽器へ、MIDIメッセージを送信します。
+@param msg {String} 送信するMIDIメッセージ文字列（HEX 形式）
+@note
+送信例）send('90607F');
+
+@method rwc.inputmode(mode)
+オーディオ入力モードを設定します。初期設定は、MIX モード (0) です。
+@param mode {Number} オーディオ入力モード番号
+@note
+  - 0（MIX：楽器へ送ったオーディオ出力とミックスして、オーディオ入力を返します。）
+  - 1（SOLO：楽器へ送ったオーディオ出力はミックスされず、オーディオ入力が返されます。）
+
+@method rwc.timeout([sec])
+接続処理のタイムアウト時間（秒）を設定、取得します。引数に sec を指定しない場合は、取得のみを行います。
+@param option sec {Number} タイムアウト時間
+@return {Number} タイムアウト時間
+
+@method rwc.keepalive([sec])
+接続確認応答のタイムアウト時間（秒）を設定、取得します。引数に sec を指定しない場合は、取得のみを行います。
+@param option sec {Number} タイムアウト時間
+@return {Number} タイムアウト時間
+
+@category $native.rwc.event
+
+@method rwc.event.found(dev)
+ネットワーク内に楽器を見つけた時に通知されます（楽器ごとに通知されます）。
+@param dev {String} 楽器情報オブジェクト（JSON形式）
+
+@method rwc.event.connected(dev)
+楽器との接続が完了すると通知されます。
+@param dev {String} 接続が完了した楽器情報オブジェクト（JSON形式）
+
+@method rwc.event.connectfailed(dev)
+楽器との接続に失敗した場合に通知されます。
+@param dev {String} 接続に失敗した楽器情報オブジェクト（JSON形式）
+
+@method rwc.event.closed(dev)
+楽器が接続を切断した場合、もしくは接続確認応答に対して反応が無かった場合に通知されます。
+@param dev {String} 楽器情報オブジェクト（JSON形式）
+
+@method rwc.event.message(msg, timestamp)
+楽器から MIDI メッセージを受信すると呼ばれます。
+@param msg {String} 受信した MIDI メッセージ（HEX形式）
+@param timestamp {String} 受信時のタイムスタンプ(ミリ秒)
+
+@method rwc.event.error(dev)
+楽器との通信でエラーが発生した場合に通知されます。
+@param dev {String} エラーの発生した楽器情報オブジェクト（JSON形式）
+
+@category $native.util
+
+@method util.bytes(text)
+文字列を UTF-8 形式のバイトデータに変換します。
+@return {String} バイトデータ（HEX 形式）
+
+@method util.text(bytes)
+UTF-8 形式のバイトデータ（HEX 形式）を文字列に変換します。
+@return {String} 文字列
+
+@category $event
+
+@method start()
+ネイティブからのイベント取得を開始します。
+
+
+</pre>
+</body>
+</html>

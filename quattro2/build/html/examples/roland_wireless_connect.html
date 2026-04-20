@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Roland Wireless Connect</title>
+	<link rel="stylesheet" type="text/css" href="default.css" />
+	<script src="../native.js"></script>
+	<script src="jquery.js"></script>
+</head>
+<body>
+	<p><a href="../index.html">&lt; MENU</a></p>
+
+	<p><button id="search">SEARCH</button></p>
+		<div id="list"></div>
+
+	<p>Device: <strong id="device"></strong><button id="disconnect">DISCONNECT</button></p>
+
+	<p>Input Mode:
+		<select id="inputmode">
+			<option value="0">Mix</option>
+			<option value="1">Solo</option>
+		</select>
+	</p>
+	<p>Connect Timeout: <input type="range" id="timeout" min="0" max="30" /><span></span></p>
+	<p>Keep Alive Timeout: <input type="range" id="keepalive" min="0" max="30" /><span></span></p>
+
+	<p>
+		<button class="key" id="3C">C4</button>
+		<button class="key" id="3E">D4</button>
+		<button class="key" id="40">E4</button>
+		<button class="key" id="41">F4</button>
+		<button class="key" id="43">G4</button>
+		<button class="key" id="45">A4</button>
+		<button class="key" id="47">B4</button>
+	</p>
+	<p><input type="text" /><button id="send">SEND</button></p>
+
+	<p>Monitor:</p>
+		<ul id="monitor"></ul>
+
+	<script type = "text/javascript">
+
+	$(function() {
+
+		var rwc = $native.rwc;
+
+		var devices = [];
+
+		rwc.event = {
+			found: function(dev) {
+				dev = JSON.parse(dev);
+				devices.push(dev); list();
+			},
+			connected: function(dev) {
+				dev = JSON.parse(dev);
+				$('#device').text(dev.RWCDeviceNameKey + ' ( ' +  dev.RWCDeviceUIDKey + ' ) ');
+			},
+			closed: function(dev) {
+				dev = JSON.parse(dev);
+				$('#device').text('(not connected)');
+			},
+			message: function(msg, timestamp) {
+				if ($('#monitor > li').length > 10) {
+					$('#monitor > li:first').remove();
+				}
+				$('#monitor').append('<li>' + msg + '</li>');
+			},
+			connectfailed: function(dev) {
+				dev = JSON.parse(dev);
+				alert('connectfailed: ' + dev.RWCDeviceNameKey);
+			},
+			error: function(dev) {
+				dev = JSON.parse(dev);
+				alert('error: ' + dev.RWCDeviceNameKey);
+				$('#device').text('(not connected)');
+			}
+		};
+
+		$('#search').on('click', function(){
+			devices = []; list();
+			rwc.discovery();
+		});
+
+		$('#list').on('click', '.connect', function(){
+			$('#device').text('');
+			var i = $(this).closest('tr').index() - 1;
+			rwc.connect(devices[i]);
+		});
+
+		$('#disconnect').on('click', function(){
+			$('#device').text('(not connected)');
+			rwc.disconnect();
+		});
+
+		$('#inputmode').on('change', function(){
+			rwc.inputmode($(this).val());
+		});
+
+		$('#timeout').on('change', function(){
+			var t = rwc.timeout($(this).val());
+			$(this).next().text(t);
+		});
+
+		$('#keepalive').on('change', function(){
+			var t = rwc.keepalive($(this).val());
+			$(this).next().text(t);
+		});
+
+		$('.key').on('click', function(){
+			var noteNo = $(this).attr('id');
+			rwc.send('90' + noteNo + '7F');
+			setTimeout(function(){ rwc.send('80' + noteNo + '00') }, 500);
+		});
+
+		$('#send').on('click', function(){
+			rwc.send($(this).prev().val());
+		});
+
+		function list() {
+
+			function header() {
+				return (
+					'<table><tr>' +
+					'<th>Manufacturer</th>' +
+					'<th>Device Name</th>' +
+					'<th>Version</th>' +
+					'<th>Address</th>' +
+					'<th>PortNo</th>' +
+					'<th>UID</th>' +
+					'<th>Caps</th>' +
+					'<th>Image</th>' +
+					'<th>Status</th>' +
+					'</tr>'
+				);
+			}
+
+			function data(dev) {
+				return (
+					'<tr>' +
+					'<td>' + dev.RWCDeviceManufacturerKey + '</td>' +
+					'<td>' + dev.RWCDeviceNameKey + '</td>' +
+					'<td>' + dev.RWCDeviceVersionKey + '</td>' +
+					'<td>' + dev.RWCDeviceAddressKey + '</td>' +
+					'<td>' + dev.RWCDevicePortNoKey + '</td>' +
+					'<td>' + dev.RWCDeviceUIDKey + '</td>' +
+					'<td>' + dev.RWCDeviceCapsKey + '</td>' +
+					'<td>' + dev.RWCDeviceImageKey + '</td>' +
+					'<td>' + dev.RWCDeviceStatusKey + '</td>' +
+					'<td><button class="connect">CONNECT</button></td>' +
+					'</tr>'
+					);
+			}
+
+			var doc = header();
+			for (var i = 0, num = devices.length; i < num; i++) {
+				doc += data(devices[i]);
+			}
+			doc += '</table>'
+			$('#list').empty();
+			$('#list').append(doc);
+
+		}
+
+		var dev = rwc.device();
+		if (dev) {
+			$('#device').text(dev.RWCDeviceNameKey + ' ( ' +  dev.RWCDeviceUIDKey + ' ) ');
+		} else {
+			$('#device').text('(not connected)');
+		}
+		$('#timeout').next().text(rwc.timeout());
+		$('#keepalive').next().text(rwc.keepalive());
+
+		list();
+
+		$event.start();
+
+	});
+
+	</script>
+
+
+</body>
+</html>

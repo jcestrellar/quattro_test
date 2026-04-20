@@ -1,0 +1,16 @@
+*.bak
+.DS_Store
+/android/.idea
+/android/app/src/main/assets/dataset
+/android/app/src/main/assets/html
+/mac/quattro.xcodeproj/xcuserdata
+/mac/quattro.xcodeproj/project.xcworkspace
+/mac/pkg
+/mac/*.pkg
+/win10/.vs
+/win10/packages
+/win10/Win32
+/win10/x64
+/win10/quattro.vcxproj.user
+/win10/*.exe
+.vscode/
