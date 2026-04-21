@@ -12,8 +12,8 @@ import {
   Scene,
   StandardMaterial,
   Vector3,
-  type Mesh,
   type InstancedMesh,
+  type Mesh,
 } from '@babylonjs/core';
 import { Box } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -30,7 +30,6 @@ import { ScoreHud } from '../drumRhythm/components/scoreHud';
 import type { ChartMeta, MidiNote } from '../drumRhythm/chartTypes';
 import { RouteMap } from '../../routes';
 
-// ── Layout (same constants as Three.js version for fair comparison) ───────────
 const LOOK_AHEAD_SEC = 2.5;
 const HIGHWAY_DEPTH = 24;
 const SPEED = HIGHWAY_DEPTH / LOOK_AHEAD_SEC;
@@ -43,7 +42,7 @@ const HIGHWAY_W = LANE_COUNT * LANE_W + (LANE_COUNT + 1) * LANE_GAP;
 function laneX(idx: number): number {
   return -HIGHWAY_W / 2 + LANE_GAP + LANE_W / 2 + idx * (LANE_W + LANE_GAP);
 }
-// Babylon.js is left-handed: +X goes LEFT when looking in -Z, so negate for correct lane order
+
 function laneXBab(idx: number): number {
   return -laneX(idx);
 }
@@ -80,7 +79,9 @@ export const DrumRhythm3DBabylonIndex = () => {
   const [flash, setFlash] = useState<{ j: Judgement; k: number } | null>(null);
 
   const inputOffsetSecRef = useRef(inputOffsetSec);
-  useEffect(() => { inputOffsetSecRef.current = inputOffsetSec; });
+  useEffect(() => {
+    inputOffsetSecRef.current = inputOffsetSec;
+  });
   const hitHandlerRef = useRef<((midi: number) => void) | null>(null);
   const litUntilRef = useRef<Map<number, number>>(new Map());
 
@@ -96,12 +97,16 @@ export const DrumRhythm3DBabylonIndex = () => {
     setFlash({ j, k: Date.now() });
   }, []);
   const handleJudgementRef = useRef(handleJudgement);
-  useEffect(() => { handleJudgementRef.current = handleJudgement; });
+  useEffect(() => {
+    handleJudgementRef.current = handleJudgement;
+  });
 
   useEffect(() => {
     if (status !== 'ready') return;
     audioEngine.load('assets/song.ogg').catch(console.error);
-    return () => { audioEngine.dispose(); };
+    return () => {
+      audioEngine.dispose();
+    };
   }, [status, audioEngine]);
 
   useEffect(() => {
@@ -109,17 +114,22 @@ export const DrumRhythm3DBabylonIndex = () => {
     audioEngine.onEnded(() => setPhaseSync('result'));
   }, [phase, audioEngine, setPhaseSync]);
 
-  const triggerHit = useCallback(async (midi: number) => {
-    if (phaseRef.current === 'result') return;
-    if (phaseRef.current === 'idle') {
-      await audioEngine.resume();
-      audioEngine.start();
-      setPhaseSync('playing');
-    }
-    hitHandlerRef.current?.(midi);
-  }, [audioEngine, setPhaseSync]);
+  const triggerHit = useCallback(
+    async (midi: number) => {
+      if (phaseRef.current === 'result') return;
+      if (phaseRef.current === 'idle') {
+        await audioEngine.resume();
+        audioEngine.start();
+        setPhaseSync('playing');
+      }
+      hitHandlerRef.current?.(midi);
+    },
+    [audioEngine, setPhaseSync],
+  );
 
-  useMidiNoteOn((note) => { if (MIDI_TO_LANE[note] !== undefined) triggerHit(note); });
+  useMidiNoteOn((note) => {
+    if (MIDI_TO_LANE[note] !== undefined) triggerHit(note);
+  });
 
   useEffect(() => {
     if (!import.meta.env.DEV) return;
@@ -129,11 +139,10 @@ export const DrumRhythm3DBabylonIndex = () => {
       const lane = KEY_LANE_MAP[e.key];
       if (lane !== undefined) triggerHit(LANE_MIDI[lane as number] ?? 38);
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    globalThis.addEventListener('keydown', onKey);
+    return () => globalThis.removeEventListener('keydown', onKey);
   }, [triggerHit]);
 
-  // ── Babylon.js scene ────────────────────────────────────────────────────────
   useEffect(() => {
     if (status !== 'ready' || !chart || !canvasRef.current) return;
     const canvas = canvasRef.current;
@@ -146,13 +155,11 @@ export const DrumRhythm3DBabylonIndex = () => {
     scene.fogEnd = HIGHWAY_DEPTH * 1.05;
     scene.fogColor = new Color3(0.03, 0.03, 0.08);
 
-    // Camera
     const camera = new FreeCamera('cam', new Vector3(0, 3.5, 7), scene);
     camera.setTarget(new Vector3(0, 0, -5));
     camera.minZ = 0.1;
     camera.maxZ = 100;
 
-    // Lights — Babylon's HemisphericLight gives a nice ambient gradient
     const hemi = new HemisphericLight('hemi', new Vector3(0, 1, 0), scene);
     hemi.intensity = 0.7;
     hemi.diffuse = new Color3(0.2, 0.3, 0.8);
@@ -160,7 +167,6 @@ export const DrumRhythm3DBabylonIndex = () => {
     const sun = new DirectionalLight('sun', new Vector3(-1, -3, -2), scene);
     sun.intensity = 2.8;
 
-    // Floor (CreateGround = XZ plane, no rotation needed — Babylon advantage)
     const floor = MeshBuilder.CreateGround('floor', { width: HIGHWAY_W, height: HIGHWAY_DEPTH + 2 }, scene);
     floor.position.z = -HIGHWAY_DEPTH / 2;
     const floorMat = new StandardMaterial('floorMat', scene);
@@ -168,7 +174,6 @@ export const DrumRhythm3DBabylonIndex = () => {
     floorMat.specularColor = Color3.Black();
     floor.material = floorMat;
 
-    // Side walls
     for (const side of [-1, 1]) {
       const wall = MeshBuilder.CreateBox(`wall-${side}`, { width: 0.07, height: 1.2, depth: HIGHWAY_DEPTH + 2 }, scene);
       wall.position = new Vector3(side * (HIGHWAY_W / 2 + 0.035), 0.55, -HIGHWAY_DEPTH / 2);
@@ -178,21 +183,26 @@ export const DrumRhythm3DBabylonIndex = () => {
       wall.material = wMat;
     }
 
-    // Lane dividers — CreateLines supports per-point colors (gradient fade)
     for (let i = 0; i <= LANE_COUNT; i++) {
       const x = HIGHWAY_W / 2 - i * (LANE_W + LANE_GAP) + (i === 0 ? -LANE_GAP / 2 : LANE_GAP / 2);
-      MeshBuilder.CreateLines(`div-${i}`, {
-        points: [new Vector3(x, 0.01, HIT_Z + 0.5), new Vector3(x, 0.01, -HIGHWAY_DEPTH)],
-        colors: [new Color4(0.12, 0.18, 0.7, 1), new Color4(0.05, 0.08, 0.3, 0)],
-      }, scene);
+      MeshBuilder.CreateLines(
+        `div-${i}`,
+        {
+          points: [new Vector3(x, 0.01, HIT_Z + 0.5), new Vector3(x, 0.01, -HIGHWAY_DEPTH)],
+          colors: [new Color4(0.12, 0.18, 0.7, 1), new Color4(0.05, 0.08, 0.3, 0)],
+        },
+        scene,
+      );
     }
 
-    // Hit line
-    MeshBuilder.CreateLines('hitline', {
-      points: [new Vector3(-HIGHWAY_W / 2, 0.015, HIT_Z), new Vector3(HIGHWAY_W / 2, 0.015, HIT_Z)],
-      colors: [new Color4(1, 1, 1, 1), new Color4(1, 1, 1, 1)],
-    }, scene);
-    // Glow plane at hit line
+    MeshBuilder.CreateLines(
+      'hitline',
+      {
+        points: [new Vector3(-HIGHWAY_W / 2, 0.015, HIT_Z), new Vector3(HIGHWAY_W / 2, 0.015, HIT_Z)],
+        colors: [new Color4(1, 1, 1, 1), new Color4(1, 1, 1, 1)],
+      },
+      scene,
+    );
     const hitGlowMesh = MeshBuilder.CreatePlane('hitGlow', { width: HIGHWAY_W, height: 0.55 }, scene);
     hitGlowMesh.rotation.x = Math.PI / 2;
     hitGlowMesh.position = new Vector3(0, 0.012, HIT_Z);
@@ -201,7 +211,6 @@ export const DrumRhythm3DBabylonIndex = () => {
     hitGlowMat.alpha = 0.06;
     hitGlowMesh.material = hitGlowMat;
 
-    // ── Particle texture (white circle shared by all systems) ─────────────────
     const ptex = new DynamicTexture('particleTex', { width: 16, height: 16 }, scene, false);
     const pctx = ptex.getContext();
     pctx.fillStyle = 'white';
@@ -210,7 +219,6 @@ export const DrumRhythm3DBabylonIndex = () => {
     pctx.fill();
     ptex.update();
 
-    // ── Ambient floating dust ─────────────────────────────────────────────────
     const ambient = new ParticleSystem('ambient', 400, scene);
     ambient.particleTexture = ptex;
     ambient.emitter = new Vector3(0, 0, -HIGHWAY_DEPTH / 2);
@@ -232,7 +240,6 @@ export const DrumRhythm3DBabylonIndex = () => {
     ambient.blendMode = ParticleSystem.BLENDMODE_STANDARD;
     ambient.start();
 
-    // ── Hit burst helper ──────────────────────────────────────────────────────
     const BURST_COUNT = 26;
     const spawnBurst = (x: number, y: number, lane: DrumLane) => {
       const c = hexToColor3(LANE_COLORS[lane]);
@@ -261,7 +268,6 @@ export const DrumRhythm3DBabylonIndex = () => {
       burst.start();
     };
 
-    // Pad indicators + per-pad materials
     const padMatsMap = new Map<number, StandardMaterial>();
     const padLitColors = new Map<number, Color3>();
     const padDimColor = new Color3(0, 0, 0);
@@ -278,7 +284,6 @@ export const DrumRhythm3DBabylonIndex = () => {
       padMatsMap.set(lane as number, mat);
       padLitColors.set(lane as number, c.scale(0.85));
     });
-    // Kick pad
     const kickC = hexToColor3(LANE_COLORS[DrumLane.Kick]);
     const kickPadMat = new StandardMaterial('kickPadMat', scene);
     kickPadMat.diffuseColor = kickC.scale(0.2);
@@ -290,7 +295,6 @@ export const DrumRhythm3DBabylonIndex = () => {
     padMatsMap.set(DrumLane.Kick as number, kickPadMat);
     padLitColors.set(DrumLane.Kick as number, kickC.scale(0.85));
 
-    // Note templates (invisible) — one per lane; instances share geometry + material
     const noteTemplates = new Map<DrumLane, Mesh>();
     for (const lane of [...LANE_ORDER, DrumLane.Kick] as DrumLane[]) {
       const isKick = lane === DrumLane.Kick;
@@ -309,37 +313,39 @@ export const DrumRhythm3DBabylonIndex = () => {
       noteTemplates.set(lane, tmpl);
     }
 
-    // Build instanced note pool — Babylon's instancing keeps GPU memory low
     const pool: Active3DNote[] = chart.notes
-      .filter(n => MIDI_TO_LANE[n.midi] !== undefined)
-      .map(n => {
+      .filter((n) => MIDI_TO_LANE[n.midi] !== undefined)
+      .map((n) => {
         const lane = MIDI_TO_LANE[n.midi];
         const isKick = lane === DrumLane.Kick;
-        const laneIdx = isKick ? -1 : LANE_ORDER.indexOf(lane as typeof LANE_ORDER[number]);
+        const laneIdx = isKick ? -1 : LANE_ORDER.indexOf(lane as (typeof LANE_ORDER)[number]);
         const instance = noteTemplates.get(lane)!.createInstance(`note-${seqBab++}`);
         instance.position = new Vector3(isKick ? 0 : laneXBab(laneIdx), isKick ? 0.045 : 0.1, -HIGHWAY_DEPTH);
         instance.isVisible = false;
         return { ...n, id: seqBab, lane, laneIdx, missed: false, instance };
       });
 
-    // Hit handler
     hitHandlerRef.current = (midi: number) => {
       const lane = MIDI_TO_LANE[midi];
       if (lane === undefined) return;
       const isKick = lane === DrumLane.Kick;
-      const laneIdx = isKick ? -1 : LANE_ORDER.indexOf(lane as typeof LANE_ORDER[number]);
+      const laneIdx = isKick ? -1 : LANE_ORDER.indexOf(lane as (typeof LANE_ORDER)[number]);
       litUntilRef.current.set(lane as number, performance.now() + 140);
       spawnBurst(isKick ? 0 : laneXBab(laneIdx), isKick ? 0.045 : 0.1, lane);
       if (!audioEngine.isPlaying()) return;
       const ct = audioEngine.getCurrentTime();
-      let bestIdx = -1, bestDelta = Infinity;
+      let bestIdx = -1;
+      let bestDelta = Infinity;
       for (let i = 0; i < pool.length; i++) {
         const n = pool[i];
         if (n.missed || n.lane !== lane) continue;
         const delta = ct - n.timeSec - inputOffsetSecRef.current;
         if (delta > WINDOWS_SEC.ok) continue;
         if (delta < -WINDOWS_SEC.ok) break;
-        if (Math.abs(delta) < Math.abs(bestDelta)) { bestDelta = delta; bestIdx = i; }
+        if (Math.abs(delta) < Math.abs(bestDelta)) {
+          bestDelta = delta;
+          bestIdx = i;
+        }
       }
       if (bestIdx >= 0) {
         pool[bestIdx].missed = true;
@@ -348,13 +354,15 @@ export const DrumRhythm3DBabylonIndex = () => {
       }
     };
 
-    // Game loop via Babylon's registerBeforeRender
     scene.registerBeforeRender(() => {
       const now = performance.now();
       const ct = audioEngine.isPlaying() ? audioEngine.getCurrentTime() : -LOOK_AHEAD_SEC;
 
       for (const n of pool) {
-        if (n.missed) { n.instance.isVisible = false; continue; }
+        if (n.missed) {
+          n.instance.isVisible = false;
+          continue;
+        }
         const ta = n.timeSec - ct;
         if (ct - n.timeSec > WINDOWS_SEC.ok) {
           n.missed = true;
@@ -362,12 +370,14 @@ export const DrumRhythm3DBabylonIndex = () => {
           if (audioEngine.isPlaying()) handleJudgementRef.current('miss');
           continue;
         }
-        if (ta > LOOK_AHEAD_SEC + 0.2 || ta < -0.15) { n.instance.isVisible = false; continue; }
+        if (ta > LOOK_AHEAD_SEC + 0.2 || ta < -0.15) {
+          n.instance.isVisible = false;
+          continue;
+        }
         n.instance.isVisible = true;
         n.instance.position.z = HIT_Z - ta * SPEED;
       }
 
-      // Pad flash
       for (const [laneNum, mat] of padMatsMap.entries()) {
         const lit = (litUntilRef.current.get(laneNum) ?? 0) > now;
         mat.emissiveColor = lit ? padLitColors.get(laneNum)! : padDimColor;
@@ -382,9 +392,9 @@ export const DrumRhythm3DBabylonIndex = () => {
     return () => {
       ro.disconnect();
       hitHandlerRef.current = null;
-      engine.dispose(); // disposes scene, meshes, materials, textures
+      engine.dispose();
     };
-  }, [status, chart, audioEngine]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [status, chart, audioEngine]);
 
   const handleCalibrate = useCallback(() => {
     navigate(`/${RouteMap.root.path}/${RouteMap.drumRhythmCalibration.path}`);

@@ -125,6 +125,11 @@ export const HomeIndex = () => {
       icon: <MusicNote />,
       path: RouteMap.drumRhythm3DBabylon.path,
     },
+    {
+      title: 'Drum Rhythm 3D · Concierto (Babylon.js)',
+      icon: <MusicNote />,
+      path: RouteMap.drumRhythm3DBabylonConcert.path,
+    },
   ];
 
   return (

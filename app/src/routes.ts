@@ -6,6 +6,7 @@ import { DrumRhythmRawPage } from './pages/drumRhythmRawPage/drumRhythmRawPage';
 import { DrumRhythmCalibrationPage } from './pages/drumRhythmCalibrationPage/drumRhythmCalibrationPage';
 import { DrumRhythm3DPage } from './pages/drumRhythm3DPage/drumRhythm3DPage';
 import { DrumRhythm3DBabylonPage } from './pages/drumRhythm3DBabylonPage/drumRhythm3DBabylonPage';
+import { DrumRhythm3DBabylonConcertPage } from './pages/drumRhythm3DBabylonConcertPage/drumRhythm3DBabylonConcertPage';
 import { FriendJamDemoPage } from './pages/friendJamDemoPage/friendJamDemoPage';
 import { HomePage } from './pages/homePage/homePage';
 import { LaunchPage } from './pages/lauchPage/launchPage';
@@ -157,5 +158,10 @@ export const RouteMap = {
     path: 'drumRhythm3DBabylon',
     component: DrumRhythm3DBabylonPage,
     title: 'Drum Rhythm 3D (Babylon.js)',
+  },
+  drumRhythm3DBabylonConcert: {
+    path: 'drumRhythm3DBabylonConcert',
+    component: DrumRhythm3DBabylonConcertPage,
+    title: 'Drum Rhythm 3D · Concierto (Babylon.js)',
   },
 } as const;

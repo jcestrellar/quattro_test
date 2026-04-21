@@ -186,6 +186,10 @@ function App() {
                 path={RouteMap.drumRhythm3DBabylon.path}
                 element={<RouteMap.drumRhythm3DBabylon.component />}
               />
+              <Route
+                path={RouteMap.drumRhythm3DBabylonConcert.path}
+                element={<RouteMap.drumRhythm3DBabylonConcert.component />}
+              />
             </Route>
           </Routes>
         </ThemeProvider>
