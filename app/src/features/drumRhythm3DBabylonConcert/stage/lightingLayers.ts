@@ -273,6 +273,11 @@ const hasVertices = (mesh: AbstractMesh): boolean => mesh.getTotalVertices() > 0
 
 const normalizeImportedMaterials = (scene: Scene, maxLights: number): void => {
   for (const material of scene.materials) {
+    // UI del highway (gh*): sin iluminación dinámica; no tocar (emisivo propio).
+    if (/^gh/i.test(material.name)) {
+      continue;
+    }
+
     const candidate = material as {
       disableLighting?: boolean;
       unlit?: boolean;
