@@ -16,6 +16,7 @@ import { applyLightingLayersToScene, setupLightingLayers } from './lightingLayer
 import { CONCERT_PERF } from './concertPerf';
 import { normalizeStageInstancedMeshes } from './stageMeshNormalization';
 import { bindLaneAnchors, buildFallbackDrumKit, ensureAnchorsForAllLanes } from './stageLaneAnchors';
+import { vitePublicUrl } from '../../../utils/vitePublicUrl';
 
 export interface ConcertStageHandles {
   engine: Engine;
@@ -67,12 +68,14 @@ export async function createConcertStageScene(canvas: HTMLCanvasElement): Promis
   let stageMeshes: AbstractMesh[] = [];
   let usedFallbackKit = false;
 
+  const stageGlbFolder = vitePublicUrl('assets/').replace(/\/?$/, '/');
+
   try {
-    const result = await SceneLoader.ImportMeshAsync('', '/assets/', 'Stage.glb', scene);
+    const result = await SceneLoader.ImportMeshAsync('', stageGlbFolder, 'Stage.glb', scene);
     stageMeshes = normalizeStageInstancedMeshes(result.meshes);
   } catch (e) {
     console.warn(
-      '[concertStage] No se pudo cargar /assets/Stage.glb — kit procedural.',
+      `[concertStage] No se pudo cargar ${vitePublicUrl('assets/Stage.glb')} — kit procedural.`,
       e,
     );
     stageMeshes = buildFallbackDrumKit(scene);
