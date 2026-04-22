@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        0.2165064513683319,
+        0.09997868537902832,
+        0.12500059604644775
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0.5000000596046448,
+        0,
+        0.8660253882408142
+    ],
+    "scaling": [
+        1,
+        1,
+        1
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Tom_Floor_Strap",
+    "id": "5d0c615e-cfa3-4c3c-a68c-7238dab5fc07",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813365024
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813365023,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

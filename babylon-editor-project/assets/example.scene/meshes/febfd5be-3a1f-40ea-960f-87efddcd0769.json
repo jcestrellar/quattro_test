@@ -1,0 +1,473 @@
+{
+    "meshes": [
+        {
+            "name": "Tube057",
+            "id": "febfd5be-3a1f-40ea-960f-87efddcd0769",
+            "uniqueId": 1776813364592,
+            "type": "Mesh",
+            "position": [
+                24.14896011352539,
+                -13.081503868103027,
+                0.029065612703561783
+            ],
+            "rotationQuaternion": [
+                0,
+                0,
+                0,
+                1
+            ],
+            "scaling": [
+                0.33220934867858887,
+                0.788190484046936,
+                0.33220934867858887
+            ],
+            "localMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "isEnabled": true,
+            "isVisible": true,
+            "infiniteDistance": false,
+            "pickable": true,
+            "receiveShadows": true,
+            "billboardMode": 0,
+            "visibility": 1,
+            "alwaysSelectAsActiveMesh": false,
+            "checkCollisions": false,
+            "ellipsoid": [
+                0.5,
+                1,
+                0.5
+            ],
+            "ellipsoidOffset": [
+                0,
+                0,
+                0
+            ],
+            "doNotSyncBoundingInfo": false,
+            "isBlocker": false,
+            "sideOrientation": 0,
+            "isUnIndexed": false,
+            "geometryUniqueId": 1776813365854,
+            "geometryId": "53148c9d-3367-4a23-be34-ad5bc1e06d8d",
+            "subMeshes": null,
+            "materialUniqueId": 1776813365935,
+            "materialId": "5956691d-ffed-4da0-ab45-6dce482c816d",
+            "metadata": {
+                "parentId": 1776813364974
+            },
+            "instances": [],
+            "animations": [],
+            "ranges": [],
+            "layerMask": 268435455,
+            "alphaIndex": 1.7976931348623157e+308,
+            "hasVertexAlpha": false,
+            "overlayAlpha": 1,
+            "overlayColor": [
+                0,
+                0,
+                0
+            ],
+            "applyFog": true,
+            "delayLoadingFile": "assets/example.scene/geometries/53148c9d-3367-4a23-be34-ad5bc1e06d8d.babylonbinarymeshdata",
+            "boundingBoxMaximum": [
+                12.578895568847656,
+                2.207791328430176,
+                13.089797973632812
+            ],
+            "boundingBoxMinimum": [
+                -13.432351112365723,
+                0,
+                -13.296746253967285
+            ],
+            "_binaryInfo": {
+                "positionsAttrDesc": {
+                    "count": 120,
+                    "stride": 3,
+                    "offset": 0,
+                    "dataType": 1
+                },
+                "normalsAttrDesc": {
+                    "count": 120,
+                    "stride": 3,
+                    "offset": 480,
+                    "dataType": 1
+                },
+                "uvsAttrDesc": {
+                    "count": 80,
+                    "stride": 2,
+                    "offset": 960,
+                    "dataType": 1
+                },
+                "indicesAttrDesc": {
+                    "count": 114,
+                    "stride": 1,
+                    "offset": 1280,
+                    "dataType": 0
+                },
+                "subMeshesAttrDesc": {
+                    "count": 1,
+                    "stride": 5,
+                    "offset": 1736,
+                    "dataType": 0
+                }
+            },
+            "positions": null,
+            "normals": null,
+            "uvs": null,
+            "hasUVs": true,
+            "indices": null
+        }
+    ],
+    "transformNodes": [],
+    "cameras": [],
+    "lights": [],
+    "materials": [
+        {
+            "tags": null,
+            "directIntensity": 1,
+            "emissiveIntensity": 1,
+            "environmentIntensity": 1,
+            "specularIntensity": 1,
+            "disableBumpMap": false,
+            "ambientTextureStrength": 1,
+            "ambientTextureImpactOnAnalyticalLights": 0,
+            "metallic": 1,
+            "roughness": 0.5527864098548889,
+            "metallicF0Factor": 1,
+            "metallicReflectanceColor": [
+                2,
+                2,
+                2
+            ],
+            "useOnlyMetallicFromMetallicReflectanceTexture": false,
+            "ambient": [
+                0,
+                0,
+                0
+            ],
+            "albedo": [
+                1,
+                1,
+                1
+            ],
+            "baseWeight": 1,
+            "reflectivity": [
+                1,
+                1,
+                1
+            ],
+            "reflection": [
+                1,
+                1,
+                1
+            ],
+            "emissive": [
+                0,
+                0,
+                0
+            ],
+            "microSurface": 1,
+            "useLightmapAsShadowmap": false,
+            "useAlphaFromAlbedoTexture": false,
+            "forceAlphaTest": false,
+            "alphaCutOff": 0.4,
+            "useSpecularOverAlpha": true,
+            "useMicroSurfaceFromReflectivityMapAlpha": false,
+            "useRoughnessFromMetallicTextureAlpha": true,
+            "useRoughnessFromMetallicTextureGreen": false,
+            "useMetallnessFromMetallicTextureBlue": false,
+            "useAmbientOcclusionFromMetallicTextureRed": false,
+            "useAmbientInGrayScale": false,
+            "useAutoMicroSurfaceFromReflectivityMap": false,
+            "usePhysicalLightFalloff": true,
+            "useGLTFLightFalloff": false,
+            "useRadianceOverAlpha": true,
+            "useObjectSpaceNormalMap": false,
+            "useParallax": false,
+            "useParallaxOcclusion": false,
+            "parallaxScaleBias": 0.05,
+            "disableLighting": false,
+            "forceIrradianceInFragment": false,
+            "maxSimultaneousLights": 32,
+            "invertNormalMapX": false,
+            "invertNormalMapY": false,
+            "twoSidedLighting": true,
+            "useAlphaFresnel": false,
+            "useLinearAlphaFresnel": false,
+            "forceNormalForward": false,
+            "enableSpecularAntiAliasing": true,
+            "useHorizonOcclusion": true,
+            "useRadianceOcclusion": true,
+            "unlit": false,
+            "applyDecalMapAfterDetailMap": false,
+            "_imageProcessingConfiguration": {
+                "tags": null,
+                "colorCurves": {
+                    "tags": null,
+                    "_globalHue": 30,
+                    "_globalDensity": 0,
+                    "_globalSaturation": 0,
+                    "_globalExposure": 0,
+                    "_highlightsHue": 30,
+                    "_highlightsDensity": 0,
+                    "_highlightsSaturation": 0,
+                    "_highlightsExposure": 0,
+                    "_midtonesHue": 30,
+                    "_midtonesDensity": 0,
+                    "_midtonesSaturation": 0,
+                    "_midtonesExposure": 0
+                },
+                "_colorCurvesEnabled": false,
+                "_colorGradingEnabled": false,
+                "_colorGradingWithGreenDepth": true,
+                "_colorGradingBGR": true,
+                "_exposure": 1,
+                "_toneMappingEnabled": false,
+                "_toneMappingType": 0,
+                "_contrast": 1,
+                "vignetteStretch": 0,
+                "vignetteCenterX": 0,
+                "vignetteCenterY": 0,
+                "vignetteWeight": 1.5,
+                "vignetteColor": [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "vignetteCameraFov": 0.5,
+                "_vignetteBlendMode": 0,
+                "_vignetteEnabled": false,
+                "_ditheringEnabled": false,
+                "_ditheringIntensity": 0.00392156862745098,
+                "_skipFinalColorClamp": false,
+                "_applyByPostProcess": false,
+                "_isEnabled": true,
+                "outputTextureWidth": 0,
+                "outputTextureHeight": 0
+            },
+            "id": "5956691d-ffed-4da0-ab45-6dce482c816d",
+            "name": "Aluminium",
+            "metadata": {},
+            "checkReadyOnEveryCall": false,
+            "checkReadyOnlyOnce": false,
+            "state": "",
+            "alpha": 1,
+            "backFaceCulling": false,
+            "cullBackFaces": true,
+            "_alphaMode": [
+                2
+            ],
+            "_needDepthPrePass": false,
+            "disableDepthWrite": false,
+            "disableColorWrite": false,
+            "forceDepthWrite": false,
+            "depthFunction": 0,
+            "separateCullingPass": false,
+            "fogEnabled": true,
+            "pointSize": 1,
+            "zOffset": 0,
+            "zOffsetUnits": 0,
+            "pointsCloud": false,
+            "fillMode": 0,
+            "_isVertexOutputInvariant": false,
+            "transparencyMode": 0,
+            "stencil": {
+                "tags": null,
+                "func": 519,
+                "backFunc": 519,
+                "funcRef": 1,
+                "funcMask": 255,
+                "opStencilFail": 7680,
+                "opDepthFail": 7680,
+                "opStencilDepthPass": 7681,
+                "backOpStencilFail": 7680,
+                "backOpDepthFail": 7680,
+                "backOpStencilDepthPass": 7681,
+                "mask": 255,
+                "enabled": false
+            },
+            "uniqueId": 1776813365935,
+            "plugins": {
+                "PBRBRDFConfiguration": {
+                    "tags": null,
+                    "useEnergyConservation": true,
+                    "useSmithVisibilityHeightCorrelated": true,
+                    "useSphericalHarmonics": true,
+                    "useSpecularGlossinessInputEnergyConservation": true,
+                    "mixIblRadianceWithIrradiance": true,
+                    "useLegacySpecularEnergyConservation": true,
+                    "baseDiffuseModel": 0,
+                    "dielectricSpecularModel": 0,
+                    "conductorSpecularModel": 0,
+                    "name": "PBRBRDF",
+                    "priority": 90,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRClearCoatConfiguration": {
+                    "tags": null,
+                    "isEnabled": false,
+                    "intensity": 1,
+                    "roughness": 0,
+                    "indexOfRefraction": 1.5,
+                    "useRoughnessFromMainTexture": true,
+                    "remapF0OnInterfaceChange": true,
+                    "isTintEnabled": false,
+                    "tintColor": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "tintColorAtDistance": 1,
+                    "tintThickness": 1,
+                    "name": "PBRClearCoat",
+                    "priority": 100,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRIridescenceConfiguration": {
+                    "tags": null,
+                    "isEnabled": false,
+                    "intensity": 1,
+                    "minimumThickness": 100,
+                    "maximumThickness": 400,
+                    "indexOfRefraction": 1.3,
+                    "name": "PBRIridescence",
+                    "priority": 110,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRAnisotropicConfiguration": {
+                    "tags": null,
+                    "isEnabled": false,
+                    "intensity": 1,
+                    "direction": [
+                        1,
+                        0
+                    ],
+                    "legacy": false,
+                    "name": "PBRAnisotropic",
+                    "priority": 110,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRSheenConfiguration": {
+                    "tags": null,
+                    "isEnabled": false,
+                    "linkSheenWithAlbedo": false,
+                    "intensity": 1,
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "useRoughnessFromMainTexture": true,
+                    "albedoScaling": false,
+                    "name": "Sheen",
+                    "priority": 120,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRSubSurfaceConfiguration": {
+                    "tags": null,
+                    "isRefractionEnabled": false,
+                    "isTranslucencyEnabled": false,
+                    "isDispersionEnabled": false,
+                    "isScatteringEnabled": false,
+                    "_scatteringDiffusionProfileIndex": 0,
+                    "refractionIntensity": 1,
+                    "translucencyIntensity": 1,
+                    "useAlbedoToTintRefraction": false,
+                    "useAlbedoToTintTranslucency": false,
+                    "indexOfRefraction": 1.4500000476837158,
+                    "_volumeIndexOfRefraction": -1,
+                    "invertRefractionY": false,
+                    "linkRefractionWithTransparency": false,
+                    "minimumThickness": 0,
+                    "maximumThickness": 1,
+                    "useThicknessAsDepth": false,
+                    "tintColor": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "tintColorAtDistance": 1,
+                    "dispersion": 0,
+                    "diffusionDistance": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "useMaskFromThicknessTexture": false,
+                    "useGltfStyleTextures": true,
+                    "applyAlbedoAfterSubSurface": false,
+                    "legacyTranslucency": false,
+                    "name": "PBRSubSurface",
+                    "priority": 130,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": true
+                },
+                "DetailMapConfiguration": {
+                    "tags": null,
+                    "diffuseBlendLevel": 1,
+                    "roughnessBlendLevel": 1,
+                    "bumpLevel": 1,
+                    "normalBlendMethod": 0,
+                    "isEnabled": false,
+                    "name": "DetailMap",
+                    "priority": 140,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                }
+            },
+            "customType": "BABYLON.PBRMaterial"
+        }
+    ],
+    "geometries": {
+        "boxes": [],
+        "spheres": [],
+        "cylinders": [],
+        "toruses": [],
+        "grounds": [],
+        "planes": [],
+        "torusKnots": [],
+        "vertexData": []
+    },
+    "metadata": {
+        "parentId": 1776813364974
+    },
+    "basePoseMatrix": [
+        1622.9692785577556,
+        0,
+        0.000632007647204828,
+        0,
+        0,
+        684.0549053406311,
+        0,
+        0,
+        0.000632007647204828,
+        0,
+        -1622.9692785577556,
+        0,
+        -3626.297717304036,
+        -3238.4644408928475,
+        -2684.5752272880236,
+        1
+    ]
+}

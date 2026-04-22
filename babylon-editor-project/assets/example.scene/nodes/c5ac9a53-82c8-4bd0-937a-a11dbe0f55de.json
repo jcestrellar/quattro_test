@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -0.19729535281658173,
+        4.013843059539795,
+        6.330425262451172
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0.0002011688193306327,
+        0.0036135585978627205,
+        -0.055390577763319016,
+        0.998458206653595
+    ],
+    "scaling": [
+        0.21040372550487518,
+        0.2528073489665985,
+        0.28686490654945374
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Woofer * tweaker * Casing.008",
+    "id": "c5ac9a53-82c8-4bd0-937a-a11dbe0f55de",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364170
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813364992,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

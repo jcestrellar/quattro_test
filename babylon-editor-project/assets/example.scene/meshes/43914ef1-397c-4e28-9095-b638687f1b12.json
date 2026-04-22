@@ -1,0 +1,473 @@
+{
+    "meshes": [
+        {
+            "name": "Cube.019",
+            "id": "43914ef1-397c-4e28-9095-b638687f1b12",
+            "uniqueId": 1776813364446,
+            "type": "Mesh",
+            "position": [
+                -0.028666257858276367,
+                -0.024054884910583496,
+                0.3308371305465698
+            ],
+            "rotationQuaternion": [
+                -0.5616741180419922,
+                0.827358603477478,
+                0,
+                7.710755056677954e-8
+            ],
+            "scaling": [
+                -1,
+                -0.9999999403953552,
+                -0.9999998807907104
+            ],
+            "localMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "isEnabled": true,
+            "isVisible": true,
+            "infiniteDistance": false,
+            "pickable": true,
+            "receiveShadows": true,
+            "billboardMode": 0,
+            "visibility": 1,
+            "alwaysSelectAsActiveMesh": false,
+            "checkCollisions": false,
+            "ellipsoid": [
+                0.5,
+                1,
+                0.5
+            ],
+            "ellipsoidOffset": [
+                0,
+                0,
+                0
+            ],
+            "doNotSyncBoundingInfo": false,
+            "isBlocker": false,
+            "sideOrientation": 0,
+            "isUnIndexed": false,
+            "geometryUniqueId": 1776813365562,
+            "geometryId": "2633d56d-b449-4911-8cd3-95156fff4844",
+            "subMeshes": null,
+            "materialUniqueId": 1776813365565,
+            "materialId": "5909a2e3-0c82-4dcf-9eda-6e8af0cc4a8d",
+            "metadata": {
+                "parentId": 1776813364930
+            },
+            "instances": [],
+            "animations": [],
+            "ranges": [],
+            "layerMask": 268435455,
+            "alphaIndex": 1.7976931348623157e+308,
+            "hasVertexAlpha": false,
+            "overlayAlpha": 1,
+            "overlayColor": [
+                0,
+                0,
+                0
+            ],
+            "applyFog": true,
+            "delayLoadingFile": "assets/example.scene/geometries/2633d56d-b449-4911-8cd3-95156fff4844.babylonbinarymeshdata",
+            "boundingBoxMaximum": [
+                -0.0012738294899463654,
+                0.03880595788359642,
+                0.01705813966691494
+            ],
+            "boundingBoxMinimum": [
+                -0.582522451877594,
+                -0.03355401009321213,
+                -0.678727924823761
+            ],
+            "_binaryInfo": {
+                "positionsAttrDesc": {
+                    "count": 3372,
+                    "stride": 3,
+                    "offset": 0,
+                    "dataType": 1
+                },
+                "normalsAttrDesc": {
+                    "count": 3372,
+                    "stride": 3,
+                    "offset": 13488,
+                    "dataType": 1
+                },
+                "uvsAttrDesc": {
+                    "count": 2248,
+                    "stride": 2,
+                    "offset": 26976,
+                    "dataType": 1
+                },
+                "indicesAttrDesc": {
+                    "count": 3477,
+                    "stride": 1,
+                    "offset": 35968,
+                    "dataType": 0
+                },
+                "subMeshesAttrDesc": {
+                    "count": 1,
+                    "stride": 5,
+                    "offset": 49876,
+                    "dataType": 0
+                }
+            },
+            "positions": null,
+            "normals": null,
+            "uvs": null,
+            "hasUVs": true,
+            "indices": null
+        }
+    ],
+    "transformNodes": [],
+    "cameras": [],
+    "lights": [],
+    "materials": [
+        {
+            "tags": null,
+            "directIntensity": 1,
+            "emissiveIntensity": 1,
+            "environmentIntensity": 1,
+            "specularIntensity": 1,
+            "disableBumpMap": false,
+            "ambientTextureStrength": 1,
+            "ambientTextureImpactOnAnalyticalLights": 0,
+            "metallic": 0.1772727221250534,
+            "roughness": 1,
+            "metallicF0Factor": 0.6272727251052856,
+            "metallicReflectanceColor": [
+                1,
+                1,
+                1
+            ],
+            "useOnlyMetallicFromMetallicReflectanceTexture": false,
+            "ambient": [
+                0,
+                0,
+                0
+            ],
+            "albedo": [
+                0.024013210088014603,
+                0.024013210088014603,
+                0.024013210088014603
+            ],
+            "baseWeight": 1,
+            "reflectivity": [
+                1,
+                1,
+                1
+            ],
+            "reflection": [
+                1,
+                1,
+                1
+            ],
+            "emissive": [
+                0,
+                0,
+                0
+            ],
+            "microSurface": 1,
+            "useLightmapAsShadowmap": false,
+            "useAlphaFromAlbedoTexture": false,
+            "forceAlphaTest": false,
+            "alphaCutOff": 0.4,
+            "useSpecularOverAlpha": true,
+            "useMicroSurfaceFromReflectivityMapAlpha": false,
+            "useRoughnessFromMetallicTextureAlpha": true,
+            "useRoughnessFromMetallicTextureGreen": false,
+            "useMetallnessFromMetallicTextureBlue": false,
+            "useAmbientOcclusionFromMetallicTextureRed": false,
+            "useAmbientInGrayScale": false,
+            "useAutoMicroSurfaceFromReflectivityMap": false,
+            "usePhysicalLightFalloff": true,
+            "useGLTFLightFalloff": false,
+            "useRadianceOverAlpha": true,
+            "useObjectSpaceNormalMap": false,
+            "useParallax": false,
+            "useParallaxOcclusion": false,
+            "parallaxScaleBias": 0.05,
+            "disableLighting": false,
+            "forceIrradianceInFragment": false,
+            "maxSimultaneousLights": 32,
+            "invertNormalMapX": false,
+            "invertNormalMapY": false,
+            "twoSidedLighting": true,
+            "useAlphaFresnel": false,
+            "useLinearAlphaFresnel": false,
+            "forceNormalForward": false,
+            "enableSpecularAntiAliasing": true,
+            "useHorizonOcclusion": true,
+            "useRadianceOcclusion": true,
+            "unlit": false,
+            "applyDecalMapAfterDetailMap": false,
+            "_imageProcessingConfiguration": {
+                "tags": null,
+                "colorCurves": {
+                    "tags": null,
+                    "_globalHue": 30,
+                    "_globalDensity": 0,
+                    "_globalSaturation": 0,
+                    "_globalExposure": 0,
+                    "_highlightsHue": 30,
+                    "_highlightsDensity": 0,
+                    "_highlightsSaturation": 0,
+                    "_highlightsExposure": 0,
+                    "_midtonesHue": 30,
+                    "_midtonesDensity": 0,
+                    "_midtonesSaturation": 0,
+                    "_midtonesExposure": 0
+                },
+                "_colorCurvesEnabled": false,
+                "_colorGradingEnabled": false,
+                "_colorGradingWithGreenDepth": true,
+                "_colorGradingBGR": true,
+                "_exposure": 1,
+                "_toneMappingEnabled": false,
+                "_toneMappingType": 0,
+                "_contrast": 1,
+                "vignetteStretch": 0,
+                "vignetteCenterX": 0,
+                "vignetteCenterY": 0,
+                "vignetteWeight": 1.5,
+                "vignetteColor": [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "vignetteCameraFov": 0.5,
+                "_vignetteBlendMode": 0,
+                "_vignetteEnabled": false,
+                "_ditheringEnabled": false,
+                "_ditheringIntensity": 0.00392156862745098,
+                "_skipFinalColorClamp": false,
+                "_applyByPostProcess": false,
+                "_isEnabled": true,
+                "outputTextureWidth": 0,
+                "outputTextureHeight": 0
+            },
+            "id": "5909a2e3-0c82-4dcf-9eda-6e8af0cc4a8d",
+            "name": "Material.023",
+            "metadata": {},
+            "checkReadyOnEveryCall": false,
+            "checkReadyOnlyOnce": false,
+            "state": "",
+            "alpha": 1,
+            "backFaceCulling": false,
+            "cullBackFaces": true,
+            "_alphaMode": [
+                2
+            ],
+            "_needDepthPrePass": false,
+            "disableDepthWrite": false,
+            "disableColorWrite": false,
+            "forceDepthWrite": false,
+            "depthFunction": 0,
+            "separateCullingPass": false,
+            "fogEnabled": true,
+            "pointSize": 1,
+            "zOffset": 0,
+            "zOffsetUnits": 0,
+            "pointsCloud": false,
+            "fillMode": 0,
+            "_isVertexOutputInvariant": false,
+            "transparencyMode": 0,
+            "stencil": {
+                "tags": null,
+                "func": 519,
+                "backFunc": 519,
+                "funcRef": 1,
+                "funcMask": 255,
+                "opStencilFail": 7680,
+                "opDepthFail": 7680,
+                "opStencilDepthPass": 7681,
+                "backOpStencilFail": 7680,
+                "backOpDepthFail": 7680,
+                "backOpStencilDepthPass": 7681,
+                "mask": 255,
+                "enabled": false
+            },
+            "uniqueId": 1776813365565,
+            "plugins": {
+                "PBRBRDFConfiguration": {
+                    "tags": null,
+                    "useEnergyConservation": true,
+                    "useSmithVisibilityHeightCorrelated": true,
+                    "useSphericalHarmonics": true,
+                    "useSpecularGlossinessInputEnergyConservation": true,
+                    "mixIblRadianceWithIrradiance": true,
+                    "useLegacySpecularEnergyConservation": true,
+                    "baseDiffuseModel": 0,
+                    "dielectricSpecularModel": 0,
+                    "conductorSpecularModel": 0,
+                    "name": "PBRBRDF",
+                    "priority": 90,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRClearCoatConfiguration": {
+                    "tags": null,
+                    "isEnabled": true,
+                    "intensity": 0.021590910851955414,
+                    "roughness": 0.12090909481048584,
+                    "indexOfRefraction": 1.5,
+                    "useRoughnessFromMainTexture": false,
+                    "remapF0OnInterfaceChange": false,
+                    "isTintEnabled": false,
+                    "tintColor": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "tintColorAtDistance": 1,
+                    "tintThickness": 1,
+                    "name": "PBRClearCoat",
+                    "priority": 100,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRIridescenceConfiguration": {
+                    "tags": null,
+                    "isEnabled": false,
+                    "intensity": 1,
+                    "minimumThickness": 100,
+                    "maximumThickness": 400,
+                    "indexOfRefraction": 1.3,
+                    "name": "PBRIridescence",
+                    "priority": 110,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRAnisotropicConfiguration": {
+                    "tags": null,
+                    "isEnabled": false,
+                    "intensity": 1,
+                    "direction": [
+                        1,
+                        0
+                    ],
+                    "legacy": false,
+                    "name": "PBRAnisotropic",
+                    "priority": 110,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRSheenConfiguration": {
+                    "tags": null,
+                    "isEnabled": false,
+                    "linkSheenWithAlbedo": false,
+                    "intensity": 1,
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "useRoughnessFromMainTexture": true,
+                    "albedoScaling": false,
+                    "name": "Sheen",
+                    "priority": 120,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRSubSurfaceConfiguration": {
+                    "tags": null,
+                    "isRefractionEnabled": false,
+                    "isTranslucencyEnabled": false,
+                    "isDispersionEnabled": false,
+                    "isScatteringEnabled": false,
+                    "_scatteringDiffusionProfileIndex": 0,
+                    "refractionIntensity": 1,
+                    "translucencyIntensity": 1,
+                    "useAlbedoToTintRefraction": false,
+                    "useAlbedoToTintTranslucency": false,
+                    "indexOfRefraction": 1.4500000476837158,
+                    "_volumeIndexOfRefraction": -1,
+                    "invertRefractionY": false,
+                    "linkRefractionWithTransparency": false,
+                    "minimumThickness": 0,
+                    "maximumThickness": 1,
+                    "useThicknessAsDepth": false,
+                    "tintColor": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "tintColorAtDistance": 1,
+                    "dispersion": 0,
+                    "diffusionDistance": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "useMaskFromThicknessTexture": false,
+                    "useGltfStyleTextures": true,
+                    "applyAlbedoAfterSubSurface": false,
+                    "legacyTranslucency": false,
+                    "name": "PBRSubSurface",
+                    "priority": 130,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": true
+                },
+                "DetailMapConfiguration": {
+                    "tags": null,
+                    "diffuseBlendLevel": 1,
+                    "roughnessBlendLevel": 1,
+                    "bumpLevel": 1,
+                    "normalBlendMethod": 0,
+                    "isEnabled": false,
+                    "name": "DetailMap",
+                    "priority": 140,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                }
+            },
+            "customType": "BABYLON.PBRMaterial"
+        }
+    ],
+    "geometries": {
+        "boxes": [],
+        "spheres": [],
+        "cylinders": [],
+        "toruses": [],
+        "grounds": [],
+        "planes": [],
+        "torusKnots": [],
+        "vertexData": []
+    },
+    "metadata": {
+        "parentId": 1776813364930
+    },
+    "basePoseMatrix": [
+        -1.0372342131919605,
+        1.6382252962161523,
+        -0.8435305664980437,
+        0,
+        1.7763799765897756,
+        1.1462556043476648,
+        0.04185250350989982,
+        0,
+        0.4896938920762235,
+        -0.6881099893785453,
+        -1.9385265111607832,
+        0,
+        5.0552005434310905,
+        -12.0476310790145,
+        -2.29674103111103,
+        0.9999999999999999
+    ]
+}

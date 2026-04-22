@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -3.81404185295105,
+        1.4896695613861084,
+        0.8845973014831543
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0.88318932056427,
+        0,
+        0.4690166413784027
+    ],
+    "scaling": [
+        0.709545373916626,
+        0.709545373916626,
+        0.709545373916626
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Cymbal_Ride_Centre.001",
+    "id": "949e2261-c33b-41b1-8efd-ed958f5ba162",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364170
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813365031,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

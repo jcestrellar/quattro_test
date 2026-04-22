@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        36.98213577270508,
+        2.8767647743225098,
+        -0.1773167997598648
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0,
+        0,
+        1
+    ],
+    "scaling": [
+        1,
+        1,
+        1
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "BUTTONS.002",
+    "id": "c111c377-7e1b-4015-82ac-268275912270",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813365019
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813364996,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

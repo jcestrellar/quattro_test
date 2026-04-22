@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -2.115290403366089,
+        -1.0390533208847046,
+        -0.030185764655470848
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0,
+        0.7071066498756409,
+        0.70710688829422
+    ],
+    "scaling": [
+        0.0810561552643776,
+        0.08424494415521622,
+        0.08105617016553879
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Chich ",
+    "id": "c651fa75-14e8-4609-b810-b38c8cc1c57f",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364919
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813364916,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

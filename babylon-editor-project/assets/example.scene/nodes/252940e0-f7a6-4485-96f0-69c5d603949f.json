@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        60.914154052734375,
+        -0.118499755859375,
+        -3.744171142578125
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0.5023073554039001,
+        -0.49768173694610596,
+        0.4976818263530731,
+        0.5023077726364136
+    ],
+    "scaling": [
+        0.47511395812034607,
+        0.8770867586135864,
+        0.4750995934009552
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Collapse_Lam_Mod_147",
+    "id": "252940e0-f7a6-4485-96f0-69c5d603949f",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364966
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813364964,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

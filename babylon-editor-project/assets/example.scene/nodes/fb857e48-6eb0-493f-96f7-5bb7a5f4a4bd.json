@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -4.577526569366455,
+        2.2436423301696777,
+        1.8797903060913086
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0.0675669014453888,
+        -0.7038712501525879,
+        0.7038713097572327,
+        0.06756678968667984
+    ],
+    "scaling": [
+        0.007518027909100056,
+        0.007999257184565067,
+        0.007427177391946316
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "PIANO.001",
+    "id": "fb857e48-6eb0-493f-96f7-5bb7a5f4a4bd",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364170
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813364914,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

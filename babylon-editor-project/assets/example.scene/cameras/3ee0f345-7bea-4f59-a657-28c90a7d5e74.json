@@ -1,0 +1,91 @@
+{
+    "tags": null,
+    "ellipsoid": [
+        0.5,
+        1,
+        0.5
+    ],
+    "ellipsoidOffset": [
+        0,
+        0,
+        0
+    ],
+    "checkCollisions": false,
+    "applyGravity": false,
+    "updateUpVectorFromRotation": false,
+    "rotation": [
+        0.5844886527320279,
+        -1.5801508149113666,
+        0.00009415198868408678
+    ],
+    "speed": 500,
+    "position": [
+        461.1302428043034,
+        345.46843859071964,
+        -590.5933627666051
+    ],
+    "upVector": [
+        -0.5517479689103102,
+        0.8339943388258907,
+        -0.0052556264814638265
+    ],
+    "fov": 0.8,
+    "projectionPlaneTilt": 0,
+    "minZ": 1,
+    "maxZ": 1000000,
+    "inertia": 0,
+    "mode": 0,
+    "layerMask": 268435455,
+    "fovMode": 0,
+    "cameraRigMode": 0,
+    "ignoreCameraMaxZ": false,
+    "name": "camera",
+    "id": "3ee0f345-7bea-4f59-a657-28c90a7d5e74",
+    "state": "",
+    "metadata": {
+        "sensorSize": 36,
+        "focalLength": 42.574003560703986
+    },
+    "uniqueId": 18,
+    "type": "UniversalCamera",
+    "inputsmgr": {
+        "FreeCameraKeyboardMoveInput": {
+            "tags": null,
+            "keysUp": [
+                87
+            ],
+            "keysUpward": [
+                69
+            ],
+            "keysDown": [
+                83
+            ],
+            "keysDownward": [
+                81
+            ],
+            "keysLeft": [
+                65
+            ],
+            "keysRight": [
+                68
+            ],
+            "rotationSpeed": 0.5,
+            "keysRotateLeft": [],
+            "keysRotateRight": [],
+            "keysRotateUp": [],
+            "keysRotateDown": []
+        },
+        "FreeCameraMouseInput": {
+            "tags": null,
+            "buttons": [
+                0,
+                1,
+                2
+            ],
+            "angularSensibility": 500
+        }
+    },
+    "animations": [],
+    "ranges": [],
+    "isEnabled": true
+}

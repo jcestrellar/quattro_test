@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -4.797663688659668,
+        1.4896695613861084,
+        -0.04316052049398422
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0.7071068286895752,
+        0,
+        0.7071068286895752
+    ],
+    "scaling": [
+        0.709545373916626,
+        0.709545373916626,
+        0.709545373916626
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Stool_Centre",
+    "id": "81b27d4e-dc2b-422c-bcd6-565dec8bb572",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364170
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813365025,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

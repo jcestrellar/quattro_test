@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -103.33263397216797,
+        0.07910322397947311,
+        -0.7292599678039551
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0,
+        0,
+        1
+    ],
+    "scaling": [
+        1,
+        1,
+        1
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "FADERS.001",
+    "id": "a9366c31-9130-4407-9ae9-4ff010e3c9ad",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364914
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813364912,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

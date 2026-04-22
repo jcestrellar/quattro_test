@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        0,
+        0.5490670204162598,
+        0
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0.659345805644989,
+        0,
+        0,
+        0.751839816570282
+    ],
+    "scaling": [
+        1,
+        1,
+        1
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Bass_Drum_Centre",
+    "id": "a430d9e6-7ba7-49cf-8005-443916af64d9",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813365039
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813365034,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

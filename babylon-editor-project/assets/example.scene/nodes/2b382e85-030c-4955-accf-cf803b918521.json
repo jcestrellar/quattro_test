@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        0,
+        -0.8289859294891357,
+        0
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0.8660253882408142,
+        0,
+        0.5
+    ],
+    "scaling": [
+        1,
+        1,
+        1
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Legs_Rotation",
+    "id": "2b382e85-030c-4955-accf-cf803b918521",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813365024
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813365022,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

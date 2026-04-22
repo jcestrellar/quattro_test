@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -4.209475517272949,
+        1.4896695613861084,
+        -0.1938561201095581
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0.965925931930542,
+        0,
+        0.25881898403167725
+    ],
+    "scaling": [
+        0.709545373916626,
+        0.709545373916626,
+        0.709545373916626
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Snare_Centre",
+    "id": "df6538a6-523d-4c05-b0ea-2abd4e6a6b91",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364170
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813365029,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

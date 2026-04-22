@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -3.6509196758270264,
+        1.4896695613861084,
+        0.1359371840953827
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0.7071068286895752,
+        0,
+        0.7071068286895752
+    ],
+    "scaling": [
+        0.709545373916626,
+        0.709545373916626,
+        0.709545373916626
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Bass_Centre",
+    "id": "0584c455-63d2-435f-a954-d9d519d65ba7",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364170
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813365039,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

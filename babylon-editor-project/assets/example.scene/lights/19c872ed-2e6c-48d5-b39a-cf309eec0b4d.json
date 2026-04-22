@@ -1,0 +1,53 @@
+{
+    "tags": null,
+    "angle": 0.9773843811168235,
+    "innerAngle": 0,
+    "exponent": 3.141592653589793,
+    "projectionTextureLightNear": 0.000001,
+    "projectionTextureLightFar": 1000,
+    "projectionTextureUpDirection": {
+        "_isDirty": true,
+        "_x": 0,
+        "_y": 1,
+        "_z": 0
+    },
+    "diffuse": [
+        0.02352941176470591,
+        0.36345977643393823,
+        0.7098039215686275
+    ],
+    "specular": [
+        0.7586206896551724,
+        0.14060642092746722,
+        0.14060642092746722
+    ],
+    "falloffType": 0,
+    "intensity": 10000000,
+    "range": 87000,
+    "intensityMode": 0,
+    "radius": 0.00001,
+    "_renderPriority": 0,
+    "shadowEnabled": true,
+    "excludeWithLayerMask": 0,
+    "includeOnlyWithLayerMask": 0,
+    "lightmapMode": 0,
+    "position": [
+        36.18280251742803,
+        415.9177122128703,
+        -293.5383907388076
+    ],
+    "direction": [
+        4.89,
+        -3.4899999999999998,
+        -5.209999999999998
+    ],
+    "name": "New Spot Light",
+    "id": "19c872ed-2e6c-48d5-b39a-cf309eec0b4d",
+    "state": "",
+    "metadata": {},
+    "uniqueId": 1776813850750,
+    "type": 2,
+    "animations": [],
+    "ranges": [],
+    "isEnabled": true
+}

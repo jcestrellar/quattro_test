@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        50.76658630371094,
+        -0.53955078125,
+        -3.415139675140381
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0,
+        0.32906848192214966,
+        0.9443060755729675
+    ],
+    "scaling": [
+        1,
+        1,
+        1
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "VRayLight1102",
+    "id": "cddb36c5-2d17-4262-a4db-2cff8c677294",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364960
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813364959,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

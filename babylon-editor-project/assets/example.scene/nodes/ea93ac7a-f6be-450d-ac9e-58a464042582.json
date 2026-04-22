@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -3.7361907958984375,
+        1.4896695613861084,
+        -0.5248759388923645
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0.8538362383842468,
+        0,
+        0.5205417275428772
+    ],
+    "scaling": [
+        0.7095453143119812,
+        0.709545373916626,
+        0.7095453143119812
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Cymbal_Crash_Centre",
+    "id": "ea93ac7a-f6be-450d-ac9e-58a464042582",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364170
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813365032,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}
