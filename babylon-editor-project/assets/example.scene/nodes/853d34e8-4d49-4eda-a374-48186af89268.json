@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        0,
+        1.168020248413086,
+        0
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0,
+        0,
+        1
+    ],
+    "scaling": [
+        1,
+        1,
+        1
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Snare_Drum_Centre",
+    "id": "853d34e8-4d49-4eda-a374-48186af89268",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813365029
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813365028,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

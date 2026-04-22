@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -4.513428211212158,
+        1.4605594873428345,
+        1.8056012392044067
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0.07011216133832932,
+        -0.7036222219467163,
+        0.7036222815513611,
+        0.07011215388774872
+    ],
+    "scaling": [
+        0.012192496098577976,
+        0.14486996829509735,
+        0.012377823702991009
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Cylinder.010",
+    "id": "08beca1a-facf-4e5a-92de-01068f151ff1",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364170
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813364915,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

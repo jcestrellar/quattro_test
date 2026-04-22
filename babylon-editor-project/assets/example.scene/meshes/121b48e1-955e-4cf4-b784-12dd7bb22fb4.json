@@ -1,0 +1,744 @@
+{
+    "meshes": [
+        {
+            "name": "Sphere.007",
+            "id": "121b48e1-955e-4cf4-b784-12dd7bb22fb4",
+            "uniqueId": 1776813364360,
+            "type": "Mesh",
+            "position": [
+                -2.0914900302886963,
+                0.1681041717529297,
+                -1.0895392894744873
+            ],
+            "rotationQuaternion": [
+                0,
+                0,
+                0.7071068286895752,
+                0.7071068286895752
+            ],
+            "scaling": [
+                0.037272680550813675,
+                0.038739003241062164,
+                0.037272680550813675
+            ],
+            "localMatrix": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            "isEnabled": true,
+            "isVisible": true,
+            "infiniteDistance": false,
+            "pickable": true,
+            "receiveShadows": true,
+            "billboardMode": 0,
+            "visibility": 1,
+            "alwaysSelectAsActiveMesh": false,
+            "checkCollisions": false,
+            "ellipsoid": [
+                0.5,
+                1,
+                0.5
+            ],
+            "ellipsoidOffset": [
+                0,
+                0,
+                0
+            ],
+            "doNotSyncBoundingInfo": false,
+            "isBlocker": false,
+            "sideOrientation": 0,
+            "isUnIndexed": false,
+            "geometryUniqueId": 1776813365412,
+            "geometryId": "c7fd8dfe-f5d4-4f7e-a270-ba5fac0fb873",
+            "subMeshes": null,
+            "materialUniqueId": 1776813365413,
+            "materialId": "8fcb3481-1fb0-49f1-9cd6-7fe09d875ebb",
+            "metadata": {
+                "parentId": 1776813364919
+            },
+            "instances": [
+                {
+                    "name": "Sphere.008",
+                    "id": "0679d817-d09c-4f71-9dc0-9309a07522c8",
+                    "isEnabled": true,
+                    "isVisible": true,
+                    "isPickable": true,
+                    "checkCollisions": false,
+                    "position": [
+                        -2.0914902687072754,
+                        0.16810491681098938,
+                        1.055740237236023
+                    ],
+                    "scaling": [
+                        0.037272680550813675,
+                        0.038739003241062164,
+                        0.037272680550813675
+                    ],
+                    "rotationQuaternion": [
+                        0,
+                        0,
+                        0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "metadata": {
+                        "parentId": 1776813364919
+                    },
+                    "animations": [],
+                    "ranges": [],
+                    "uniqueId": 1776813364361
+                },
+                {
+                    "name": "Sphere.009",
+                    "id": "2fcef7d1-3aeb-4e52-acb2-0de49f5b43cd",
+                    "isEnabled": true,
+                    "isVisible": true,
+                    "isPickable": true,
+                    "checkCollisions": false,
+                    "position": [
+                        -2.0914902687072754,
+                        0.9662883877754211,
+                        0.6816055774688721
+                    ],
+                    "scaling": [
+                        0.037272680550813675,
+                        0.038739003241062164,
+                        0.037272680550813675
+                    ],
+                    "rotationQuaternion": [
+                        0,
+                        0,
+                        0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "metadata": {
+                        "parentId": 1776813364919
+                    },
+                    "animations": [],
+                    "ranges": [],
+                    "uniqueId": 1776813364362
+                },
+                {
+                    "name": "Sphere.010",
+                    "id": "13fdd51c-a0c5-48d6-bdf4-1ce8b53ccc99",
+                    "isEnabled": true,
+                    "isVisible": true,
+                    "isPickable": true,
+                    "checkCollisions": false,
+                    "position": [
+                        -2.0914900302886963,
+                        0.9662885069847107,
+                        -0.7474234700202942
+                    ],
+                    "scaling": [
+                        0.037272680550813675,
+                        0.038739003241062164,
+                        0.037272680550813675
+                    ],
+                    "rotationQuaternion": [
+                        0,
+                        0,
+                        0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "metadata": {
+                        "parentId": 1776813364919
+                    },
+                    "animations": [],
+                    "ranges": [],
+                    "uniqueId": 1776813364363
+                },
+                {
+                    "name": "Sphere.011",
+                    "id": "51b0d7ae-216b-4962-8e2b-c4b95dc35993",
+                    "isEnabled": true,
+                    "isVisible": true,
+                    "isPickable": true,
+                    "checkCollisions": false,
+                    "position": [
+                        -2.0914900302886963,
+                        -2.6498401165008545,
+                        -0.7258946299552917
+                    ],
+                    "scaling": [
+                        0.037272680550813675,
+                        0.038739003241062164,
+                        0.037272680550813675
+                    ],
+                    "rotationQuaternion": [
+                        0,
+                        0,
+                        0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "metadata": {
+                        "parentId": 1776813364919
+                    },
+                    "animations": [],
+                    "ranges": [],
+                    "uniqueId": 1776813364364
+                },
+                {
+                    "name": "Sphere.012",
+                    "id": "722ebda9-4e56-4492-866d-33f9eaf1a083",
+                    "isEnabled": true,
+                    "isVisible": true,
+                    "isPickable": true,
+                    "checkCollisions": false,
+                    "position": [
+                        -2.0914900302886963,
+                        -2.656330108642578,
+                        0.6816047430038452
+                    ],
+                    "scaling": [
+                        0.037272680550813675,
+                        0.038739003241062164,
+                        0.037272680550813675
+                    ],
+                    "rotationQuaternion": [
+                        0,
+                        0,
+                        0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "metadata": {
+                        "parentId": 1776813364919
+                    },
+                    "animations": [],
+                    "ranges": [],
+                    "uniqueId": 1776813364365
+                },
+                {
+                    "name": "Sphere.013",
+                    "id": "a5accd52-afbc-43a1-94cd-b14ae7bc647e",
+                    "isEnabled": true,
+                    "isVisible": true,
+                    "isPickable": true,
+                    "checkCollisions": false,
+                    "position": [
+                        -2.0914902687072754,
+                        -1.935905933380127,
+                        -1.08953857421875
+                    ],
+                    "scaling": [
+                        0.037272680550813675,
+                        0.038739003241062164,
+                        0.037272680550813675
+                    ],
+                    "rotationQuaternion": [
+                        0,
+                        0,
+                        0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "metadata": {
+                        "parentId": 1776813364919
+                    },
+                    "animations": [],
+                    "ranges": [],
+                    "uniqueId": 1776813364366
+                },
+                {
+                    "name": "Sphere.014",
+                    "id": "31f2946c-3349-4807-aa80-b6cd19234ec2",
+                    "isEnabled": true,
+                    "isVisible": true,
+                    "isPickable": true,
+                    "checkCollisions": false,
+                    "position": [
+                        -2.0914902687072754,
+                        -1.9407718181610107,
+                        1.0612645149230957
+                    ],
+                    "scaling": [
+                        0.037272680550813675,
+                        0.038739003241062164,
+                        0.037272680550813675
+                    ],
+                    "rotationQuaternion": [
+                        0,
+                        0,
+                        0.7071068286895752,
+                        0.7071068286895752
+                    ],
+                    "metadata": {
+                        "parentId": 1776813364919
+                    },
+                    "animations": [],
+                    "ranges": [],
+                    "uniqueId": 1776813364367
+                },
+                {
+                    "name": "Sphere.016",
+                    "id": "55a04429-5042-4f3f-aa64-f9981fb0caae",
+                    "isEnabled": true,
+                    "isVisible": true,
+                    "isPickable": true,
+                    "checkCollisions": false,
+                    "position": [
+                        -1.1373964548110962,
+                        -2.3396379947662354,
+                        -0.03577987849712372
+                    ],
+                    "scaling": [
+                        0.05148887634277344,
+                        0.05351446568965912,
+                        0.05148887634277344
+                    ],
+                    "rotationQuaternion": [
+                        0,
+                        0,
+                        -0.7071066498756409,
+                        0.70710688829422
+                    ],
+                    "metadata": {
+                        "parentId": 1776813364919
+                    },
+                    "animations": [],
+                    "ranges": [],
+                    "uniqueId": 1776813364368
+                },
+                {
+                    "name": "Sphere.039",
+                    "id": "3527cd30-dab1-419c-8166-b32970b635fd",
+                    "isEnabled": true,
+                    "isVisible": true,
+                    "isPickable": true,
+                    "checkCollisions": false,
+                    "position": [
+                        -0.9217401146888733,
+                        -2.3396382331848145,
+                        -0.2410714030265808
+                    ],
+                    "scaling": [
+                        0.05148887634277344,
+                        0.05351446568965912,
+                        0.05148887634277344
+                    ],
+                    "rotationQuaternion": [
+                        0,
+                        0,
+                        -0.7071066498756409,
+                        0.70710688829422
+                    ],
+                    "metadata": {
+                        "parentId": 1776813364919
+                    },
+                    "animations": [],
+                    "ranges": [],
+                    "uniqueId": 1776813364369
+                }
+            ],
+            "animations": [],
+            "ranges": [],
+            "layerMask": 268435455,
+            "alphaIndex": 1.7976931348623157e+308,
+            "hasVertexAlpha": false,
+            "overlayAlpha": 1,
+            "overlayColor": [
+                0,
+                0,
+                0
+            ],
+            "applyFog": true,
+            "delayLoadingFile": "assets/example.scene/geometries/c7fd8dfe-f5d4-4f7e-a270-ba5fac0fb873.babylonbinarymeshdata",
+            "boundingBoxMaximum": [
+                0.8314698934555054,
+                0.3067777752876282,
+                0.8314696550369263
+            ],
+            "boundingBoxMinimum": [
+                -0.8314698934555054,
+                -0.05186665058135986,
+                -0.8314696550369263
+            ],
+            "_binaryInfo": {
+                "positionsAttrDesc": {
+                    "count": 969,
+                    "stride": 3,
+                    "offset": 0,
+                    "dataType": 1
+                },
+                "normalsAttrDesc": {
+                    "count": 969,
+                    "stride": 3,
+                    "offset": 3876,
+                    "dataType": 1
+                },
+                "uvsAttrDesc": {
+                    "count": 646,
+                    "stride": 2,
+                    "offset": 7752,
+                    "dataType": 1
+                },
+                "indicesAttrDesc": {
+                    "count": 1560,
+                    "stride": 1,
+                    "offset": 10336,
+                    "dataType": 0
+                },
+                "subMeshesAttrDesc": {
+                    "count": 1,
+                    "stride": 5,
+                    "offset": 16576,
+                    "dataType": 0
+                }
+            },
+            "positions": null,
+            "normals": null,
+            "uvs": null,
+            "hasUVs": true,
+            "indices": null
+        }
+    ],
+    "transformNodes": [],
+    "cameras": [],
+    "lights": [],
+    "materials": [
+        {
+            "tags": null,
+            "directIntensity": 1,
+            "emissiveIntensity": 1,
+            "environmentIntensity": 1,
+            "specularIntensity": 1,
+            "disableBumpMap": false,
+            "ambientTextureStrength": 1,
+            "ambientTextureImpactOnAnalyticalLights": 0,
+            "metallic": 0,
+            "roughness": 0.06037735939025879,
+            "metallicF0Factor": 1,
+            "metallicReflectanceColor": [
+                1,
+                1,
+                1
+            ],
+            "useOnlyMetallicFromMetallicReflectanceTexture": false,
+            "ambient": [
+                0,
+                0,
+                0
+            ],
+            "albedo": [
+                0,
+                0,
+                0
+            ],
+            "baseWeight": 1,
+            "reflectivity": [
+                1,
+                1,
+                1
+            ],
+            "reflection": [
+                1,
+                1,
+                1
+            ],
+            "emissive": [
+                0,
+                0,
+                0
+            ],
+            "microSurface": 1,
+            "useLightmapAsShadowmap": false,
+            "useAlphaFromAlbedoTexture": false,
+            "forceAlphaTest": false,
+            "alphaCutOff": 0.4,
+            "useSpecularOverAlpha": true,
+            "useMicroSurfaceFromReflectivityMapAlpha": false,
+            "useRoughnessFromMetallicTextureAlpha": true,
+            "useRoughnessFromMetallicTextureGreen": false,
+            "useMetallnessFromMetallicTextureBlue": false,
+            "useAmbientOcclusionFromMetallicTextureRed": false,
+            "useAmbientInGrayScale": false,
+            "useAutoMicroSurfaceFromReflectivityMap": false,
+            "usePhysicalLightFalloff": true,
+            "useGLTFLightFalloff": false,
+            "useRadianceOverAlpha": true,
+            "useObjectSpaceNormalMap": false,
+            "useParallax": false,
+            "useParallaxOcclusion": false,
+            "parallaxScaleBias": 0.05,
+            "disableLighting": false,
+            "forceIrradianceInFragment": false,
+            "maxSimultaneousLights": 32,
+            "invertNormalMapX": false,
+            "invertNormalMapY": false,
+            "twoSidedLighting": true,
+            "useAlphaFresnel": false,
+            "useLinearAlphaFresnel": false,
+            "forceNormalForward": false,
+            "enableSpecularAntiAliasing": true,
+            "useHorizonOcclusion": true,
+            "useRadianceOcclusion": true,
+            "unlit": false,
+            "applyDecalMapAfterDetailMap": false,
+            "_imageProcessingConfiguration": {
+                "tags": null,
+                "colorCurves": {
+                    "tags": null,
+                    "_globalHue": 30,
+                    "_globalDensity": 0,
+                    "_globalSaturation": 0,
+                    "_globalExposure": 0,
+                    "_highlightsHue": 30,
+                    "_highlightsDensity": 0,
+                    "_highlightsSaturation": 0,
+                    "_highlightsExposure": 0,
+                    "_midtonesHue": 30,
+                    "_midtonesDensity": 0,
+                    "_midtonesSaturation": 0,
+                    "_midtonesExposure": 0
+                },
+                "_colorCurvesEnabled": false,
+                "_colorGradingEnabled": false,
+                "_colorGradingWithGreenDepth": true,
+                "_colorGradingBGR": true,
+                "_exposure": 1,
+                "_toneMappingEnabled": false,
+                "_toneMappingType": 0,
+                "_contrast": 1,
+                "vignetteStretch": 0,
+                "vignetteCenterX": 0,
+                "vignetteCenterY": 0,
+                "vignetteWeight": 1.5,
+                "vignetteColor": [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "vignetteCameraFov": 0.5,
+                "_vignetteBlendMode": 0,
+                "_vignetteEnabled": false,
+                "_ditheringEnabled": false,
+                "_ditheringIntensity": 0.00392156862745098,
+                "_skipFinalColorClamp": false,
+                "_applyByPostProcess": false,
+                "_isEnabled": true,
+                "outputTextureWidth": 0,
+                "outputTextureHeight": 0
+            },
+            "id": "8fcb3481-1fb0-49f1-9cd6-7fe09d875ebb",
+            "name": "Material.009",
+            "metadata": {},
+            "checkReadyOnEveryCall": false,
+            "checkReadyOnlyOnce": false,
+            "state": "",
+            "alpha": 1,
+            "backFaceCulling": false,
+            "cullBackFaces": true,
+            "_alphaMode": [
+                2
+            ],
+            "_needDepthPrePass": false,
+            "disableDepthWrite": false,
+            "disableColorWrite": false,
+            "forceDepthWrite": false,
+            "depthFunction": 0,
+            "separateCullingPass": false,
+            "fogEnabled": true,
+            "pointSize": 1,
+            "zOffset": 0,
+            "zOffsetUnits": 0,
+            "pointsCloud": false,
+            "fillMode": 0,
+            "_isVertexOutputInvariant": false,
+            "transparencyMode": 0,
+            "stencil": {
+                "tags": null,
+                "func": 519,
+                "backFunc": 519,
+                "funcRef": 1,
+                "funcMask": 255,
+                "opStencilFail": 7680,
+                "opDepthFail": 7680,
+                "opStencilDepthPass": 7681,
+                "backOpStencilFail": 7680,
+                "backOpDepthFail": 7680,
+                "backOpStencilDepthPass": 7681,
+                "mask": 255,
+                "enabled": false
+            },
+            "uniqueId": 1776813365413,
+            "plugins": {
+                "PBRBRDFConfiguration": {
+                    "tags": null,
+                    "useEnergyConservation": true,
+                    "useSmithVisibilityHeightCorrelated": true,
+                    "useSphericalHarmonics": true,
+                    "useSpecularGlossinessInputEnergyConservation": true,
+                    "mixIblRadianceWithIrradiance": true,
+                    "useLegacySpecularEnergyConservation": true,
+                    "baseDiffuseModel": 0,
+                    "dielectricSpecularModel": 0,
+                    "conductorSpecularModel": 0,
+                    "name": "PBRBRDF",
+                    "priority": 90,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRClearCoatConfiguration": {
+                    "tags": null,
+                    "isEnabled": false,
+                    "intensity": 1,
+                    "roughness": 0,
+                    "indexOfRefraction": 1.5,
+                    "useRoughnessFromMainTexture": true,
+                    "remapF0OnInterfaceChange": true,
+                    "isTintEnabled": false,
+                    "tintColor": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "tintColorAtDistance": 1,
+                    "tintThickness": 1,
+                    "name": "PBRClearCoat",
+                    "priority": 100,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRIridescenceConfiguration": {
+                    "tags": null,
+                    "isEnabled": false,
+                    "intensity": 1,
+                    "minimumThickness": 100,
+                    "maximumThickness": 400,
+                    "indexOfRefraction": 1.3,
+                    "name": "PBRIridescence",
+                    "priority": 110,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRAnisotropicConfiguration": {
+                    "tags": null,
+                    "isEnabled": false,
+                    "intensity": 1,
+                    "direction": [
+                        1,
+                        0
+                    ],
+                    "legacy": false,
+                    "name": "PBRAnisotropic",
+                    "priority": 110,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRSheenConfiguration": {
+                    "tags": null,
+                    "isEnabled": false,
+                    "linkSheenWithAlbedo": false,
+                    "intensity": 1,
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "useRoughnessFromMainTexture": true,
+                    "albedoScaling": false,
+                    "name": "Sheen",
+                    "priority": 120,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                },
+                "PBRSubSurfaceConfiguration": {
+                    "tags": null,
+                    "isRefractionEnabled": false,
+                    "isTranslucencyEnabled": false,
+                    "isDispersionEnabled": false,
+                    "isScatteringEnabled": false,
+                    "_scatteringDiffusionProfileIndex": 0,
+                    "refractionIntensity": 1,
+                    "translucencyIntensity": 1,
+                    "useAlbedoToTintRefraction": false,
+                    "useAlbedoToTintTranslucency": false,
+                    "indexOfRefraction": 1.5,
+                    "_volumeIndexOfRefraction": -1,
+                    "invertRefractionY": false,
+                    "linkRefractionWithTransparency": false,
+                    "minimumThickness": 0,
+                    "maximumThickness": 1,
+                    "useThicknessAsDepth": false,
+                    "tintColor": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "tintColorAtDistance": 1,
+                    "dispersion": 0,
+                    "diffusionDistance": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "useMaskFromThicknessTexture": false,
+                    "useGltfStyleTextures": true,
+                    "applyAlbedoAfterSubSurface": false,
+                    "legacyTranslucency": false,
+                    "name": "PBRSubSurface",
+                    "priority": 130,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": true
+                },
+                "DetailMapConfiguration": {
+                    "tags": null,
+                    "diffuseBlendLevel": 1,
+                    "roughnessBlendLevel": 1,
+                    "bumpLevel": 1,
+                    "normalBlendMethod": 0,
+                    "isEnabled": false,
+                    "name": "DetailMap",
+                    "priority": 140,
+                    "resolveIncludes": false,
+                    "registerForExtraEvents": false
+                }
+            },
+            "customType": "BABYLON.PBRMaterial"
+        }
+    ],
+    "geometries": {
+        "boxes": [],
+        "spheres": [],
+        "cylinders": [],
+        "toruses": [],
+        "grounds": [],
+        "planes": [],
+        "torusKnots": [],
+        "vertexData": []
+    },
+    "metadata": {
+        "parentId": 1776813364919
+    },
+    "basePoseMatrix": [
+        0.000011431841966696058,
+        98.29428542611404,
+        -8.132500378247538,
+        0,
+        -98.63015187580322,
+        0.000015044653970412776,
+        0.000055558276671808604,
+        0,
+        -0.00005669393451936422,
+        -8.132498234459367,
+        -98.29430188117324,
+        0,
+        114.74804016074661,
+        -95.18654650082074,
+        -204.24122357713475,
+        1
+    ]
+}

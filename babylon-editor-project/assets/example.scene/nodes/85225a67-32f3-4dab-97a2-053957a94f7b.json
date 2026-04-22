@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -0.2849220335483551,
+        0.3366572856903076,
+        -0.2784257233142853
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        -0.09904535114765167,
+        0.00429228600114584,
+        -0.04308265820145607,
+        0.9941406846046448
+    ],
+    "scaling": [
+        1,
+        1,
+        1
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Tom_Mid_Centre",
+    "id": "85225a67-32f3-4dab-97a2-053957a94f7b",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364886
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813365038,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -4.176554203033447,
+        1.4896695613861084,
+        -0.5772720575332642
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0.2021385133266449,
+        0,
+        0.9793569445610046
+    ],
+    "scaling": [
+        0.7095454335212708,
+        0.709545373916626,
+        0.7095454335212708
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "HiHat_Centre",
+    "id": "4c32fafb-cfd7-4e2f-93ae-f8dc5e8f50b6",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364170
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813365030,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

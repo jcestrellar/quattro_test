@@ -15,7 +15,6 @@ import type { Judgement, ScoreState } from '../drumRhythm/scoring';
 import { ScoreHud } from '../drumRhythm/components/scoreHud';
 import type { ChartMeta } from '../drumRhythm/chartTypes';
 import { RouteMap } from '../../routes';
-import { vitePublicUrl } from '../../utils/vitePublicUrl';
 import { CONCERT_PERF } from './stage/concertPerf';
 import { createConcertStageScene, type ConcertStageHandles } from './stage/concertStageScene';
 import {
@@ -114,7 +113,8 @@ export const DrumRhythm3DBabylonConcertIndex = () => {
 
   useEffect(() => {
     if (status !== 'ready') return;
-    audioEngine.load(vitePublicUrl('assets/song.ogg')).catch(console.error);
+    // Igual que drumRhythm3DBabylon: evitar `./assets/...` en Quattro.fs (Android).
+    audioEngine.load('assets/song.ogg').catch(console.error);
     return () => {
       audioEngine.dispose();
     };

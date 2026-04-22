@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -0.18243098258972168,
+        0.13385994732379913,
+        0.44042718410491943
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        -0.1950903832912445,
+        0,
+        0.9807853698730469
+    ],
+    "scaling": [
+        1,
+        1,
+        1
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Bass_Strap",
+    "id": "1b7afa5e-e407-4ef1-9c90-c49b89fafb55",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813365034
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813365033,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

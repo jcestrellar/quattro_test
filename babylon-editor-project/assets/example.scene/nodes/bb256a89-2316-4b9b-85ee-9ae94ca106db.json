@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        0.17303359508514404,
+        0.036697499454021454,
+        0.09990093111991882
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0.5,
+        0,
+        0.8660253882408142
+    ],
+    "scaling": [
+        1,
+        1,
+        1
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Tom_Mid_Strap",
+    "id": "bb256a89-2316-4b9b-85ee-9ae94ca106db",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813365038
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813365037,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

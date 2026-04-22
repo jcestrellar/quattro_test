@@ -15,7 +15,6 @@ import type { Judgement, ScoreState } from '../drumRhythm/scoring';
 import { ScoreHud } from '../drumRhythm/components/scoreHud';
 import type { ChartMeta } from '../drumRhythm/chartTypes';
 import { RouteMap } from '../../routes';
-import { vitePublicUrl } from '../../utils/vitePublicUrl';
 import { CONCERT_SHOW_PERF } from './stage/concertShowPerf';
 import {
   createHighwayOwnFillLight,
@@ -118,7 +117,7 @@ export const DrumRhythm3DBabylonConcertShowIndex = () => {
 
   useEffect(() => {
     if (status !== 'ready') return;
-    audioEngine.load(vitePublicUrl('assets/song.ogg')).catch(console.error);
+    audioEngine.load('assets/song.ogg').catch(console.error);
     return () => {
       audioEngine.dispose();
     };

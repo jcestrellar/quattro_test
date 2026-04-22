@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -20.99197006225586,
+        -2.5342657566070557,
+        0.16912215948104858
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0,
+        0,
+        1
+    ],
+    "scaling": [
+        1,
+        1,
+        1
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "DRUM_PAD.002",
+    "id": "8b1920a5-a9ac-446d-89ee-a96a5a037f33",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364996
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813364995,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

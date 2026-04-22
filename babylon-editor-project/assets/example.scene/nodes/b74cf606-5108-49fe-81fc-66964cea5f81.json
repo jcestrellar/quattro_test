@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -2.0026795864105225,
+        -2.119323253631592,
+        -0.4292300343513489
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0,
+        0,
+        1
+    ],
+    "scaling": [
+        1.3002922534942627,
+        1.3087103366851807,
+        1.2510746717453003
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Stecker",
+    "id": "b74cf606-5108-49fe-81fc-66964cea5f81",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364919
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813364917,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

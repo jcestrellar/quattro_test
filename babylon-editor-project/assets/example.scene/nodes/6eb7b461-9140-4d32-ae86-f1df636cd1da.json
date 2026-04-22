@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        -1.967841386795044,
+        -1.0751343965530396,
+        -0.44844022393226624
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        -0.7071068286895752,
+        0,
+        0.7071067094802856
+    ],
+    "scaling": [
+        0.14180350303649902,
+        0.14180350303649902,
+        0.14738209545612335
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Xlr",
+    "id": "6eb7b461-9140-4d32-ae86-f1df636cd1da",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364919
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813364918,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

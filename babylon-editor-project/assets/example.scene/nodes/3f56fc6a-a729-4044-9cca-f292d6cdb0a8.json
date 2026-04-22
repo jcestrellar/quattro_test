@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        12.014603614807129,
+        4.301014423370361,
+        -0.13538987934589386
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0,
+        0,
+        1
+    ],
+    "scaling": [
+        1,
+        1,
+        1
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Group2302",
+    "id": "3f56fc6a-a729-4044-9cca-f292d6cdb0a8",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813364945
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813364944,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

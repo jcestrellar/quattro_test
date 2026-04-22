@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        66.31112670898438,
+        -1.2208704948425293,
+        -0.4438614845275879
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0,
+        0,
+        1
+    ],
+    "scaling": [
+        1,
+        1,
+        1
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "DIALS.002",
+    "id": "d4c8a614-0012-40c2-9acb-735e8c7809cb",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813365019
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813364997,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}

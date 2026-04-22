@@ -1,0 +1,58 @@
+{
+    "tags": null,
+    "position": [
+        0.16100190579891205,
+        0.005370233207941055,
+        0.09295400977134705
+    ],
+    "rotation": [
+        0,
+        0,
+        0
+    ],
+    "rotationQuaternion": [
+        0,
+        0.4999999701976776,
+        0,
+        0.8660253882408142
+    ],
+    "scaling": [
+        1,
+        1,
+        1
+    ],
+    "billboardMode": 0,
+    "scalingDeterminant": 1,
+    "infiniteDistance": false,
+    "ignoreNonUniformScaling": false,
+    "reIntegrateRotationIntoRotationQuaternion": false,
+    "name": "Tom_High_Strap",
+    "id": "cc1305ff-f2e3-4323-828f-5acb56bee950",
+    "state": "",
+    "metadata": {
+        "parentId": 1776813365036
+    },
+    "type": "TransformNode",
+    "uniqueId": 1776813365035,
+    "localMatrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+    ],
+    "isEnabled": true,
+    "animations": [],
+    "ranges": []
+}
