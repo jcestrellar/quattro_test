@@ -54,6 +54,19 @@ export interface ConcertHighwayHandles {
   padLitColors: Map<number, Color3>;
 }
 
+/** Presets de partículas del highway (móvil vs escritorio). */
+export interface ConcertHighwayParticleTuning {
+  ambientMax: number;
+  ambientEmitRate: number;
+  burstCount: number;
+}
+
+const DEFAULT_HIGHWAY_PARTICLES: ConcertHighwayParticleTuning = {
+  ambientMax: 220,
+  ambientEmitRate: 28,
+  burstCount: 22,
+};
+
 let seq = 0;
 
 /** Distancia desde la cámara hasta la línea de golpeo (a lo largo del rayo de visión). */
@@ -125,7 +138,12 @@ function alignHighwayRootToCamera(root: TransformNode, camera: FreeCamera): void
 /**
  * Carretera GH/RB: orientada frente a la cámara (notas vienen hacia el jugador).
  */
-export function buildConcertHighway(scene: Scene, chart: MidiChart, camera: FreeCamera): ConcertHighwayHandles {
+export function buildConcertHighway(
+  scene: Scene,
+  chart: MidiChart,
+  camera: FreeCamera,
+  particles: ConcertHighwayParticleTuning = DEFAULT_HIGHWAY_PARTICLES,
+): ConcertHighwayHandles {
   const root = new TransformNode('ghHighway', scene);
   alignHighwayRootToCamera(root, camera);
 
@@ -202,7 +220,7 @@ export function buildConcertHighway(scene: Scene, chart: MidiChart, camera: Free
   ambientEmitter.isVisible = false;
   ambientEmitter.isPickable = false;
 
-  const ambient = new ParticleSystem('ghAmbient', 220, scene);
+  const ambient = new ParticleSystem('ghAmbient', particles.ambientMax, scene);
   ambient.particleTexture = ptex;
   ambient.emitter = ambientEmitter;
   ambient.minEmitBox = new Vector3(-HIGHWAY_W / 2, 0.2, -HIGHWAY_DEPTH / 2);
@@ -214,7 +232,7 @@ export function buildConcertHighway(scene: Scene, chart: MidiChart, camera: Free
   ambient.maxSize = 0.07;
   ambient.minLifeTime = 4;
   ambient.maxLifeTime = 8;
-  ambient.emitRate = 28;
+  ambient.emitRate = particles.ambientEmitRate;
   ambient.minEmitPower = 0.015;
   ambient.maxEmitPower = 0.04;
   ambient.direction1 = new Vector3(-0.08, 0.5, 0.08);
@@ -223,7 +241,7 @@ export function buildConcertHighway(scene: Scene, chart: MidiChart, camera: Free
   ambient.blendMode = ParticleSystem.BLENDMODE_STANDARD;
   ambient.start();
 
-  const BURST_COUNT = 22;
+  const BURST_COUNT = particles.burstCount;
   const spawnBurst = (lane: DrumLane) => {
     const isKick = lane === DrumLane.Kick;
     const laneIdx = isKick ? -1 : LANE_ORDER.indexOf(lane as (typeof LANE_ORDER)[number]);

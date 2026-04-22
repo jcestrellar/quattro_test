@@ -15,6 +15,11 @@ import {
 export interface ConcertShowLightingOptions {
   shadowMapSize: number;
   usePcfShadow: boolean;
+  shadowCheapPass?: boolean;
+  /** Cilindros alpha “haz volumétrico”; false ahorra mucho fill-rate en móvil. */
+  enableVolumetricBeams?: boolean;
+  /** Llamar `updateShowLights` cada N frames (>=1). */
+  lightUpdateStride?: number;
 }
 
 function dirFromTo(from: Vector3, to: Vector3): Vector3 {
@@ -89,7 +94,10 @@ export function setupConcertShowLighting(
   shadowGenerator.darkness = 0.36;
   shadowGenerator.bias = 0.00085;
   shadowGenerator.normalBias = 0.02;
-  if (options.usePcfShadow) {
+  if (options.shadowCheapPass) {
+    shadowGenerator.usePercentageCloserFiltering = false;
+    shadowGenerator.useBlurExponentialShadowMap = false;
+  } else if (options.usePcfShadow) {
     shadowGenerator.usePercentageCloserFiltering = true;
     shadowGenerator.blurKernel = 12;
     shadowGenerator.useBlurExponentialShadowMap = false;
@@ -249,6 +257,7 @@ export function setupConcertShowLighting(
   });
 
   const beamLen = 16;
+  const useVolBeams = options.enableVolumetricBeams !== false;
   /** Haces: paleta distinta (coral, turquesa, ámbar, fucsia) acorde al atardecer */
   const volBeamColors = [
     new Color3(1, 0.38, 0.32),
@@ -257,22 +266,24 @@ export function setupConcertShowLighting(
     new Color3(0.92, 0.22, 0.58),
   ];
   const volBeams: AbstractMesh[] = [];
-  for (let i = 0; i < 4; i++) {
-    const beam = MeshBuilder.CreateCylinder(
-      `showVolBeam${i}`,
-      { height: beamLen, diameterTop: 0.04, diameterBottom: 2.15, tessellation: 16 },
-      scene,
-    );
-    const mat = new StandardMaterial(`showVolBeamMat${i}`, scene);
-    mat.disableLighting = true;
-    mat.emissiveColor = volBeamColors[i]!.clone();
-    mat.emissiveColor.scaleInPlace(0.46);
-    mat.alpha = 0.09;
-    mat.transparencyMode = StandardMaterial.MATERIAL_ALPHABLEND;
-    mat.backFaceCulling = false;
-    beam.material = mat;
-    beam.isPickable = false;
-    volBeams.push(beam);
+  if (useVolBeams) {
+    for (let i = 0; i < 4; i++) {
+      const beam = MeshBuilder.CreateCylinder(
+        `showVolBeam${i}`,
+        { height: beamLen, diameterTop: 0.04, diameterBottom: 2.15, tessellation: 16 },
+        scene,
+      );
+      const mat = new StandardMaterial(`showVolBeamMat${i}`, scene);
+      mat.disableLighting = true;
+      mat.emissiveColor = volBeamColors[i]!.clone();
+      mat.emissiveColor.scaleInPlace(0.46);
+      mat.alpha = 0.09;
+      mat.transparencyMode = StandardMaterial.MATERIAL_ALPHABLEND;
+      mat.backFaceCulling = false;
+      beam.material = mat;
+      beam.isPickable = false;
+      volBeams.push(beam);
+    }
   }
 
   /** Base + tres ejes animados por haz (cada uno con otro “carácter”) */
@@ -373,38 +384,46 @@ export function setupConcertShowLighting(
       s.light.intensity = s.baseIntensity * Math.max(0.78, breathe * chaos);
     }
 
-    for (let i = 0; i < volBeams.length; i++) {
-      const cfg = volBeamCfg[i]!;
-      const wLat = axisMotion(t, cfg.aimPhase + i * 0.4, cfg.mLat);
-      const wFwd = axisMotion(t, cfg.aimPhase * 1.1 + i, cfg.mFwd);
-      const wUp = axisMotion(t, cfg.aimPhase * 0.7 + i * 0.55, cfg.mUp);
-      const origin = drumBase
-        .clone()
-        .add(fwd.scale(cfg.baseFwd + wFwd))
-        .add(right.scale(cfg.baseLat + wLat))
-        .add(new Vector3(0, cfg.baseUp + wUp, 0));
+    if (volBeams.length > 0) {
+      for (let i = 0; i < volBeams.length; i++) {
+        const cfg = volBeamCfg[i]!;
+        const wLat = axisMotion(t, cfg.aimPhase + i * 0.4, cfg.mLat);
+        const wFwd = axisMotion(t, cfg.aimPhase * 1.1 + i, cfg.mFwd);
+        const wUp = axisMotion(t, cfg.aimPhase * 0.7 + i * 0.55, cfg.mUp);
+        const origin = drumBase
+          .clone()
+          .add(fwd.scale(cfg.baseFwd + wFwd))
+          .add(right.scale(cfg.baseLat + wLat))
+          .add(new Vector3(0, cfg.baseUp + wUp, 0));
 
-      const aimVol = kitFocus.clone().add(
-        new Vector3(
-          messyWave(t, cfg.aimPhase + 5, 0.65, 1.25, 2.85, 0.72),
-          messyWave(t, cfg.aimPhase + 1.2, 0.35, 1.95, 3.4, 1.18),
-          messyWave(t, cfg.aimPhase + 3.1, 0.55, 0.88, 2.1, 1.45),
-        ),
-      );
-      const dir = dirFromTo(origin, aimVol);
-      updateVolumetricBeam(volBeams[i]!, origin, dir, beamLen);
-      const mat = volBeams[i]!.material as StandardMaterial;
-      const tint =
-        0.4 +
-        0.14 * Math.sin(t * 1.05 + i * 1.15) +
-        0.08 * Math.sin(t * 4.2 + i * 2.1);
-      mat.emissiveColor.copyFrom(volBeamColors[i]!.clone().scaleInPlace(tint));
+        const aimVol = kitFocus.clone().add(
+          new Vector3(
+            messyWave(t, cfg.aimPhase + 5, 0.65, 1.25, 2.85, 0.72),
+            messyWave(t, cfg.aimPhase + 1.2, 0.35, 1.95, 3.4, 1.18),
+            messyWave(t, cfg.aimPhase + 3.1, 0.55, 0.88, 2.1, 1.45),
+          ),
+        );
+        const dir = dirFromTo(origin, aimVol);
+        updateVolumetricBeam(volBeams[i]!, origin, dir, beamLen);
+        const mat = volBeams[i]!.material as StandardMaterial;
+        const tint =
+          0.4 +
+          0.14 * Math.sin(t * 1.05 + i * 1.15) +
+          0.08 * Math.sin(t * 4.2 + i * 2.1);
+        mat.emissiveColor.copyFrom(volBeamColors[i]!.clone().scaleInPlace(tint));
+      }
     }
   };
 
   updateShowLights(performance.now() * 0.001);
 
+  const stride = Math.max(1, Math.floor(options.lightUpdateStride ?? 1));
+  let lightTick = 0;
   scene.onBeforeRenderObservable.add(() => {
+    lightTick++;
+    if ((lightTick - 1) % stride !== 0) {
+      return;
+    }
     updateShowLights(performance.now() * 0.001);
   });
 

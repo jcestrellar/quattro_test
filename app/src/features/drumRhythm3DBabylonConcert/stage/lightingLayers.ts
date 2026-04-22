@@ -22,6 +22,8 @@ export interface LightingPerfOptions {
   usePcfShadow: boolean;
   whiteRigCount: 1 | 2;
   showBeamMeshes: boolean;
+  /** Sin blur exponencial en sombras: más barato en móvil. */
+  shadowCheapPass?: boolean;
 }
 
 interface CameraAlignedLights {
@@ -197,6 +199,7 @@ const createShadowLayer = (
   scene: Scene,
   mapSize: number,
   usePcf: boolean,
+  cheapPass: boolean,
 ): { keyLight: DirectionalLight; shadowGenerator: ShadowGenerator } => {
   const keyLight = new DirectionalLight('keyShadowLight', new Vector3(-0.2, -1, 0.35), scene);
   keyLight.position = new Vector3(0, 6, -4);
@@ -207,7 +210,10 @@ const createShadowLayer = (
   shadowGenerator.bias = 0.0008;
   shadowGenerator.normalBias = 0.02;
 
-  if (usePcf) {
+  if (cheapPass) {
+    shadowGenerator.usePercentageCloserFiltering = false;
+    shadowGenerator.useBlurExponentialShadowMap = false;
+  } else if (usePcf) {
     shadowGenerator.usePercentageCloserFiltering = true;
     shadowGenerator.blurKernel = 16;
     shadowGenerator.useBlurExponentialShadowMap = false;
@@ -251,20 +257,19 @@ export const setupLightingLayers = (
   const areaLight = createAreaLayer(scene);
   const whiteRigLights = createForwardWhiteRigs(scene, perf.whiteRigCount, perf.showBeamMeshes);
   animateWhiteRigSway(scene, whiteRigLights);
-  const { keyLight, shadowGenerator } = createShadowLayer(scene, perf.shadowMapSize, perf.usePcfShadow);
+  const { keyLight, shadowGenerator } = createShadowLayer(
+    scene,
+    perf.shadowMapSize,
+    perf.usePcfShadow,
+    perf.shadowCheapPass === true,
+  );
 
   alignLightsToCamera(camera, {
     keyLight,
     pointLight,
     areaLight,
   });
-  scene.onBeforeRenderObservable.add(() => {
-    alignLightsToCamera(camera, {
-      keyLight,
-      pointLight,
-      areaLight,
-    });
-  });
+  /* Cámara fija del concierto: alinear cada frame forzaba trabajo CPU/GPU sin beneficio. */
 
   return { shadowGenerator };
 };

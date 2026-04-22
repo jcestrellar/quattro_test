@@ -16,6 +16,7 @@ import { applyLightingLayersToScene, setupLightingLayers } from './lightingLayer
 import { CONCERT_PERF } from './concertPerf';
 import { normalizeStageInstancedMeshes } from './stageMeshNormalization';
 import { bindLaneAnchors, buildFallbackDrumKit, ensureAnchorsForAllLanes } from './stageLaneAnchors';
+import { SystemDevice } from '../../../functions/systemDevice';
 import { vitePublicUrl } from '../../../utils/vitePublicUrl';
 
 export interface ConcertStageHandles {
@@ -29,11 +30,16 @@ export interface ConcertStageHandles {
 }
 
 export async function createConcertStageScene(canvas: HTMLCanvasElement): Promise<ConcertStageHandles> {
-  const engine = new Engine(canvas, false, {
-    preserveDrawingBuffer: false,
-    stencil: false,
-    powerPreference: 'high-performance',
-  });
+  const engine = new Engine(
+    canvas,
+    false,
+    {
+      preserveDrawingBuffer: false,
+      stencil: false,
+      powerPreference: SystemDevice.isMobile ? 'default' : 'high-performance',
+    },
+    !SystemDevice.isMobile,
+  );
   engine.setHardwareScalingLevel(CONCERT_PERF.hardwareScalingLevel);
 
   const scene = new Scene(engine);
@@ -63,6 +69,7 @@ export async function createConcertStageScene(canvas: HTMLCanvasElement): Promis
     usePcfShadow: CONCERT_PERF.usePcfShadow,
     whiteRigCount: CONCERT_PERF.whiteRigCount,
     showBeamMeshes: CONCERT_PERF.showBeamMeshes,
+    shadowCheapPass: CONCERT_PERF.shadowCheapPass,
   });
 
   let stageMeshes: AbstractMesh[] = [];

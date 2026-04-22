@@ -15,6 +15,7 @@ import { applyCartoonStylized } from '../../drumRhythm3DBabylonConcert/stage/car
 import { applyLightingLayersToScene } from '../../drumRhythm3DBabylonConcert/stage/lightingLayers';
 import { normalizeStageInstancedMeshes } from '../../drumRhythm3DBabylonConcert/stage/stageMeshNormalization';
 import { bindLaneAnchors, buildFallbackDrumKit, ensureAnchorsForAllLanes } from '../../drumRhythm3DBabylonConcert/stage/stageLaneAnchors';
+import { SystemDevice } from '../../../functions/systemDevice';
 import { vitePublicUrl } from '../../../utils/vitePublicUrl';
 import {
   computeDrumKitFocusFromAnchors,
@@ -34,11 +35,16 @@ export interface ConcertShowStageHandles {
 }
 
 export async function createConcertShowStageScene(canvas: HTMLCanvasElement): Promise<ConcertShowStageHandles> {
-  const engine = new Engine(canvas, false, {
-    preserveDrawingBuffer: false,
-    stencil: false,
-    powerPreference: 'high-performance',
-  });
+  const engine = new Engine(
+    canvas,
+    false,
+    {
+      preserveDrawingBuffer: false,
+      stencil: false,
+      powerPreference: SystemDevice.isMobile ? 'default' : 'high-performance',
+    },
+    !SystemDevice.isMobile,
+  );
   engine.setHardwareScalingLevel(CONCERT_SHOW_PERF.hardwareScalingLevel);
 
   const scene = new Scene(engine);
@@ -87,10 +93,18 @@ export async function createConcertShowStageScene(canvas: HTMLCanvasElement): Pr
   const bboxFallback = computeMeshesWorldCenter(stageMeshes, new Vector3(0, 1.12, 0));
   const stageLightTarget = computeDrumKitFocusFromAnchors(laneAnchors, bboxFallback);
 
-  const { shadowGenerator } = setupConcertShowLighting(scene, camera, {
-    shadowMapSize: CONCERT_SHOW_PERF.shadowMapSize,
-    usePcfShadow: CONCERT_SHOW_PERF.usePcfShadow,
-  }, stageLightTarget);
+  const { shadowGenerator } = setupConcertShowLighting(
+    scene,
+    camera,
+    {
+      shadowMapSize: CONCERT_SHOW_PERF.shadowMapSize,
+      usePcfShadow: CONCERT_SHOW_PERF.usePcfShadow,
+      shadowCheapPass: CONCERT_SHOW_PERF.shadowCheapPass,
+      enableVolumetricBeams: CONCERT_SHOW_PERF.enableVolumetricBeams,
+      lightUpdateStride: CONCERT_SHOW_PERF.lightUpdateStride,
+    },
+    stageLightTarget,
+  );
 
   const anchorMeshes = new Set(laneAnchors.values());
   for (const m of stageMeshes) {

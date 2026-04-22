@@ -173,9 +173,13 @@ export const DrumRhythm3DBabylonConcertShowIndex = () => {
 
       const { scene, engine, laneAnchors } = stage;
 
-      const sceneInstrumentation = new SceneInstrumentation(scene);
+      const sceneInstrumentation = import.meta.env.DEV ? new SceneInstrumentation(scene) : null;
 
-      const highway = buildConcertHighway(scene, chart, stage.camera);
+      const highway = buildConcertHighway(scene, chart, stage.camera, {
+        ambientMax: CONCERT_SHOW_PERF.highwayAmbientParticles,
+        ambientEmitRate: CONCERT_SHOW_PERF.highwayAmbientEmitRate,
+        burstCount: CONCERT_SHOW_PERF.highwayBurstParticles,
+      });
       const { pool, spawnBurst, padMatsMap, padLitColors } = highway;
 
       const highwayMeshes = scene.meshes.filter((m) => m.name.startsWith('gh'));
@@ -235,27 +239,30 @@ export const DrumRhythm3DBabylonConcertShowIndex = () => {
       };
 
       let statsFrame = 0;
-      const afterObs = scene.onAfterRenderObservable.add(() => {
-        statsFrame++;
-        if (statsFrame % 15 !== 0) return;
-        const idx = scene.getActiveIndices();
-        setSceneDebugRef.current({
-          fps: Math.round(engine.getFps()),
-          drawCalls: Math.round(sceneInstrumentation.drawCallsCounter.current),
-          vertices: scene.getTotalVertices(),
-          indices: idx,
-          triangles: Math.floor(idx / 3),
-          activeMeshes: scene.getActiveMeshes().length,
-          meshes: scene.meshes.length,
-          transformNodes: scene.transformNodes.length,
-          lights: scene.lights.length,
-          cameras: scene.cameras.length,
-          materials: scene.materials.length,
-          textures: scene.textures.length,
-          particles: scene.getActiveParticles(),
-          bones: scene.getActiveBones(),
-        });
-      });
+      const afterObs =
+        import.meta.env.DEV && sceneInstrumentation
+          ? scene.onAfterRenderObservable.add(() => {
+              statsFrame++;
+              if (statsFrame % 30 !== 0) return;
+              const idx = scene.getActiveIndices();
+              setSceneDebugRef.current({
+                fps: Math.round(engine.getFps()),
+                drawCalls: Math.round(sceneInstrumentation.drawCallsCounter.current),
+                vertices: scene.getTotalVertices(),
+                indices: idx,
+                triangles: Math.floor(idx / 3),
+                activeMeshes: scene.getActiveMeshes().length,
+                meshes: scene.meshes.length,
+                transformNodes: scene.transformNodes.length,
+                lights: scene.lights.length,
+                cameras: scene.cameras.length,
+                materials: scene.materials.length,
+                textures: scene.textures.length,
+                particles: scene.getActiveParticles(),
+                bones: scene.getActiveBones(),
+              });
+            })
+          : null;
 
       const obs = scene.onBeforeRenderObservable.add(() => {
         const now = performance.now();
@@ -298,8 +305,10 @@ export const DrumRhythm3DBabylonConcertShowIndex = () => {
 
       fullDispose = () => {
         highwayFill.dispose();
-        scene.onAfterRenderObservable.remove(afterObs);
-        sceneInstrumentation.dispose();
+        if (afterObs !== null) {
+          scene.onAfterRenderObservable.remove(afterObs);
+        }
+        sceneInstrumentation?.dispose();
         setSceneDebugRef.current({ ...EMPTY_SCENE_DEBUG });
         scene.onBeforeRenderObservable.remove(obs);
         hitVfx.dispose();
@@ -329,7 +338,7 @@ export const DrumRhythm3DBabylonConcertShowIndex = () => {
         ref={canvasRef}
         style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'block' }}
       />
-      {status === 'ready' && (
+      {status === 'ready' && import.meta.env.DEV && (
         <Box
           sx={{
             position: 'absolute',
